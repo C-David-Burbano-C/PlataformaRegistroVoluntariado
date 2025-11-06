@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_018 - Auditoría Moderno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .filters-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .filters-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .filters-controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .filter-btn.active {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .filter-btn:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-label {
+            color: #374151;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .filter-input {
+            padding: 10px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .filter-select {
+            padding: 10px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9em;
+            background: white;
+            cursor: pointer;
+        }
+
+        .audit-log {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .audit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .audit-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .audit-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .audit-btn {
+            padding: 8px 16px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .audit-btn:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+
+        .audit-btn.primary {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .audit-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .audit-table th,
+        .audit-table td {
+            padding: 15px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .audit-table th {
+            background: #f9fafb;
+            color: #1e3a8a;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .audit-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .audit-action {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .action-create {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .action-update {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .action-delete {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .action-login {
+            background: #f3e8ff;
+            color: #6b21a8;
+        }
+
+        .action-logout {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .audit-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .user-role {
+            font-size: 0.8em;
+            color: #6b7280;
+        }
+
+        .audit-details {
+            color: #6b7280;
+            font-size: 0.85em;
+            max-width: 300px;
+        }
+
+        .audit-timestamp {
+            color: #374151;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .audit-ip {
+            color: #6b7280;
+            font-size: 0.8em;
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .stat-activities .stat-icon {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .stat-users .stat-icon {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+        }
+
+        .stat-security .stat-icon {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .stat-reports .stat-icon {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .trend-up {
+            color: #10b981;
+        }
+
+        .trend-down {
+            color: #ef4444;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: 300;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        .recent-activity {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .activity-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: #f3f4f6;
+            border-color: #0ea5e9;
+        }
+
+        .activity-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            color: #374151;
+            font-size: 1em;
+            margin-bottom: 4px;
+        }
+
+        .activity-meta {
+            color: #6b7280;
+            font-size: 0.85em;
+        }
+
+        .activity-time {
+            color: #6b7280;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .export-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .export-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .export-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .export-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .export-option {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+        }
+
+        .export-option:hover {
+            border-color: #0ea5e9;
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .export-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .export-name {
+            color: #1e3a8a;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .export-description {
+            color: #6b7280;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+
+            .audit-table {
+                font-size: 0.8em;
+            }
+
+            .audit-table th,
+            .audit-table td {
+                padding: 10px 8px;
+            }
+
+            .activity-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .export-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Sistema de Auditoría</h1>
+        <p>Registro completo de actividades y cambios en el sistema</p>
+    </div>
+
+    <div class="content">
+        <div class="stats-section">
+            <div class="stat-card stat-activities">
+                <div class="stat-header">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-trend trend-up">
+                        <span>↗️</span>
+                        <span>+15%</span>
+                    </div>
+                </div>
+                <div class="stat-value">1,247</div>
+                <div class="stat-label">Registros de Auditoría</div>
+            </div>
+
+            <div class="stat-card stat-users">
+                <div class="stat-header">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-trend trend-up">
+                        <span>↗️</span>
+                        <span>+8%</span>
+                    </div>
+                </div>
+                <div class="stat-value">89</div>
+                <div class="stat-label">Usuarios Activos</div>
+            </div>
+
+            <div class="stat-card stat-security">
+                <div class="stat-header">
+                    <div class="stat-icon">🔒</div>
+                    <div class="stat-trend trend-down">
+                        <span>↘️</span>
+                        <span>-5%</span>
+                    </div>
+                </div>
+                <div class="stat-value">3</div>
+                <div class="stat-label">Alertas de Seguridad</div>
+            </div>
+
+            <div class="stat-card stat-reports">
+                <div class="stat-header">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-trend trend-up">
+                        <span>↗️</span>
+                        <span>+12%</span>
+                    </div>
+                </div>
+                <div class="stat-value">23</div>
+                <div class="stat-label">Reportes Generados</div>
+            </div>
+        </div>
+
+        <div class="filters-section">
+            <div class="filters-header">
+                <h2 class="filters-title">Filtros de Auditoría</h2>
+                <div class="filters-controls">
+                    <button class="filter-btn active">Hoy</button>
+                    <button class="filter-btn">Esta Semana</button>
+                    <button class="filter-btn">Este Mes</button>
+                    <button class="filter-btn">Personalizado</button>
+                </div>
+            </div>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">Usuario</label>
+                    <input type="text" class="filter-input" placeholder="Buscar por usuario...">
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Acción</label>
+                    <select class="filter-select">
+                        <option value="">Todas las acciones</option>
+                        <option value="create">Crear</option>
+                        <option value="update">Actualizar</option>
+                        <option value="delete">Eliminar</option>
+                        <option value="login">Iniciar Sesión</option>
+                        <option value="logout">Cerrar Sesión</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Módulo</label>
+                    <select class="filter-select">
+                        <option value="">Todos los módulos</option>
+                        <option value="users">Usuarios</option>
+                        <option value="activities">Actividades</option>
+                        <option value="certificates">Certificados</option>
+                        <option value="reports">Reportes</option>
+                        <option value="system">Sistema</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Fecha Desde</label>
+                    <input type="date" class="filter-input">
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Fecha Hasta</label>
+                    <input type="date" class="filter-input">
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Dirección IP</label>
+                    <input type="text" class="filter-input" placeholder="192.168.1.1">
+                </div>
+            </div>
+        </div>
+
+        <div class="audit-log">
+            <div class="audit-header">
+                <h2 class="audit-title">Registro de Auditoría</h2>
+                <div class="audit-controls">
+                    <button class="audit-btn">Actualizar</button>
+                    <button class="audit-btn primary">Exportar</button>
+                </div>
+            </div>
+
+            <table class="audit-table">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Acción</th>
+                        <th>Detalles</th>
+                        <th>Fecha/Hora</th>
+                        <th>IP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="audit-user">
+                                <div class="user-avatar">MG</div>
+                                <div class="user-info">
+                                    <div class="user-name">María González</div>
+                                    <div class="user-role">Coordinadora</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="audit-action action-create">Crear</span></td>
+                        <td class="audit-details">Creó nueva actividad "Limpieza Parque Central" en categoría Medio Ambiente</td>
+                        <td class="audit-timestamp">15 Nov 2025, 14:30:25</td>
+                        <td class="audit-ip">192.168.1.100</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="audit-user">
+                                <div class="user-avatar">CR</div>
+                                <div class="user-info">
+                                    <div class="user-name">Carlos Rodríguez</div>
+                                    <div class="user-role">Voluntario</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="audit-action action-login">Login</span></td>
+                        <td class="audit-details">Inicio de sesión exitoso desde aplicación móvil</td>
+                        <td class="audit-timestamp">15 Nov 2025, 14:15:12</td>
+                        <td class="audit-ip">192.168.1.150</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="audit-user">
+                                <div class="user-avatar">AL</div>
+                                <div class="user-info">
+                                    <div class="user-name">Ana López</div>
+                                    <div class="user-role">Administrador</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="audit-action action-update">Actualizar</span></td>
+                        <td class="audit-details">Actualizó información de usuario ID: 247, cambió email de confirmación</td>
+                        <td class="audit-timestamp">15 Nov 2025, 13:45:33</td>
+                        <td class="audit-ip">192.168.1.200</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="audit-user">
+                                <div class="user-avatar">PM</div>
+                                <div class="user-info">
+                                    <div class="user-name">Pedro Martínez</div>
+                                    <div class="user-role">Voluntario</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="audit-action action-create">Crear</span></td>
+                        <td class="audit-details">Solicitó certificado de participación para actividad "Reforestación"</td>
+                        <td class="audit-timestamp">15 Nov 2025, 13:22:18</td>
+                        <td class="audit-ip">192.168.1.175</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="audit-user">
+                                <div class="user-avatar">AL</div>
+                                <div class="user-info">
+                                    <div class="user-name">Ana López</div>
+                                    <div class="user-role">Administrador</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="audit-action action-delete">Eliminar</span></td>
+                        <td class="audit-details">Eliminó actividad cancelada "Taller de Manualidades" (ID: 156)</td>
+                        <td class="audit-timestamp">15 Nov 2025, 12:58:47</td>
+                        <td class="audit-ip">192.168.1.200</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="audit-user">
+                                <div class="user-avatar">MG</div>
+                                <div class="user-info">
+                                    <div class="user-name">María González</div>
+                                    <div class="user-role">Coordinadora</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="audit-action action-update">Actualizar</span></td>
+                        <td class="audit-details">Modificó horario de actividad "Banco de Alimentos" de 10:00 a 11:00</td>
+                        <td class="audit-timestamp">15 Nov 2025, 12:30:15</td>
+                        <td class="audit-ip">192.168.1.100</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="audit-user">
+                                <div class="user-avatar">CR</div>
+                                <div class="user-info">
+                                    <div class="user-name">Carlos Rodríguez</div>
+                                    <div class="user-role">Voluntario</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="audit-action action-logout">Logout</span></td>
+                        <td class="audit-details">Cierre de sesión desde aplicación web</td>
+                        <td class="audit-timestamp">15 Nov 2025, 11:45:22</td>
+                        <td class="audit-ip">192.168.1.150</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="audit-user">
+                                <div class="user-avatar">AL</div>
+                                <div class="user-info">
+                                    <div class="user-name">Ana López</div>
+                                    <div class="user-role">Administrador</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="audit-action action-create">Crear</span></td>
+                        <td class="audit-details">Generó reporte mensual de actividades (Noviembre 2025)</td>
+                        <td class="audit-timestamp">15 Nov 2025, 11:15:08</td>
+                        <td class="audit-ip">192.168.1.200</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="recent-activity">
+            <div class="activity-header">
+                <h2 class="activity-title">Actividad Reciente</h2>
+                <span style="color: #6b7280; font-size: 0.9em;">Últimas 24 horas</span>
+            </div>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-icon">🔒</div>
+                    <div class="activity-content">
+                        <div class="activity-text">Intento de acceso fallido desde IP desconocida</div>
+                        <div class="activity-meta">IP: 203.0.113.45 • Usuario: admin</div>
+                    </div>
+                    <div class="activity-time">Hace 2 horas</div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">📊</div>
+                    <div class="activity-content">
+                        <div class="activity-text">Generación de reporte de auditoría semanal</div>
+                        <div class="activity-meta">23 registros exportados • Formato: PDF</div>
+                    </div>
+                    <div class="activity-time">Hace 4 horas</div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">👤</div>
+                    <div class="activity-content">
+                        <div class="activity-text">Cambio de contraseña de usuario administrador</div>
+                        <div class="activity-meta">Usuario: Ana López • Método: Recuperación</div>
+                    </div>
+                    <div class="activity-time">Hace 6 horas</div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">⚙️</div>
+                    <div class="activity-content">
+                        <div class="activity-text">Actualización de configuración de seguridad</div>
+                        <div class="activity-meta">Habilitado 2FA obligatorio • Nivel: Alto</div>
+                    </div>
+                    <div class="activity-time">Hace 8 horas</div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">🗑️</div>
+                    <div class="activity-content">
+                        <div class="activity-text">Eliminación masiva de registros antiguos</div>
+                        <div class="activity-meta">156 registros • Período: > 2 años</div>
+                    </div>
+                    <div class="activity-time">Hace 12 horas</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="export-section">
+            <div class="export-header">
+                <h2 class="export-title">Exportar Datos de Auditoría</h2>
+                <span style="color: #6b7280; font-size: 0.9em;">Formatos disponibles</span>
+            </div>
+            <div class="export-grid">
+                <div class="export-option">
+                    <div class="export-icon">📄</div>
+                    <div class="export-name">PDF</div>
+                    <div class="export-description">Documento formateado con marcas de agua y firmas digitales</div>
+                </div>
+
+                <div class="export-option">
+                    <div class="export-icon">📊</div>
+                    <div class="export-name">Excel</div>
+                    <div class="export-description">Hoja de cálculo con filtros y fórmulas para análisis</div>
+                </div>
+
+                <div class="export-option">
+                    <div class="export-icon">📋</div>
+                    <div class="export-name">CSV</div>
+                    <div class="export-description">Archivo plano para importación en otras herramientas</div>
+                </div>
+
+                <div class="export-option">
+                    <div class="export-icon">🗂️</div>
+                    <div class="export-name">JSON</div>
+                    <div class="export-description">Formato estructurado para desarrolladores e integraciones</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
