@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_015 - Dashboard Administrativo Moderno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .stat-volunteers .stat-icon {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+        }
+
+        .stat-activities .stat-icon {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .stat-hours .stat-icon {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .stat-categories .stat-icon {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .trend-up {
+            color: #10b981;
+        }
+
+        .trend-down {
+            color: #ef4444;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: 300;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .chart-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .chart-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chart-btn {
+            padding: 8px 16px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .chart-btn.active {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .chart-btn:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 1.2em;
+            border: 2px dashed #e5e7eb;
+        }
+
+        .sidebar-charts {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .mini-chart {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .mini-chart-title {
+            color: #1e3a8a;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .mini-chart-placeholder {
+            height: 150px;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 0.9em;
+            border: 2px dashed #e5e7eb;
+        }
+
+        .recent-activity {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .activity-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: #f3f4f6;
+            border-color: #0ea5e9;
+        }
+
+        .activity-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            color: #374151;
+            font-size: 1em;
+            margin-bottom: 4px;
+        }
+
+        .activity-meta {
+            color: #6b7280;
+            font-size: 0.85em;
+        }
+
+        .activity-time {
+            color: #6b7280;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .action-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+        }
+
+        .action-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .action-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+        }
+
+        .action-info h3 {
+            color: #1e3a8a;
+            font-size: 1.3em;
+            margin-bottom: 8px;
+        }
+
+        .action-description {
+            color: #6b7280;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .alerts-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .alerts-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .alerts-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .alerts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            border-left-color: #f59e0b;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            border-left-color: #0ea5e9;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            border-left-color: #10b981;
+        }
+
+        .alert-icon {
+            font-size: 1.2em;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-text {
+            color: #374151;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .alert-meta {
+            color: #6b7280;
+            font-size: 0.8em;
+        }
+
+        .alert-action {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .alert-action.primary {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .alert-action.secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .activity-header,
+            .alerts-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .activity-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .alert-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Dashboard Administrativo</h1>
+        <p>Panel de control completo del sistema de voluntariado</p>
+    </div>
+
+    <div class="content">
+        <div class="stats-grid">
+            <div class="stat-card stat-volunteers">
+                <div class="stat-header">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-trend trend-up">
+                        <span>↗️</span>
+                        <span>+12%</span>
+                    </div>
+                </div>
+                <div class="stat-value">247</div>
+                <div class="stat-label">Voluntarios Registrados</div>
+            </div>
+
+            <div class="stat-card stat-activities">
+                <div class="stat-header">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-trend trend-up">
+                        <span>↗️</span>
+                        <span>+8%</span>
+                    </div>
+                </div>
+                <div class="stat-value">23</div>
+                <div class="stat-label">Actividades Activas</div>
+            </div>
+
+            <div class="stat-card stat-hours">
+                <div class="stat-header">
+                    <div class="stat-icon">⏰</div>
+                    <div class="stat-trend trend-up">
+                        <span>↗️</span>
+                        <span>+15%</span>
+                    </div>
+                </div>
+                <div class="stat-value">1,247</div>
+                <div class="stat-label">Horas de Servicio</div>
+            </div>
+
+            <div class="stat-card stat-categories">
+                <div class="stat-header">
+                    <div class="stat-icon">🏷️</div>
+                    <div class="stat-trend trend-up">
+                        <span>↗️</span>
+                        <span>+2%</span>
+                    </div>
+                </div>
+                <div class="stat-value">5</div>
+                <div class="stat-label">Categorías Activas</div>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Participación por Categorías</h3>
+                    <div class="chart-controls">
+                        <button class="chart-btn active">Mensual</button>
+                        <button class="chart-btn">Trimestral</button>
+                        <button class="chart-btn">Anual</button>
+                    </div>
+                </div>
+                <div class="chart-placeholder">
+                    📊 Gráfico de Participación por Categorías
+                </div>
+            </div>
+
+            <div class="sidebar-charts">
+                <div class="mini-chart">
+                    <h4 class="mini-chart-title">Tendencia de Inscripciones</h4>
+                    <div class="mini-chart-placeholder">
+                        📈 Gráfico de Tendencia
+                    </div>
+                </div>
+
+                <div class="mini-chart">
+                    <h4 class="mini-chart-title">Distribución por Edad</h4>
+                    <div class="mini-chart-placeholder">
+                        👥 Gráfico Demográfico
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <div class="action-card">
+                <div class="action-header">
+                    <div class="action-icon">➕</div>
+                    <div class="action-info">
+                        <h3>Crear Actividad</h3>
+                        <p>Agrega una nueva actividad de voluntariado al sistema</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-card">
+                <div class="action-header">
+                    <div class="action-icon">📊</div>
+                    <div class="action-info">
+                        <h3>Generar Reporte</h3>
+                        <p>Crea reportes personalizados con datos del sistema</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-card">
+                <div class="action-header">
+                    <div class="action-icon">👤</div>
+                    <div class="action-info">
+                        <h3>Gestionar Usuarios</h3>
+                        <p>Administra usuarios, roles y permisos del sistema</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-card">
+                <div class="action-header">
+                    <div class="action-icon">⚙️</div>
+                    <div class="action-info">
+                        <h3>Configuración</h3>
+                        <p>Ajusta configuraciones generales del sistema</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="recent-activity">
+            <div class="activity-header">
+                <h3 class="activity-title">Actividad Reciente</h3>
+                <span style="color: #6b7280; font-size: 0.9em;">Últimas 24 horas</span>
+            </div>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-icon">📝</div>
+                    <div class="activity-content">
+                        <div class="activity-text">Nueva actividad "Limpieza Parque Central" creada</div>
+                        <div class="activity-meta">Por María González • Coordinadora</div>
+                    </div>
+                    <div class="activity-time">Hace 2 horas</div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">✅</div>
+                    <div class="activity-content">
+                        <div class="activity-text">15 voluntarios confirmaron asistencia a "Banco de Alimentos"</div>
+                        <div class="activity-meta">Actividad completada • 12 participantes</div>
+                    </div>
+                    <div class="activity-time">Hace 4 horas</div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">👤</div>
+                    <div class="activity-content">
+                        <div class="activity-text">5 nuevos voluntarios se registraron en el sistema</div>
+                        <div class="activity-meta">Categorías: Educación, Medio Ambiente</div>
+                    </div>
+                    <div class="activity-time">Hace 6 horas</div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">📊</div>
+                    <div class="activity-content">
+                        <div class="activity-text">Reporte mensual generado automáticamente</div>
+                        <div class="activity-meta">Noviembre 2025 • 23 actividades registradas</div>
+                    </div>
+                    <div class="activity-time">Hace 8 horas</div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">🏆</div>
+                    <div class="activity-content">
+                        <div class="activity-text">8 certificados emitidos por actividades completadas</div>
+                        <div class="activity-meta">Voluntarios destacados • 127 horas totales</div>
+                    </div>
+                    <div class="activity-time">Hace 12 horas</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="alerts-section">
+            <div class="alerts-header">
+                <h3 class="alerts-title">Alertas y Notificaciones</h3>
+                <span style="color: #6b7280; font-size: 0.9em;">3 alertas activas</span>
+            </div>
+            <div class="alerts-list">
+                <div class="alert-item alert-warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-content">
+                        <div class="alert-text">Actividad "Taller de Arte" programada para mañana tiene solo 3 inscritos</div>
+                        <div class="alert-meta">Requiere mínimo 5 participantes • Coordinar con Ana López</div>
+                    </div>
+                    <button class="alert-action primary">Ver Detalles</button>
+                </div>
+
+                <div class="alert-item alert-info">
+                    <div class="alert-icon">ℹ️</div>
+                    <div class="alert-content">
+                        <div class="alert-text">12 voluntarios pendientes de aprobación de registro</div>
+                        <div class="alert-meta">Esperando verificación de documentos • 3 días en espera</div>
+                    </div>
+                    <button class="alert-action primary">Revisar</button>
+                </div>
+
+                <div class="alert-item alert-success">
+                    <div class="alert-icon">✅</div>
+                    <div class="alert-content">
+                        <div class="alert-text">Meta mensual de horas superada: 1,247 horas registradas</div>
+                        <div class="alert-meta">Objetivo: 1,200 horas • +47 horas adicionales</div>
+                    </div>
+                    <button class="alert-action secondary">Ver Reporte</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

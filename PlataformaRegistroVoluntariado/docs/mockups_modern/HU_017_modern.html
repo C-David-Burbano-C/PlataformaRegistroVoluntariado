@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_017 - Notificaciones Moderno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .tabs-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .tabs-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .tabs-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .tabs-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .tab-btn.active {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .tab-btn:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+
+        .notifications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .notification-item {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .notification-item:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-color: #0ea5e9;
+        }
+
+        .notification-item.unread {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            margin-right: 15px;
+        }
+
+        .notification-content {
+            flex: 1;
+            display: flex;
+            gap: 15px;
+        }
+
+        .notification-text {
+            flex: 1;
+        }
+
+        .notification-title {
+            color: #1e3a8a;
+            font-size: 1em;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .notification-message {
+            color: #6b7280;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .notification-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+        }
+
+        .notification-time {
+            color: #6b7280;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .notification-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn.primary {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .action-btn.success {
+            background: #10b981;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .notification-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .type-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .type-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .type-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .type-info {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .type-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .type-error {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .type-system {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+        }
+
+        .type-name {
+            color: #1e3a8a;
+            font-size: 1em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .type-count {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .settings-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .settings-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .setting-group {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .setting-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .setting-title {
+            color: #1e3a8a;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .setting-toggle {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: #e5e7eb;
+            border-radius: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .setting-toggle.active {
+            background: #10b981;
+        }
+
+        .setting-toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .setting-toggle.active::after {
+            left: 26px;
+        }
+
+        .setting-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .setting-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .option-label {
+            color: #374151;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        .bulk-actions {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .bulk-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .bulk-title {
+            color: #1e3a8a;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .bulk-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .bulk-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .bulk-btn {
+            padding: 8px 16px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .bulk-btn:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+
+        .bulk-btn.primary {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .bulk-btn.danger {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 300;
+            color: #1e3a8a;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .tabs-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .notification-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .notification-meta {
+                align-items: flex-start;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bulk-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Centro de Notificaciones</h1>
+        <p>Gestiona todas tus notificaciones del sistema de voluntariado</p>
+    </div>
+
+    <div class="content">
+        <div class="notification-types">
+            <div class="type-card">
+                <div class="type-icon type-info">ℹ️</div>
+                <div class="type-name">Informativas</div>
+                <div class="type-count">12 nuevas</div>
+            </div>
+
+            <div class="type-card">
+                <div class="type-icon type-warning">⚠️</div>
+                <div class="type-name">Advertencias</div>
+                <div class="type-count">3 nuevas</div>
+            </div>
+
+            <div class="type-card">
+                <div class="type-icon type-error">🚨</div>
+                <div class="type-name">Urgentes</div>
+                <div class="type-count">1 nueva</div>
+            </div>
+
+            <div class="type-card">
+                <div class="type-icon type-system">⚙️</div>
+                <div class="type-name">Sistema</div>
+                <div class="type-count">5 nuevas</div>
+            </div>
+        </div>
+
+        <div class="tabs-section">
+            <div class="tabs-header">
+                <h2 class="tabs-title">Notificaciones</h2>
+                <div class="tabs-controls">
+                    <button class="tab-btn active">Todas</button>
+                    <button class="tab-btn">No Leídas</button>
+                    <button class="tab-btn">Importantes</button>
+                    <button class="tab-btn">Hoy</button>
+                </div>
+            </div>
+
+            <div class="bulk-actions">
+                <div class="bulk-header">
+                    <h3 class="bulk-title">Acciones Masivas</h3>
+                    <div class="bulk-controls">
+                        <label>
+                            <input type="checkbox" class="bulk-checkbox"> Seleccionar Todas
+                        </label>
+                        <button class="bulk-btn primary">Marcar como Leídas</button>
+                        <button class="bulk-btn">Archivar Seleccionadas</button>
+                        <button class="bulk-btn danger">Eliminar Seleccionadas</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notifications-list">
+                <div class="notification-item unread">
+                    <div class="notification-content">
+                        <div class="notification-icon" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white;">🚨</div>
+                        <div class="notification-text">
+                            <div class="notification-title">Actividad Cancelada - Limpieza Parque Central</div>
+                            <div class="notification-message">La actividad programada para mañana ha sido cancelada debido a condiciones climáticas adversas. Los voluntarios inscritos serán notificados automáticamente.</div>
+                        </div>
+                        <div class="notification-meta">
+                            <div class="notification-time">Hace 5 min</div>
+                            <div class="notification-actions">
+                                <button class="action-btn primary">Ver Detalles</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-item unread">
+                    <div class="notification-content">
+                        <div class="notification-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white;">⚠️</div>
+                        <div class="notification-text">
+                            <div class="notification-title">Recordatorio: Confirmación de Asistencia Requerida</div>
+                            <div class="notification-message">Tienes actividades programadas para esta semana. Por favor confirma tu asistencia antes del miércoles para asegurar la organización adecuada.</div>
+                        </div>
+                        <div class="notification-meta">
+                            <div class="notification-time">Hace 2 horas</div>
+                            <div class="notification-actions">
+                                <button class="action-btn success">Confirmar</button>
+                                <button class="action-btn secondary">Ver Actividades</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-content">
+                        <div class="notification-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;">✅</div>
+                        <div class="notification-text">
+                            <div class="notification-title">Certificado Emitido - Banco de Alimentos</div>
+                            <div class="notification-message">Tu certificado de participación por 8 horas de servicio en la actividad "Banco de Alimentos" ha sido emitido y está disponible para descarga.</div>
+                        </div>
+                        <div class="notification-meta">
+                            <div class="notification-time">Hace 4 horas</div>
+                            <div class="notification-actions">
+                                <button class="action-btn primary">Descargar PDF</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-item unread">
+                    <div class="notification-content">
+                        <div class="notification-icon" style="background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: white;">ℹ️</div>
+                        <div class="notification-text">
+                            <div class="notification-title">Nueva Actividad Disponible - Taller de Arte</div>
+                            <div class="notification-message">Se ha publicado una nueva actividad en la categoría Educación. El taller se realizará el próximo sábado de 10:00 a 14:00 horas.</div>
+                        </div>
+                        <div class="notification-meta">
+                            <div class="notification-time">Hace 6 horas</div>
+                            <div class="notification-actions">
+                                <button class="action-btn primary">Ver Actividad</button>
+                                <button class="action-btn secondary">Inscribirme</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-content">
+                        <div class="notification-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white;">⚙️</div>
+                        <div class="notification-text">
+                            <div class="notification-title">Actualización del Sistema</div>
+                            <div class="notification-message">El sistema ha sido actualizado con nuevas funcionalidades. Se recomienda revisar las nuevas opciones disponibles en tu perfil.</div>
+                        </div>
+                        <div class="notification-meta">
+                            <div class="notification-time">Hace 1 día</div>
+                            <div class="notification-actions">
+                                <button class="action-btn secondary">Ver Cambios</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-content">
+                        <div class="notification-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;">🏆</div>
+                        <div class="notification-text">
+                            <div class="notification-title">¡Felicitaciones! Meta Mensual Alcanzada</div>
+                            <div class="notification-message">Has completado 20 horas de servicio voluntario este mes. ¡Gracias por tu dedicación! Tu certificado de reconocimiento está siendo procesado.</div>
+                        </div>
+                        <div class="notification-meta">
+                            <div class="notification-time">Hace 2 días</div>
+                            <div class="notification-actions">
+                                <button class="action-btn primary">Ver Logros</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-content">
+                        <div class="notification-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white;">⏰</div>
+                        <div class="notification-text">
+                            <div class="notification-title">Recordatorio: Actividad Mañana</div>
+                        <div class="notification-message">Recuerda que mañana tienes programada la actividad "Reforestación Parque Norte" a las 9:00 AM. No olvides llevar guantes y agua.</div>
+                        </div>
+                        <div class="notification-meta">
+                            <div class="notification-time">Hace 3 días</div>
+                            <div class="notification-actions">
+                                <button class="action-btn success">Confirmar Asistencia</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <div class="settings-header">
+                <h2 class="settings-title">Configuración de Notificaciones</h2>
+                <button class="bulk-btn primary">Guardar Cambios</button>
+            </div>
+
+            <div class="settings-grid">
+                <div class="setting-group">
+                    <div class="setting-header">
+                        <h3 class="setting-title">Notificaciones por Email</h3>
+                        <div class="setting-toggle active"></div>
+                    </div>
+                    <div class="setting-options">
+                        <div class="setting-option">
+                            <input type="checkbox" class="option-checkbox" checked>
+                            <label class="option-label">Nuevas actividades disponibles</label>
+                        </div>
+                        <div class="setting-option">
+                            <input type="checkbox" class="option-checkbox" checked>
+                            <label class="option-label">Recordatorios de actividades</label>
+                        </div>
+                        <div class="setting-option">
+                            <input type="checkbox" class="option-checkbox" checked>
+                            <label class="option-label">Certificados emitidos</label>
+                        </div>
+                        <div class="setting-option">
+                            <input type="checkbox" class="option-checkbox">
+                            <label class="option-label">Actualizaciones del sistema</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <div class="setting-header">
+                        <h3 class="setting-title">Notificaciones Push</h3>
+                        <div class="setting-toggle active"></div>
+                    </div>
+                    <div class="setting-options">
+                        <div class="setting-option">
+                            <input type="checkbox" class="option-checkbox" checked>
+                            <label class="option-label">Actividades urgentes</label>
+                        </div>
+                        <div class="setting-option">
+                            <input type="checkbox" class="option-checkbox" checked>
+                            <label class="option-label">Cambios en mis actividades</label>
+                        </div>
+                        <div class="setting-option">
+                            <input type="checkbox" class="option-checkbox">
+                            <label class="option-label">Mensajes de coordinadores</label>
+                        </div>
+                        <div class="setting-option">
+                            <input type="checkbox" class="option-checkbox">
+                            <label class="option-label">Actualizaciones semanales</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <div class="setting-header">
+                        <h3 class="setting-title">Notificaciones SMS</h3>
+                        <div class="setting-toggle"></div>
+                    </div>
+                    <div class="setting-options">
+                        <div class="setting-option">
+                            <input type="checkbox" class="option-checkbox" disabled>
+                            <label class="option-label">Cancelaciones de actividades</label>
+                        </div>
+                        <div class="setting-option">
+                            <input type="checkbox" class="option-checkbox" disabled>
+                            <label class="option-label">Recordatorios del día</label>
+                        </div>
+                        <div class="setting-option">
+                            <input type="checkbox" class="option-checkbox" disabled>
+                            <label class="option-label">Emergencias</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <div class="setting-header">
+                        <h3 class="setting-title">Frecuencia de Resúmenes</h3>
+                        <div class="setting-toggle active"></div>
+                    </div>
+                    <div class="setting-options">
+                        <div class="setting-option">
+                            <input type="radio" name="frequency" class="option-checkbox">
+                            <label class="option-label">Diario</label>
+                        </div>
+                        <div class="setting-option">
+                            <input type="radio" name="frequency" class="option-checkbox" checked>
+                            <label class="option-label">Semanal</label>
+                        </div>
+                        <div class="setting-option">
+                            <input type="radio" name="frequency" class="option-checkbox">
+                            <label class="option-label">Mensual</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <div class="stat-card">
+                <div class="stat-number">23</div>
+                <div class="stat-label">Notificaciones Hoy</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-number">156</div>
+                <div class="stat-label">Esta Semana</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-number">89%</div>
+                <div class="stat-label">Tasa de Apertura</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-number">4.2</div>
+                <div class="stat-label">Promedio Respuesta (horas)</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

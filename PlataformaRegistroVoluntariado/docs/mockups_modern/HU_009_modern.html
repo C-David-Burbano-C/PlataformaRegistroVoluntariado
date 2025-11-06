@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_009 - Gestión de Roles Moderno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .roles-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .role-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .role-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .role-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .role-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .role-admin .role-icon {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .role-coordinator .role-icon {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+        }
+
+        .role-volunteer .role-icon {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .role-student .role-icon {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+        }
+
+        .role-info h3 {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            margin-bottom: 8px;
+        }
+
+        .role-description {
+            color: #6b7280;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .role-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .role-details-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .section-title {
+            color: #1e3a8a;
+            font-size: 1.5em;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #0ea5e9;
+            padding-bottom: 10px;
+        }
+
+        .role-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+        }
+
+        .permissions-section {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .permissions-title {
+            color: #374151;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .permissions-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .permission-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .permission-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #0ea5e9;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .permission-checkbox.checked {
+            background: #0ea5e9;
+        }
+
+        .permission-checkbox.checked::after {
+            content: '✓';
+            position: absolute;
+            top: -2px;
+            left: 2px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .permission-label {
+            color: #374151;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .role-form-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            color: #374151;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0ea5e9;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .roles-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header h2 {
+            font-size: 1.4em;
+            font-weight: 300;
+        }
+
+        .add-role-btn {
+            padding: 10px 20px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .add-role-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85em;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .role-name {
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .role-description {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .user-count {
+            background: #e5e7eb;
+            color: #374151;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-edit {
+            background: #0ea5e9;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-duplicate {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .actions-section {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn-large {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-cancel {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            color: white;
+        }
+
+        .action-btn-large:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .roles-overview {
+                grid-template-columns: 1fr;
+            }
+
+            .role-detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .action-buttons {
+                justify-content: center;
+            }
+
+            .actions-section {
+                flex-direction: column;
+            }
+
+            .action-btn-large {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Gestión de Roles</h1>
+        <p>Administración de roles y permisos del sistema</p>
+    </div>
+
+    <div class="content">
+        <div class="roles-overview">
+            <div class="role-card role-admin">
+                <div class="role-header">
+                    <div class="role-icon">👑</div>
+                    <div class="role-info">
+                        <h3>Administrador</h3>
+                        <p>Control total del sistema</p>
+                    </div>
+                </div>
+                <div class="role-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Usuarios</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">25</div>
+                        <div class="stat-label">Permisos</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="role-card role-coordinator">
+                <div class="role-header">
+                    <div class="role-icon">🎯</div>
+                    <div class="role-info">
+                        <h3>Coordinador</h3>
+                        <p>Gestión de actividades y voluntarios</p>
+                    </div>
+                </div>
+                <div class="role-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Usuarios</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">18</div>
+                        <div class="stat-label">Permisos</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="role-card role-volunteer">
+                <div class="role-header">
+                    <div class="role-icon">🤝</div>
+                    <div class="role-info">
+                        <h3>Voluntario</h3>
+                        <p>Participación en actividades</p>
+                    </div>
+                </div>
+                <div class="role-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">45</div>
+                        <div class="stat-label">Usuarios</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Permisos</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="role-card role-student">
+                <div class="role-header">
+                    <div class="role-icon">📚</div>
+                    <div class="role-info">
+                        <h3>Estudiante</h3>
+                        <p>Acceso limitado a talleres</p>
+                    </div>
+                </div>
+                <div class="role-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">187</div>
+                        <div class="stat-label">Usuarios</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Permisos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="role-details-section">
+            <h3 class="section-title">Configuración de Rol: Coordinador</h3>
+            <div class="role-detail-grid">
+                <div class="role-form-section">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="roleName">Nombre del Rol</label>
+                            <input type="text" id="roleName" value="Coordinador">
+                        </div>
+                        <div class="form-group">
+                            <label for="roleColor">Color Representativo</label>
+                            <input type="color" id="roleColor" value="#0ea5e9">
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label for="roleDescription">Descripción</label>
+                            <textarea id="roleDescription">Usuario con permisos para gestionar actividades voluntarias, coordinar voluntarios y supervisar el progreso de las iniciativas.</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="permissions-section">
+                    <h4 class="permissions-title">Permisos del Rol</h4>
+                    <div class="permissions-list">
+                        <div class="permission-item">
+                            <div class="permission-checkbox checked"></div>
+                            <span class="permission-label">Crear actividades</span>
+                        </div>
+                        <div class="permission-item">
+                            <div class="permission-checkbox checked"></div>
+                            <span class="permission-label">Editar actividades</span>
+                        </div>
+                        <div class="permission-item">
+                            <div class="permission-checkbox checked"></div>
+                            <span class="permission-label">Eliminar actividades</span>
+                        </div>
+                        <div class="permission-item">
+                            <div class="permission-checkbox checked"></div>
+                            <span class="permission-label">Gestionar voluntarios</span>
+                        </div>
+                        <div class="permission-item">
+                            <div class="permission-checkbox checked"></div>
+                            <span class="permission-label">Ver reportes</span>
+                        </div>
+                        <div class="permission-item">
+                            <div class="permission-checkbox checked"></div>
+                            <span class="permission-label">Exportar datos</span>
+                        </div>
+                        <div class="permission-item">
+                            <div class="permission-checkbox"></div>
+                            <span class="permission-label">Gestionar usuarios</span>
+                        </div>
+                        <div class="permission-item">
+                            <div class="permission-checkbox"></div>
+                            <span class="permission-label">Configurar sistema</span>
+                        </div>
+                        <div class="permission-item">
+                            <div class="permission-checkbox checked"></div>
+                            <span class="permission-label">Control de asistencia</span>
+                        </div>
+                        <div class="permission-item">
+                            <div class="permission-checkbox checked"></div>
+                            <span class="permission-label">Generar certificados</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions-section">
+                <button class="action-btn-large btn-save">Guardar Cambios</button>
+                <button class="action-btn-large btn-cancel">Cancelar</button>
+            </div>
+        </div>
+
+        <div class="roles-table">
+            <div class="table-header">
+                <h2>Lista de Roles</h2>
+                <button class="add-role-btn">+ Nuevo Rol</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rol</th>
+                        <th>Descripción</th>
+                        <th>Usuarios</th>
+                        <th>Permisos</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="role-name">Administrador</div>
+                        </td>
+                        <td>
+                            <div class="role-description">Control total del sistema y configuración</div>
+                        </td>
+                        <td><span class="user-count">3 usuarios</span></td>
+                        <td><span class="user-count">25 permisos</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-edit">Editar</button>
+                                <button class="action-btn btn-duplicate">Duplicar</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="role-name">Coordinador</div>
+                        </td>
+                        <td>
+                            <div class="role-description">Gestión de actividades y voluntarios</div>
+                        </td>
+                        <td><span class="user-count">12 usuarios</span></td>
+                        <td><span class="user-count">18 permisos</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-edit">Editar</button>
+                                <button class="action-btn btn-duplicate">Duplicar</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="role-name">Voluntario</div>
+                        </td>
+                        <td>
+                            <div class="role-description">Participación en actividades voluntarias</div>
+                        </td>
+                        <td><span class="user-count">45 usuarios</span></td>
+                        <td><span class="user-count">8 permisos</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-edit">Editar</button>
+                                <button class="action-btn btn-duplicate">Duplicar</button>
+                                <button class="action-btn btn-delete">Eliminar</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="role-name">Estudiante</div>
+                        </td>
+                        <td>
+                            <div class="role-description">Acceso limitado a talleres educativos</div>
+                        </td>
+                        <td><span class="user-count">187 usuarios</span></td>
+                        <td><span class="user-count">5 permisos</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-edit">Editar</button>
+                                <button class="action-btn btn-duplicate">Duplicar</button>
+                                <button class="action-btn btn-delete">Eliminar</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

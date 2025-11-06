@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_013 - Gestión de Categorías Moderno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .categories-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0ea5e9, #10b981);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: white;
+        }
+
+        .category-environment .category-icon {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .category-education .category-icon {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        }
+
+        .category-food .category-icon {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .category-health .category-icon {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .category-social .category-icon {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+
+        .category-info h3 {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            margin-bottom: 8px;
+        }
+
+        .category-description {
+            color: #6b7280;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .category-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .category-management {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .section-title {
+            color: #1e3a8a;
+            font-size: 1.5em;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #0ea5e9;
+            padding-bottom: 10px;
+        }
+
+        .management-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .form-section {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .form-title {
+            color: #374151;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            color: #374151;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #0ea5e9;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .color-option.selected {
+            border-color: #374151;
+            transform: scale(1.1);
+        }
+
+        .color-option[data-color="#10b981"] { background: #10b981; }
+        .color-option[data-color="#0ea5e9"] { background: #0ea5e9; }
+        .color-option[data-color="#f59e0b"] { background: #f59e0b; }
+        .color-option[data-color="#ef4444"] { background: #ef4444; }
+        .color-option[data-color="#8b5cf6"] { background: #8b5cf6; }
+        .color-option[data-color="#06b6d4"] { background: #06b6d4; }
+
+        .categories-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header h2 {
+            font-size: 1.4em;
+            font-weight: 300;
+        }
+
+        .add-category-btn {
+            padding: 10px 20px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .add-category-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85em;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .category-name {
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .category-description {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .color-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .activity-count {
+            background: #e5e7eb;
+            color: #374151;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-edit {
+            background: #0ea5e9;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-activities {
+            background: #10b981;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .actions-section {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn-large {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-cancel {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            color: white;
+        }
+
+        .action-btn-large:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .categories-overview {
+                grid-template-columns: 1fr;
+            }
+
+            .management-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .action-buttons {
+                justify-content: center;
+            }
+
+            .actions-section {
+                flex-direction: column;
+            }
+
+            .action-btn-large {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Gestión de Categorías</h1>
+        <p>Administración de categorías de actividades voluntarias</p>
+    </div>
+
+    <div class="content">
+        <div class="categories-overview">
+            <div class="category-card category-environment">
+                <div class="category-header">
+                    <div class="category-icon">🌱</div>
+                    <div class="category-info">
+                        <h3>Medio Ambiente</h3>
+                        <p>Actividades de protección y cuidado del medio ambiente</p>
+                    </div>
+                </div>
+                <div class="category-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Actividades</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">45</div>
+                        <div class="stat-label">Voluntarios</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-card category-education">
+                <div class="category-header">
+                    <div class="category-icon">📚</div>
+                    <div class="category-info">
+                        <h3>Educación</h3>
+                        <p>Apoyo educativo y talleres de formación</p>
+                    </div>
+                </div>
+                <div class="category-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">Actividades</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">32</div>
+                        <div class="stat-label">Voluntarios</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-card category-food">
+                <div class="category-header">
+                    <div class="category-icon">🍽️</div>
+                    <div class="category-info">
+                        <h3>Alimentación</h3>
+                        <p>Bancos de alimentos y distribución de comida</p>
+                    </div>
+                </div>
+                <div class="category-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Actividades</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">28</div>
+                        <div class="stat-label">Voluntarios</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-card category-health">
+                <div class="category-header">
+                    <div class="category-icon">🏥</div>
+                    <div class="category-info">
+                        <h3>Salud</h3>
+                        <p>Campañas de salud y donación de sangre</p>
+                    </div>
+                </div>
+                <div class="category-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Actividades</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">25</div>
+                        <div class="stat-label">Voluntarios</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-card category-social">
+                <div class="category-header">
+                    <div class="category-icon">🤝</div>
+                    <div class="category-info">
+                        <h3>Social</h3>
+                        <p>Apoyo a comunidades vulnerables</p>
+                    </div>
+                </div>
+                <div class="category-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Actividades</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">18</div>
+                        <div class="stat-label">Voluntarios</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-management">
+            <h3 class="section-title">Gestión de Categorías</h3>
+            <div class="management-grid">
+                <div class="form-section">
+                    <h4 class="form-title">Crear/Editar Categoría</h4>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="categoryName">Nombre de la Categoría</label>
+                            <input type="text" id="categoryName" placeholder="Nueva Categoría">
+                        </div>
+                        <div class="form-group">
+                            <label for="categoryIcon">Ícono</label>
+                            <select id="categoryIcon">
+                                <option value="🌱">🌱 Medio Ambiente</option>
+                                <option value="📚">📚 Educación</option>
+                                <option value="🍽️">🍽️ Alimentación</option>
+                                <option value="🏥">🏥 Salud</option>
+                                <option value="🤝">🤝 Social</option>
+                                <option value="🎨">🎨 Arte y Cultura</option>
+                                <option value="🏃">🏃 Deporte</option>
+                                <option value="🧓">🧓 Adultos Mayores</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoryColor">Color</label>
+                            <div class="color-picker">
+                                <div class="color-option selected" data-color="#10b981"></div>
+                                <div class="color-option" data-color="#0ea5e9"></div>
+                                <div class="color-option" data-color="#f59e0b"></div>
+                                <div class="color-option" data-color="#ef4444"></div>
+                                <div class="color-option" data-color="#8b5cf6"></div>
+                                <div class="color-option" data-color="#06b6d4"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoryDescription">Descripción</label>
+                            <textarea id="categoryDescription" placeholder="Describe la categoría y sus objetivos..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h4 class="form-title">Estadísticas y Configuración</h4>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="maxActivities">Máximo de Actividades</label>
+                            <input type="number" id="maxActivities" placeholder="Sin límite" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="defaultCoordinator">Coordinador por Defecto</label>
+                            <select id="defaultCoordinator">
+                                <option>Sin asignar</option>
+                                <option>María González</option>
+                                <option>Juan Pérez</option>
+                                <option>Ana López</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="isActive">Estado</label>
+                            <select id="isActive">
+                                <option value="true">Activa</option>
+                                <option value="false">Inactiva</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="priority">Prioridad</label>
+                            <select id="priority">
+                                <option value="normal">Normal</option>
+                                <option value="high">Alta</option>
+                                <option value="low">Baja</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions-section">
+                <button class="action-btn-large btn-save">Guardar Categoría</button>
+                <button class="action-btn-large btn-cancel">Cancelar</button>
+            </div>
+        </div>
+
+        <div class="categories-table">
+            <div class="table-header">
+                <h2>Lista de Categorías</h2>
+                <button class="add-category-btn">+ Nueva Categoría</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Descripción</th>
+                        <th>Actividades</th>
+                        <th>Voluntarios</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <span class="color-indicator" style="background: #10b981;"></span>
+                                <div>
+                                    <div class="category-name">Medio Ambiente</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="category-description">Actividades de protección y cuidado del medio ambiente</div>
+                        </td>
+                        <td><span class="activity-count">8 actividades</span></td>
+                        <td><span class="activity-count">45 voluntarios</span></td>
+                        <td><span class="activity-count" style="background: #dcfce7; color: #166534;">Activa</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-edit">Editar</button>
+                                <button class="action-btn btn-activities">Ver Actividades</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <span class="color-indicator" style="background: #0ea5e9;"></span>
+                                <div>
+                                    <div class="category-name">Educación</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="category-description">Apoyo educativo y talleres de formación</div>
+                        </td>
+                        <td><span class="activity-count">6 actividades</span></td>
+                        <td><span class="activity-count">32 voluntarios</span></td>
+                        <td><span class="activity-count" style="background: #dcfce7; color: #166534;">Activa</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-edit">Editar</button>
+                                <button class="action-btn btn-activities">Ver Actividades</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <span class="color-indicator" style="background: #f59e0b;"></span>
+                                <div>
+                                    <div class="category-name">Alimentación</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="category-description">Bancos de alimentos y distribución de comida</div>
+                        </td>
+                        <td><span class="activity-count">4 actividades</span></td>
+                        <td><span class="activity-count">28 voluntarios</span></td>
+                        <td><span class="activity-count" style="background: #dcfce7; color: #166534;">Activa</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-edit">Editar</button>
+                                <button class="action-btn btn-activities">Ver Actividades</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <span class="color-indicator" style="background: #ef4444;"></span>
+                                <div>
+                                    <div class="category-name">Salud</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="category-description">Campañas de salud y donación de sangre</div>
+                        </td>
+                        <td><span class="activity-count">3 actividades</span></td>
+                        <td><span class="activity-count">25 voluntarios</span></td>
+                        <td><span class="activity-count" style="background: #dcfce7; color: #166534;">Activa</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-edit">Editar</button>
+                                <button class="action-btn btn-activities">Ver Actividades</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <span class="color-indicator" style="background: #8b5cf6;"></span>
+                                <div>
+                                    <div class="category-name">Social</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="category-description">Apoyo a comunidades vulnerables</div>
+                        </td>
+                        <td><span class="activity-count">2 actividades</span></td>
+                        <td><span class="activity-count">18 voluntarios</span></td>
+                        <td><span class="activity-count" style="background: #dcfce7; color: #166534;">Activa</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-edit">Editar</button>
+                                <button class="action-btn btn-activities">Ver Actividades</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

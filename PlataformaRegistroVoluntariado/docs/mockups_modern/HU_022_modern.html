@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_022 - Reportes Moderno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8fafc;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .reports-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .filters-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .filters-header h2 {
+            color: #1e3a8a;
+            font-size: 1.8em;
+            font-weight: 300;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+        }
+
+        .metrics-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .metric-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+
+        .metric-title {
+            font-size: 1.1em;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-size: 3em;
+            font-weight: 300;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+
+        .metric-change {
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .metric-change.positive {
+            color: #10b981;
+        }
+
+        .metric-change.negative {
+            color: #ef4444;
+        }
+
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .chart-header {
+            margin-bottom: 25px;
+        }
+
+        .chart-title {
+            font-size: 1.3em;
+            color: #1e3a8a;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .chart-subtitle {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .chart-placeholder {
+            height: 250px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 1.1em;
+        }
+
+        .reports-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            margin-bottom: 40px;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .table-header h3 {
+            font-size: 1.4em;
+            font-weight: 300;
+        }
+
+        .table-content {
+            padding: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px 30px;
+            text-align: left;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85em;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .export-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .export-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .export-btn.pdf {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .export-btn.excel {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 1024px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .metrics-dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Reportes y Analíticas</h1>
+        <p>Información detallada del impacto de voluntariado</p>
+    </div>
+
+    <div class="reports-content">
+        <div class="filters-section">
+            <div class="filters-header">
+                <h2>Filtros de Reporte</h2>
+                <button style="padding: 10px 20px; background: #0ea5e9; color: white; border: none; border-radius: 8px; cursor: pointer;">Aplicar Filtros</button>
+            </div>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label for="periodo">Período</label>
+                    <select id="periodo">
+                        <option>Último mes</option>
+                        <option>Últimos 3 meses</option>
+                        <option>Último año</option>
+                        <option>Personalizado</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="tipo-actividad">Tipo de Actividad</label>
+                    <select id="tipo-actividad">
+                        <option>Todas las actividades</option>
+                        <option>Medio Ambiente</option>
+                        <option>Educación</option>
+                        <option>Alimentación</option>
+                        <option>Salud</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="region">Región</label>
+                    <select id="region">
+                        <option>Todas las regiones</option>
+                        <option>Centro</option>
+                        <option>Norte</option>
+                        <option>Sur</option>
+                        <option>Este</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="fecha-inicio">Fecha Inicio</label>
+                    <input type="date" id="fecha-inicio">
+                </div>
+                <div class="filter-group">
+                    <label for="fecha-fin">Fecha Fin</label>
+                    <input type="date" id="fecha-fin">
+                </div>
+            </div>
+        </div>
+
+        <div class="metrics-dashboard">
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon"></div>
+                    <div class="metric-title">Total Voluntarios</div>
+                </div>
+                <div class="metric-value">1,245</div>
+                <div class="metric-change positive">+12% vs mes anterior</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon"></div>
+                    <div class="metric-title">Actividades Completadas</div>
+                </div>
+                <div class="metric-value">89</div>
+                <div class="metric-change positive">+8% vs mes anterior</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon"></div>
+                    <div class="metric-title">Horas Totales</div>
+                </div>
+                <div class="metric-value">3,456</div>
+                <div class="metric-change positive">+15% vs mes anterior</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-icon"></div>
+                    <div class="metric-title">Proyectos Activos</div>
+                </div>
+                <div class="metric-value">12</div>
+                <div class="metric-change">Sin cambios</div>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div class="chart-title">Participación Mensual</div>
+                    <div class="chart-subtitle">Evolución de voluntarios activos</div>
+                </div>
+                <div class="chart-placeholder">
+                    [Gráfico de líneas - Participación mensual]
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div class="chart-title">Distribución por Categoría</div>
+                    <div class="chart-subtitle">Tipos de actividades más populares</div>
+                </div>
+                <div class="chart-placeholder">
+                    [Gráfico circular - Distribución por categoría]
+                </div>
+            </div>
+        </div>
+
+        <div class="reports-table">
+            <div class="table-header">
+                <h3>Detalle de Actividades Recientes</h3>
+            </div>
+            <div class="table-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Actividad</th>
+                            <th>Fecha</th>
+                            <th>Participantes</th>
+                            <th>Horas</th>
+                            <th>Categoría</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Limpieza Parque Central</td>
+                            <td>2025-10-15</td>
+                            <td>25</td>
+                            <td>75</td>
+                            <td>Medio Ambiente</td>
+                            <td style="color: #10b981; font-weight: 600;">Completada</td>
+                        </tr>
+                        <tr>
+                            <td>Apoyo Educativo - Matemáticas</td>
+                            <td>2025-10-12</td>
+                            <td>8</td>
+                            <td>24</td>
+                            <td>Educación</td>
+                            <td style="color: #10b981; font-weight: 600;">Completada</td>
+                        </tr>
+                        <tr>
+                            <td>Banco de Alimentos</td>
+                            <td>2025-10-08</td>
+                            <td>15</td>
+                            <td>45</td>
+                            <td>Alimentación</td>
+                            <td style="color: #10b981; font-weight: 600;">Completada</td>
+                        </tr>
+                        <tr>
+                            <td>Taller de Arte para Niños</td>
+                            <td>2025-10-05</td>
+                            <td>12</td>
+                            <td>36</td>
+                            <td>Educación</td>
+                            <td style="color: #10b981; font-weight: 600;">Completada</td>
+                        </tr>
+                        <tr>
+                            <td>Campaña de Donación de Sangre</td>
+                            <td>2025-10-01</td>
+                            <td>30</td>
+                            <td>90</td>
+                            <td>Salud</td>
+                            <td style="color: #10b981; font-weight: 600;">Completada</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="export-actions">
+            <button class="export-btn pdf">Exportar PDF</button>
+            <button class="export-btn excel">Exportar Excel</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_021 - Estadísticas y Métricas Moderno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .filters-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-label {
+            color: #374151;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .filter-select {
+            padding: 10px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9em;
+            background: white;
+            cursor: pointer;
+        }
+
+        .metrics-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .metric-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .metric-volunteers .metric-icon {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+        }
+
+        .metric-activities .metric-icon {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .metric-hours .metric-icon {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .metric-growth .metric-icon {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+        }
+
+        .metric-trend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .trend-up {
+            color: #10b981;
+        }
+
+        .trend-down {
+            color: #ef4444;
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: 300;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            color: #6b7280;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .chart-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .chart-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chart-btn {
+            padding: 8px 16px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .chart-btn.active {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .chart-btn:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+
+        .chart-placeholder {
+            height: 350px;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 1.2em;
+            border: 2px dashed #e5e7eb;
+        }
+
+        .sidebar-metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .mini-chart {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .mini-chart-title {
+            color: #1e3a8a;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .mini-chart-placeholder {
+            height: 150px;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 0.9em;
+            border: 2px dashed #e5e7eb;
+        }
+
+        .detailed-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .detail-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .detail-title {
+            color: #1e3a8a;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .detail-export {
+            padding: 8px 16px;
+            background: #6b7280;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .detail-export:hover {
+            background: #4b5563;
+            transform: translateY(-1px);
+        }
+
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .metrics-table th,
+        .metrics-table td {
+            padding: 15px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .metrics-table th {
+            background: #f9fafb;
+            color: #1e3a8a;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metrics-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .metric-category {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .category-education {
+            background: #0ea5e9;
+        }
+
+        .category-environment {
+            background: #10b981;
+        }
+
+        .category-social {
+            background: #f59e0b;
+        }
+
+        .category-health {
+            background: #ef4444;
+        }
+
+        .category-cultural {
+            background: #8b5cf6;
+        }
+
+        .category-name {
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .metric-number {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .metric-percentage {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .performance-indicators {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .performance-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .indicators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .indicator-card {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .indicator-card:hover {
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .indicator-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .indicator-name {
+            color: #1e3a8a;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .indicator-value {
+            font-size: 1.5em;
+            font-weight: 300;
+            color: #374151;
+        }
+
+        .indicator-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .indicator-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .fill-excellent {
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+        }
+
+        .fill-good {
+            background: linear-gradient(90deg, #0ea5e9 0%, #0284c7 100%);
+        }
+
+        .fill-average {
+            background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .fill-poor {
+            background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .indicator-label {
+            color: #6b7280;
+            font-size: 0.85em;
+        }
+
+        .reports-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .reports-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .reports-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .reports-generate {
+            padding: 10px 20px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .reports-generate:hover {
+            background: #2d5aa0;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .report-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .report-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-color: #0ea5e9;
+        }
+
+        .report-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .report-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .report-info h4 {
+            color: #1e3a8a;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .report-description {
+            color: #6b7280;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .metrics-overview {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            .detailed-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .indicators-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Estadísticas y Métricas</h1>
+        <p>Análisis completo del rendimiento del sistema de voluntariado</p>
+    </div>
+
+    <div class="content">
+        <div class="filters-section">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">Período</label>
+                    <select class="filter-select">
+                        <option value="today">Hoy</option>
+                        <option value="week">Esta Semana</option>
+                        <option value="month" selected>Este Mes</option>
+                        <option value="quarter">Este Trimestre</option>
+                        <option value="year">Este Año</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Categoría</label>
+                    <select class="filter-select">
+                        <option value="all" selected>Todas las Categorías</option>
+                        <option value="education">Educación</option>
+                        <option value="environment">Medio Ambiente</option>
+                        <option value="social">Social</option>
+                        <option value="health">Salud</option>
+                        <option value="cultural">Cultural</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Tipo de Métrica</label>
+                    <select class="filter-select">
+                        <option value="all" selected>Todas</option>
+                        <option value="participation">Participación</option>
+                        <option value="impact">Impacto</option>
+                        <option value="engagement">Compromiso</option>
+                        <option value="growth">Crecimiento</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Vista</label>
+                    <select class="filter-select">
+                        <option value="summary" selected>Resumen</option>
+                        <option value="detailed">Detallado</option>
+                        <option value="comparative">Comparativo</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="metrics-overview">
+            <div class="metric-card metric-volunteers">
+                <div class="metric-header">
+                    <div class="metric-icon">👥</div>
+                    <div class="metric-trend trend-up">
+                        <span>↗️</span>
+                        <span>+12.5%</span>
+                    </div>
+                </div>
+                <div class="metric-value">247</div>
+                <div class="metric-label">Voluntarios Activos</div>
+            </div>
+
+            <div class="metric-card metric-activities">
+                <div class="metric-header">
+                    <div class="metric-icon">📅</div>
+                    <div class="metric-trend trend-up">
+                        <span>↗️</span>
+                        <span>+8.3%</span>
+                    </div>
+                </div>
+                <div class="metric-value">23</div>
+                <div class="metric-label">Actividades Completadas</div>
+            </div>
+
+            <div class="metric-card metric-hours">
+                <div class="metric-header">
+                    <div class="metric-icon">⏰</div>
+                    <div class="metric-trend trend-up">
+                        <span>↗️</span>
+                        <span>+15.7%</span>
+                    </div>
+                </div>
+                <div class="metric-value">1,247</div>
+                <div class="metric-label">Horas de Servicio</div>
+            </div>
+
+            <div class="metric-card metric-growth">
+                <div class="metric-header">
+                    <div class="metric-icon">📈</div>
+                    <div class="metric-trend trend-up">
+                        <span>↗️</span>
+                        <span>+23.1%</span>
+                    </div>
+                </div>
+                <div class="metric-value">94.2%</div>
+                <div class="metric-label">Tasa de Retención</div>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Tendencia de Participación</h3>
+                    <div class="chart-controls">
+                        <button class="chart-btn active">Mensual</button>
+                        <button class="chart-btn">Trimestral</button>
+                        <button class="chart-btn">Anual</button>
+                    </div>
+                </div>
+                <div class="chart-placeholder">
+                    📊 Gráfico de Tendencia de Participación Mensual
+                </div>
+            </div>
+
+            <div class="sidebar-metrics">
+                <div class="mini-chart">
+                    <h4 class="mini-chart-title">Distribución por Categoría</h4>
+                    <div class="mini-chart-placeholder">
+                        🥧 Gráfico Circular de Categorías
+                    </div>
+                </div>
+
+                <div class="mini-chart">
+                    <h4 class="mini-chart-title">Crecimiento de Usuarios</h4>
+                    <div class="mini-chart-placeholder">
+                        📈 Gráfico de Crecimiento
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="detailed-metrics">
+            <div class="detail-card">
+                <div class="detail-header">
+                    <h3 class="detail-title">Participación por Categoría</h3>
+                    <button class="detail-export">Exportar</button>
+                </div>
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Categoría</th>
+                            <th>Actividades</th>
+                            <th>Voluntarios</th>
+                            <th>Horas Totales</th>
+                            <th>% del Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="metric-category">
+                                    <div class="category-color category-education"></div>
+                                    <span class="category-name">Educación</span>
+                                </div>
+                            </td>
+                            <td class="metric-number">8</td>
+                            <td class="metric-number">89</td>
+                            <td class="metric-number">456</td>
+                            <td class="metric-percentage">36.5%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="metric-category">
+                                    <div class="category-color category-environment"></div>
+                                    <span class="category-name">Medio Ambiente</span>
+                                </div>
+                            </td>
+                            <td class="metric-number">6</td>
+                            <td class="metric-number">67</td>
+                            <td class="metric-number">345</td>
+                            <td class="metric-percentage">27.7%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="metric-category">
+                                    <div class="category-color category-social"></div>
+                                    <span class="category-name">Social</span>
+                                </div>
+                            </td>
+                            <td class="metric-number">5</td>
+                            <td class="metric-number">54</td>
+                            <td class="metric-number">267</td>
+                            <td class="metric-percentage">21.4%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="metric-category">
+                                    <div class="category-color category-health"></div>
+                                    <span class="category-name">Salud</span>
+                                </div>
+                            </td>
+                            <td class="metric-number">3</td>
+                            <td class="metric-number">28</td>
+                            <td class="metric-number">134</td>
+                            <td class="metric-percentage">10.7%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="metric-category">
+                                    <div class="category-color category-cultural"></div>
+                                    <span class="category-name">Cultural</span>
+                                </div>
+                            </td>
+                            <td class="metric-number">1</td>
+                            <td class="metric-number">9</td>
+                            <td class="metric-number">45</td>
+                            <td class="metric-percentage">3.7%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="detail-card">
+                <div class="detail-header">
+                    <h3 class="detail-title">Métricas de Rendimiento</h3>
+                    <button class="detail-export">Exportar</button>
+                </div>
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Métrica</th>
+                            <th>Valor Actual</th>
+                            <th>Objetivo</th>
+                            <th>% Cumplimiento</th>
+                            <th>Tendencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="category-name">Tasa de Inscripción</td>
+                            <td class="metric-number">87.3%</td>
+                            <td class="metric-number">85%</td>
+                            <td class="metric-percentage">102.7%</td>
+                            <td class="trend-up">↗️ +2.1%</td>
+                        </tr>
+                        <tr>
+                            <td class="category-name">Satisfacción de Usuarios</td>
+                            <td class="metric-number">4.6/5</td>
+                            <td class="metric-number">4.5/5</td>
+                            <td class="metric-percentage">102.2%</td>
+                            <td class="trend-up">↗️ +0.1</td>
+                        </tr>
+                        <tr>
+                            <td class="category-name">Tiempo de Respuesta</td>
+                            <td class="metric-number">2.3h</td>
+                            <td class="metric-number">4h</td>
+                            <td class="metric-percentage">57.5%</td>
+                            <td class="trend-up">↗️ -0.4h</td>
+                        </tr>
+                        <tr>
+                            <td class="category-name">Certificados Emitidos</td>
+                            <td class="metric-number">234</td>
+                            <td class="metric-number">200</td>
+                            <td class="metric-percentage">117%</td>
+                            <td class="trend-up">↗️ +12</td>
+                        </tr>
+                        <tr>
+                            <td class="category-name">Actividades por Mes</td>
+                            <td class="metric-number">23</td>
+                            <td class="metric-number">20</td>
+                            <td class="metric-percentage">115%</td>
+                            <td class="trend-up">↗️ +3</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="performance-indicators">
+            <h2 class="performance-title">Indicadores de Rendimiento</h2>
+            <div class="indicators-grid">
+                <div class="indicator-card">
+                    <div class="indicator-header">
+                        <span class="indicator-name">Eficiencia Operativa</span>
+                        <span class="indicator-value">92%</span>
+                    </div>
+                    <div class="indicator-bar">
+                        <div class="indicator-fill fill-excellent" style="width: 92%"></div>
+                    </div>
+                    <div class="indicator-label">Excelente rendimiento del sistema</div>
+                </div>
+
+                <div class="indicator-card">
+                    <div class="indicator-header">
+                        <span class="indicator-name">Satisfacción del Usuario</span>
+                        <span class="indicator-value">88%</span>
+                    </div>
+                    <div class="indicator-bar">
+                        <div class="indicator-fill fill-good" style="width: 88%"></div>
+                    </div>
+                    <div class="indicator-label">Buena experiencia general</div>
+                </div>
+
+                <div class="indicator-card">
+                    <div class="indicator-header">
+                        <span class="indicator-name">Tasa de Conversión</span>
+                        <span class="indicator-value">76%</span>
+                    </div>
+                    <div class="indicator-bar">
+                        <div class="indicator-fill fill-good" style="width: 76%"></div>
+                    </div>
+                    <div class="indicator-label">De registro a participación activa</div>
+                </div>
+
+                <div class="indicator-card">
+                    <div class="indicator-header">
+                        <span class="indicator-name">Retención de Voluntarios</span>
+                        <span class="indicator-value">94%</span>
+                    </div>
+                    <div class="indicator-bar">
+                        <div class="indicator-fill fill-excellent" style="width: 94%"></div>
+                    </div>
+                    <div class="indicator-label">Excelente fidelización</div>
+                </div>
+
+                <div class="indicator-card">
+                    <div class="indicator-header">
+                        <span class="indicator-name">Tiempo de Carga</span>
+                        <span class="indicator-value">1.2s</span>
+                    </div>
+                    <div class="indicator-bar">
+                        <div class="indicator-fill fill-excellent" style="width: 85%"></div>
+                    </div>
+                    <div class="indicator-label">Rendimiento óptimo</div>
+                </div>
+
+                <div class="indicator-card">
+                    <div class="indicator-header">
+                        <span class="indicator-name">Disponibilidad del Sistema</span>
+                        <span class="indicator-value">99.7%</span>
+                    </div>
+                    <div class="indicator-bar">
+                        <div class="indicator-fill fill-excellent" style="width: 99.7%"></div>
+                    </div>
+                    <div class="indicator-label">Alta confiabilidad</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reports-section">
+            <div class="reports-header">
+                <h2 class="reports-title">Reportes Disponibles</h2>
+                <button class="reports-generate">Generar Reporte Personalizado</button>
+            </div>
+            <div class="reports-grid">
+                <div class="report-card">
+                    <div class="report-header">
+                        <div class="report-icon">📊</div>
+                        <div class="report-info">
+                            <h4>Reporte Ejecutivo</h4>
+                            <p class="report-description">Resumen completo de métricas clave y KPIs del mes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-header">
+                        <div class="report-icon">👥</div>
+                        <div class="report-info">
+                            <h4>Reporte de Voluntarios</h4>
+                            <p class="report-description">Análisis detallado de participación y engagement</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-header">
+                        <div class="report-icon">📅</div>
+                        <div class="report-info">
+                            <h4>Reporte de Actividades</h4>
+                            <p class="report-description">Estadísticas completas de todas las actividades realizadas</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-header">
+                        <div class="report-icon">🏆</div>
+                        <div class="report-info">
+                            <h4>Reporte de Impacto</h4>
+                            <p class="report-description">Medición del impacto social generado por las actividades</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-header">
+                        <div class="report-icon">📈</div>
+                        <div class="report-info">
+                            <h4>Reporte de Tendencias</h4>
+                            <p class="report-description">Análisis de tendencias y proyecciones futuras</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-header">
+                        <div class="report-icon">🔧</div>
+                        <div class="report-info">
+                            <h4>Reporte Técnico</h4>
+                            <p class="report-description">Métricas técnicas del sistema y rendimiento</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
