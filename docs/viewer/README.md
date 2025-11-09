@@ -1,4 +1,4 @@
-# 🎨 Visor de Mockups - Plataforma de Voluntariado
+#  Visor de Mockups - Plataforma de Voluntariado
 
 Un visor interactivo moderno para explorar todos los mockups de la plataforma de registro de voluntariado.
 
@@ -12,7 +12,7 @@ Un visor interactivo moderno para explorar todos los mockups de la plataforma de
 - **Responsive**: Funciona perfectamente en desktop y móvil
 - **Pantalla completa**: Modo inmersivo para presentaciones
 
-## 🚀 Cómo usar
+##  Cómo usar
 
 ### Acceso directo
 ```
@@ -52,12 +52,12 @@ docs/
 └── index.html          # Catálogo principal
 ```
 
-## 🎯 Categorías de Mockups
+##  Categorías de Mockups
 
 - **🔐 Autenticación**: Login, registro, recuperación de contraseña
-- **👤 Usuario**: Perfil, dashboard, configuración
-- **📅 Actividades**: Explorar, inscribirse, gestionar actividades
-- **👑 Administración**: Crear actividades, reportes, gestión de certificados
+- ** Usuario**: Perfil, dashboard, configuración
+- ** Actividades**: Explorar, inscribirse, gestionar actividades
+- ** Administración**: Crear actividades, reportes, gestión de certificados
 
 ## 🛠️ Tecnologías utilizadas
 
@@ -68,13 +68,13 @@ docs/
 
 ## 📱 Compatibilidad
 
-- ✅ Chrome 70+
-- ✅ Firefox 65+
-- ✅ Safari 12+
-- ✅ Edge 79+
-- ✅ Móviles modernos
+- Chrome 70+
+- Firefox 65+
+- Safari 12+
+- Edge 79+
+- Móviles modernos
 
-## 🎨 Características técnicas
+##  Características técnicas
 
 - **Carga diferida**: Los mockups se cargan solo cuando se necesitan
 - **Navegación fluida**: Transiciones suaves entre vistas
@@ -83,4 +83,4 @@ docs/
 
 ---
 
-**Desarrollado para la Plataforma de Registro de Voluntariado** 🚀
+**Desarrollado para la Plataforma de Registro de Voluntariado** 

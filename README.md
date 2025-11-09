@@ -1,6 +1,6 @@
 # Plataforma de Registro de Voluntariado
 
-## 📋 Descripción del Proyecto
+##  Descripción del Proyecto
 
 Sistema completo de gestión para registro y administración de voluntarios, con interfaz moderna y funcionalidades avanzadas.
 
@@ -12,7 +12,7 @@ Una ONG requiere una plataforma integral para:
 - Guardar historial de voluntariado
 - Generar certificados de participación
 
-## 🎨 Mockups Modernos
+##  Mockups Modernos
 
 ### Cómo ver los mockups
 
@@ -23,10 +23,10 @@ https://C-David-Burbano-C.github.io/PlataformaRegistroVoluntariado/
 ```
 
 Esta página incluye:
-- ✅ Galería visual de todos los 23 mockups
-- ✅ Filtros por categoría (Autenticación, Usuario, Actividades, Administración)
-- ✅ Enlaces directos a cada mockup
-- ✅ Descripciones y funcionalidades
+- Galería visual de todos los 23 mockups
+- Filtros por categoría (Autenticación, Usuario, Actividades, Administración)
+- Enlaces directos a cada mockup
+- Descripciones y funcionalidades
 
 #### Opción 2: Configurar GitHub Pages Manualmente
 1. Ve a **Settings** del repositorio
@@ -85,7 +85,7 @@ python -m http.server 8000
 - **UX Optimizada**: Navegación intuitiva y elementos interactivos
 - **Accesibilidad**: Contraste adecuado y estructura semántica
 
-## 📋 Documentación del Proyecto
+##  Documentación del Proyecto
 
 ### 1. [Historias de Usuario](./docs/HISTORIAS_DE_USUARIO.md)
 Contiene 20 historias de usuario completas que describen todas las funcionalidades del sistema:
@@ -150,7 +150,7 @@ Contiene 25 escenarios de calidad que definen riesgos de seguridad, rendimiento 
 
 Cada escenario incluye fuente, estimulo, artefacto, ambiente, respuesta y medidas de respuesta.
 
-## 🚀 Tecnologías
+##  Tecnologías
 - HTML5
 - CSS3 (Flexbox, Grid, Animaciones)
 - Diseño Responsive
@@ -188,7 +188,7 @@ PlataformaRegistroVoluntariado/
 
 ---
 
-## ℹ️ Información de la Documentación
+##  Información de la Documentación
 
 **Versión:** 1.0  
 **Fecha de Creación:** 25 de Octubre de 2025  
@@ -303,13 +303,13 @@ python -m http.server 8000- EC023: Control de Acceso por Rol
 
 - EC010: Recuperacion Ante Desastres
 
-## 📋 Historias de Usuario- EC022: Sincronizacion de Datos
+##  Historias de Usuario- EC022: Sincronizacion de Datos
 
 Consulta las [historias de usuario](docs/HISTORIAS_DE_USUARIO.md) para entender los requerimientos del sistema.- EC025: Control de Cambios
 
 
 
-## 🚀 Tecnologías**Operaciones y Cumplimiento:**
+##  Tecnologías**Operaciones y Cumplimiento:**
 
 - HTML5- EC007: Notificaciones Fiables
 

@@ -5,7 +5,7 @@ const mockups = [
         title: 'REGISTRO DE VOLUNTARIOS',
         description: 'Formulario completo para registrar nuevos voluntarios con validación de datos personales.',
         category: 'admin',
-        icon: '👤',
+        icon: '',
         file: '../mockups_modern/HU_001_modern.html'
     },
     {
@@ -37,7 +37,7 @@ const mockups = [
         title: 'SEGUIMIENTO DE PARTICIPACION',
         description: 'Registro de asistencia y participación en actividades con observaciones.',
         category: 'admin',
-        icon: '✅',
+        icon: '',
         file: '../mockups_modern/HU_005_modern.html'
     },
     {
@@ -45,7 +45,7 @@ const mockups = [
         title: 'CONTROL DE ASISTENCIA DE ESTUDIANTES',
         description: 'Sistema para registrar asistencia semanal de estudiantes con estadísticas.',
         category: 'admin',
-        icon: '📊',
+        icon: '',
         file: '../mockups_modern/HU_006_modern.html'
     },
     {
@@ -53,7 +53,7 @@ const mockups = [
         title: 'GENERACION DE CERTIFICADOS',
         description: 'Generación automática de certificados de participación con código único.',
         category: 'user',
-        icon: '🏆',
+        icon: '',
         file: '../mockups_modern/HU_007_modern.html'
     },
     {
@@ -69,7 +69,7 @@ const mockups = [
         title: 'GESTION DE ACTIVIDADES',
         description: 'Panel completo para crear, modificar y eliminar actividades.',
         category: 'admin',
-        icon: '⚙️',
+        icon: '',
         file: '../mockups_modern/HU_009_modern.html'
     },
     {
@@ -93,7 +93,7 @@ const mockups = [
         title: 'EXPORTACION DE REPORTES',
         description: 'Sistema de exportación de reportes en PDF, Excel y CSV.',
         category: 'admin',
-        icon: '📄',
+        icon: '',
         file: '../mockups_modern/HU_012_modern.html'
     },
     {
@@ -101,7 +101,7 @@ const mockups = [
         title: 'GESTION DE ROLES Y PERMISOS',
         description: 'Administración de roles y permisos de usuarios del sistema.',
         category: 'admin',
-        icon: '👑',
+        icon: '',
         file: '../mockups_modern/HU_013_modern.html'
     },
     {
@@ -133,7 +133,7 @@ const mockups = [
         title: 'RECORDATORIOS Y ALERTAS',
         description: 'Centro de notificaciones y recordatorios automáticos.',
         category: 'admin',
-        icon: '⏰',
+        icon: '',
         file: '../mockups_modern/HU_017_modern.html'
     },
     {
@@ -141,7 +141,7 @@ const mockups = [
         title: 'INTEGRACION CON CALENDARIO',
         description: 'Calendario integrado con actividades y sincronización externa.',
         category: 'user',
-        icon: '📅',
+        icon: '',
         file: '../mockups_modern/HU_018_modern.html'
     },
     {
@@ -149,7 +149,7 @@ const mockups = [
         title: 'REPORTE DE IMPACTO SOCIAL',
         description: 'Reportes de impacto social con métricas y estadísticas.',
         category: 'admin',
-        icon: '📈',
+        icon: '',
         file: '../mockups_modern/HU_019_modern.html'
     },
     {

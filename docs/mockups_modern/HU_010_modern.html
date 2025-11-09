@@ -223,7 +223,7 @@
                 <label for="password">Contraseña</label>
                 <div class="password-input">
                     <input type="password" id="password" placeholder="********" value="********">
-                    <button class="password-toggle" type="button">👁</button>
+                    <button class="password-toggle" type="button"></button>
                 </div>
             </div>
 
@@ -259,7 +259,7 @@
         toggleBtn.addEventListener('click', function() {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
-            this.textContent = type === 'password' ? '👁' : '🙈';
+            this.textContent = type === 'password' ? '' : '';
         });
     </script>
 </body>
