@@ -136,48 +136,6 @@
             border-color: #d1d5db;
         }
 
-        .validation-message {
-            background: #fef3c7;
-            border-left: 4px solid #f59e0b;
-            padding: 12px 15px;
-            margin: 20px 0;
-            border-radius: 8px;
-            color: #92400e;
-            font-size: 0.9em;
-        }
-
-        .success-message {
-            background: #d1fae5;
-            border-left: 4px solid #10b981;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 8px;
-            color: #065f46;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .notification-info {
-            background: #e0f2fe;
-            border-left: 4px solid #0ea5e9;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 8px;
-            color: #075985;
-            font-size: 0.9em;
-        }
-
-        .modification-note {
-            background: #fef9c3;
-            border: 1px solid #fef08a;
-            padding: 12px 15px;
-            margin-top: 15px;
-            border-radius: 8px;
-            color: #854d0e;
-            font-size: 0.9em;
-        }
-
         .available-activities {
             background: white;
             border-radius: 15px;
@@ -213,9 +171,25 @@
             box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
         }
 
-        .activity-card.selected {
+        .activity-card.assigned {
             border-color: #10b981;
             background: #f0fdf4;
+        }
+
+        .btn-modify {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modify:hover {
+            background: #0284c7;
         }
 
         .activity-title {
@@ -234,6 +208,26 @@
             color: #374151;
             font-size: 0.9em;
             line-height: 1.4;
+        }
+
+        .alert {
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-top: 30px;
+            font-size: 0.95em;
+            border: 1px solid transparent;
+        }
+
+        .alert-success {
+            background: #ecfdf5;
+            border-color: #6ee7b7;
+            color: #047857;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            border-color: #fcd34d;
+            color: #92400e;
         }
 
         .assignment-summary {
@@ -286,14 +280,16 @@
 
             <div class="form-grid">
                 <div class="form-group">
-                    <label for="voluntario">Seleccionar Voluntario</label>
-                    <select id="voluntario">
-                        <option>Seleccionar voluntario...</option>
+                    <label for="voluntarios">Seleccionar Voluntarios</label>
+                    <select id="voluntarios" multiple size="5">
                         <option>Juan Pérez García</option>
                         <option>María López Sánchez</option>
                         <option>Carlos Rodríguez Díaz</option>
                         <option>Ana Martín Ruiz</option>
+                        <option>Lucía Torres Méndez</option>
+                        <option>Pedro Herrera Gómez</option>
                     </select>
+                    <div class="validation-text">Selecciona uno o más voluntarios registrados</div>
                 </div>
 
                 <div class="form-group">
@@ -305,22 +301,25 @@
                         <option>Alimentación</option>
                         <option>Salud</option>
                         <option>Cultura</option>
+                        <option>Crear nueva actividad</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="fechaAsignacion">Fecha de Asignación</label>
-                    <input type="date" id="fechaAsignacion">
+                    <label for="fecha_inicio">Fecha de Inicio</label>
+                    <input type="date" id="fecha_inicio">
                 </div>
 
                 <div class="form-group">
-                    <label for="fechaInicio">Fecha de Inicio</label>
-                    <input type="date" id="fechaInicio">
+                    <label for="fecha_fin">Fecha de Fin</label>
+                    <input type="date" id="fecha_fin">
+                    <div class="validation-text">Debe ser posterior a la fecha de inicio</div>
                 </div>
 
                 <div class="form-group">
-                    <label for="fechaFin">Fecha de Fin</label>
-                    <input type="date" id="fechaFin">
+                    <label for="fecha_asignacion">Fecha de Asignación</label>
+                    <input type="date" id="fecha_asignacion" value="2025-11-09" readonly>
+                    <div class="validation-text">Se registra automáticamente al guardar</div>
                 </div>
 
                 <div class="form-group">
@@ -334,25 +333,17 @@
                 </div>
             </div>
 
-            <div class="validation-message">
-                ⚠️ Validación: La fecha de fin debe ser posterior a la fecha de inicio
-            </div>
-
-            <div class="success-message" style="display: none;">
-                ✓ Actividad asignada exitosamente. Se ha enviado una notificación al voluntario.
-            </div>
-
-            <div class="notification-info">
-                ℹ️ El sistema enviará una notificación automática al voluntario asignado con los detalles de la actividad
-            </div>
-
-            <div class="modification-note">
-                📝 Nota: Las asignaciones pueden ser modificadas posteriormente desde el historial de actividades
-            </div>
-
             <div class="actions">
                 <button class="btn btn-primary">Asignar Actividad</button>
                 <button class="btn btn-secondary">Cancelar</button>
+            </div>
+
+            <div class="alert alert-success">
+                ✅ Actividad asignada y notificación enviada a los voluntarios seleccionados.
+            </div>
+
+            <div class="alert alert-warning">
+                ⚠️ No se puede asignar la actividad: la fecha de fin debe ser posterior a la fecha de inicio.
             </div>
         </div>
 
@@ -398,6 +389,19 @@
             </div>
         </div>
 
+        <div class="assigned-activities">
+            <h3 class="section-title">Actividades Asignadas al Voluntario</h3>
+
+            <div class="activities-grid">
+                <div class="activity-card assigned">
+                    <div class="activity-title">Limpieza de Parque Central</div>
+                    <div class="activity-meta">Medio Ambiente • Asignado: 09 Nov 2025 • 4 horas</div>
+                    <div class="activity-desc">Mantenimiento y limpieza de áreas verdes urbanas</div>
+                    <button class="btn-modify">Modificar Asignación</button>
+                </div>
+            </div>
+        </div>
+
         <div class="assignment-summary">
             <h4 class="summary-title">Resumen de Asignación</h4>
             <div class="summary-content">
@@ -407,6 +411,7 @@
                     <li>Actividad debe tener cupos disponibles</li>
                     <li>No debe haber conflictos de horario</li>
                     <li>Se envía confirmación por email</li>
+                    <li>Se registra fecha de asignación y responsable en auditoría</li>
                 </ul>
             </div>
         </div>

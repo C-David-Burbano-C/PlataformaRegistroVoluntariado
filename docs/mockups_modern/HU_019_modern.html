@@ -37,135 +37,279 @@
             font-size: 1.1em;
         }
 
-        .impact-content {
-            max-width: 1200px;
+        .content {
+            max-width: 1400px;
             margin: 0 auto;
             padding: 40px 30px;
         }
 
-        .impact-overview {
+        .filters-section {
             background: white;
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .impact-overview h2 {
-            font-size: 2em;
-            color: #1e3a8a;
-            margin-bottom: 20px;
-            font-weight: 300;
-        }
-
-        .impact-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .impact-stat {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            border: 2px solid #0ea5e9;
             border-radius: 15px;
             padding: 30px;
-            text-align: center;
-            transition: transform 0.3s ease;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
         }
 
-        .impact-stat:hover {
-            transform: translateY(-5px);
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
         }
 
-        .impact-stat .number {
-            font-size: 3em;
-            font-weight: 300;
-            color: #0ea5e9;
-            margin-bottom: 10px;
-        }
-
-        .impact-stat .label {
-            font-size: 1.1em;
-            color: #374151;
+        .filters-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
             font-weight: 600;
         }
 
-        .impact-stories {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
+        .filters-controls {
+            display: flex;
+            gap: 15px;
         }
 
-        .story-card {
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .filter-btn.active {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .filter-btn:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-label {
+            color: #374151;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .filter-input {
+            padding: 10px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .filter-select {
+            padding: 10px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9em;
+            background: white;
+            cursor: pointer;
+        }
+
+        .metrics-section {
             background: white;
             border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
         }
 
-        .story-card:hover {
-            transform: translateY(-5px);
+        .metrics-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
         }
 
-        .story-image {
-            height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .metrics-header h2 {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .metrics-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-btn {
+            padding: 12px 24px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .action-btn.primary {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .action-btn.secondary {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .metric-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            background: #f3f4f6;
+            border-color: #0ea5e9;
+            transform: translateY(-2px);
+        }
+
+        .metric-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 3em;
+            font-size: 1.5em;
+            flex-shrink: 0;
         }
 
-        .story-content {
-            padding: 25px;
+        .metric-content {
+            flex: 1;
         }
 
-        .story-title {
-            font-size: 1.3em;
+        .metric-value {
+            font-size: 2.2em;
+            font-weight: 300;
             color: #1e3a8a;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #6b7280;
+            font-size: 1em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .metric-change {
+            font-size: 0.85em;
             font-weight: 600;
         }
 
-        .story-description {
-            color: #6b7280;
-            line-height: 1.6;
-            margin-bottom: 20px;
+        .metric-change.positive {
+            color: #10b981;
         }
 
-        .story-impact {
-            background: #f0f9ff;
-            border-radius: 8px;
-            padding: 15px;
-            border-left: 4px solid #0ea5e9;
+        .metric-change.negative {
+            color: #ef4444;
         }
 
-        .story-impact strong {
-            color: #0ea5e9;
-        }
-
-        .impact-chart {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            margin-bottom: 40px;
-        }
-
-        .chart-header {
-            text-align: center;
+        .charts-section {
             margin-bottom: 30px;
         }
 
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
         .chart-header h3 {
-            font-size: 1.8em;
             color: #1e3a8a;
-            margin-bottom: 10px;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .chart-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chart-btn {
+            padding: 8px 16px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .chart-btn.active {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .chart-btn:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
         }
 
         .chart-placeholder {
@@ -177,150 +321,717 @@
             align-items: center;
             justify-content: center;
             color: #6b7280;
+            font-size: 1.1em;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+        }
+
+        .demographics-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .section-subtitle {
+            color: #6b7280;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .demographics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .demographic-card {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .demographic-card h3 {
+            color: #1e3a8a;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+        }
+
+        .demographic-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .demographic-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bar-label {
+            min-width: 100px;
+            color: #374151;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 20px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .bar-value {
+            min-width: 40px;
+            text-align: right;
+            color: #374151;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .gender-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .gender-stat {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .gender-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.2em;
         }
 
-        .call-to-action {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        .gender-info {
+            display: flex;
+            flex-direction: column;
         }
 
-        .call-to-action h3 {
-            font-size: 2em;
-            font-weight: 300;
-            margin-bottom: 20px;
-        }
-
-        .call-to-action p {
-            font-size: 1.1em;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-
-        .cta-button {
-            background: white;
-            color: #10b981;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 25px;
-            font-size: 1.1em;
+        .gender-label {
+            color: #374151;
+            font-size: 0.95em;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        .gender-value {
+            color: #6b7280;
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+
+        .profession-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .profession-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .profession-item:last-child {
+            border-bottom: none;
+        }
+
+        .profession-name {
+            color: #374151;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
+        .profession-count {
+            color: #0ea5e9;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
+        .testimonials-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .testimonial-card {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #e5e7eb;
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .testimonial-content {
+            color: #374151;
+            font-size: 1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .author-name {
+            color: #1e3a8a;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
+        .author-role {
+            color: #6b7280;
+            font-size: 0.85em;
+        }
+
+        .comparison-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .comparison-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .period-cell {
+            padding: 15px 12px;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-align: left;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .comparison-row:hover {
+            background: #f9fafb;
+        }
+
+        .metric-cell {
+            padding: 15px 12px;
+            color: #374151;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .value-cell {
+            padding: 15px 12px;
+            color: #1e3a8a;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .change-cell {
+            padding: 15px 12px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .change-cell.positive {
+            color: #10b981;
+        }
+
+        .change-cell.negative {
+            color: #ef4444;
         }
 
         @media (max-width: 768px) {
-            .impact-stats {
+            .filters-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .filters-controls {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .metrics-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .metrics-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .chart-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .chart-controls {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .metrics-grid {
                 grid-template-columns: 1fr;
             }
 
-            .impact-stories {
+            .charts-grid {
                 grid-template-columns: 1fr;
             }
 
-            .header h1 {
-                font-size: 2em;
+            .demographics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                font-size: 0.8em;
+            }
+
+            .comparison-header,
+            .comparison-row {
+                grid-template-columns: 1fr;
+            }
+
+            .period-cell,
+            .metric-cell,
+            .value-cell,
+            .change-cell {
+                padding: 10px 8px;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Tu Impacto</h1>
-        <p>Descubre cómo tus acciones están cambiando el mundo</p>
+        <h1>Reporte de Impacto Social</h1>
+        <p>Analiza el impacto generado por las actividades de voluntariado</p>
     </div>
 
-    <div class="impact-content">
-        <div class="impact-overview">
-            <h2>Juntos Estamos Creando un Mejor Mañana</h2>
-            <p>Tu dedicación como voluntario ha generado un impacto significativo en la comunidad</p>
+    <div class="content">
+        <div class="filters-section">
+            <div class="filters-header">
+                <h2 class="filters-title">Filtros del Reporte</h2>
+                <div class="filters-controls">
+                    <button class="filter-btn active" data-filter="month">Este Mes</button>
+                    <button class="filter-btn" data-filter="quarter">Este Trimestre</button>
+                    <button class="filter-btn" data-filter="year">Este Año</button>
+                    <button class="filter-btn" data-filter="custom">Personalizado</button>
+                </div>
+            </div>
 
-            <div class="impact-stats">
-                <div class="impact-stat">
-                    <div class="number">1,247</div>
-                    <div class="label">Personas Ayudadas</div>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">Tipo de Actividad</label>
+                    <select class="filter-select">
+                        <option value="all">Todas las actividades</option>
+                        <option value="education">Educación</option>
+                        <option value="environment">Medio Ambiente</option>
+                        <option value="health">Salud</option>
+                        <option value="social">Asistencia Social</option>
+                        <option value="culture">Cultural</option>
+                    </select>
                 </div>
-                <div class="impact-stat">
-                    <div class="number">89</div>
-                    <div class="label">Actividades Realizadas</div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Rango de Fechas</label>
+                    <input type="date" class="filter-input" placeholder="Fecha inicio">
+                    <input type="date" class="filter-input" placeholder="Fecha fin">
                 </div>
-                <div class="impact-stat">
-                    <div class="number">3,456</div>
-                    <div class="label">Horas de Servicio</div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Región</label>
+                    <select class="filter-select">
+                        <option value="all">Todas las regiones</option>
+                        <option value="north">Zona Norte</option>
+                        <option value="south">Zona Sur</option>
+                        <option value="east">Zona Este</option>
+                        <option value="west">Zona Oeste</option>
+                        <option value="center">Centro</option>
+                    </select>
                 </div>
-                <div class="impact-stat">
-                    <div class="number">12</div>
-                    <div class="label">Proyectos Completados</div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Comparar con</label>
+                    <select class="filter-select">
+                        <option value="none">Sin comparación</option>
+                        <option value="previous">Periodo anterior</option>
+                        <option value="year">Año anterior</option>
+                        <option value="custom">Periodo personalizado</option>
+                    </select>
                 </div>
             </div>
         </div>
 
-        <div class="impact-stories">
-            <div class="story-card">
-                <div class="story-image"></div>
-                <div class="story-content">
-                    <div class="story-title">Parque Central Renacido</div>
-                    <div class="story-description">
-                        Tu participación en la limpieza del parque ha creado un espacio seguro y hermoso para toda la comunidad.
-                    </div>
-                    <div class="story-impact">
-                        <strong>Impacto:</strong> 500 familias ahora disfrutan de un parque limpio y seguro todos los fines de semana.
-                    </div>
+        <div class="metrics-section">
+            <div class="metrics-header">
+                <h2>Métricas Principales</h2>
+                <div class="metrics-actions">
+                    <button class="action-btn secondary">Actualizar Datos</button>
+                    <button class="action-btn primary">Exportar PDF</button>
                 </div>
             </div>
 
-            <div class="story-card">
-                <div class="story-image"></div>
-                <div class="story-content">
-                    <div class="story-title">Educación para Todos</div>
-                    <div class="story-description">
-                        Tus clases de apoyo educativo han abierto puertas a un futuro mejor para niños de escasos recursos.
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <span class="icon">⏱️</span>
                     </div>
-                    <div class="story-impact">
-                        <strong>Impacto:</strong> 25 estudiantes mejoraron su rendimiento académico y ganaron confianza en sí mismos.
+                    <div class="metric-content">
+                        <div class="metric-value">3,247</div>
+                        <div class="metric-label">Horas Totales</div>
+                        <div class="metric-change positive">+12.5% vs periodo anterior</div>
                     </div>
                 </div>
-            </div>
 
-            <div class="story-card">
-                <div class="story-image"></div>
-                <div class="story-content">
-                    <div class="story-title">Alimentando Esperanzas</div>
-                    <div class="story-description">
-                        Tu trabajo en el banco de alimentos aseguró que familias necesitadas tuvieran comida en la mesa.
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <span class="icon">👥</span>
                     </div>
-                    <div class="story-impact">
-                        <strong>Impacto:</strong> 300 familias recibieron alimentos nutritivos durante el mes pasado.
+                    <div class="metric-content">
+                        <div class="metric-value">1,847</div>
+                        <div class="metric-label">Personas Beneficiadas</div>
+                        <div class="metric-change positive">+8.3% vs periodo anterior</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <span class="icon">📊</span>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-value">156</div>
+                        <div class="metric-label">Actividades Realizadas</div>
+                        <div class="metric-change positive">+15.2% vs periodo anterior</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <span class="icon">🔄</span>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-value">73%</div>
+                        <div class="metric-label">Ratio Retención Voluntarios</div>
+                        <div class="metric-change positive">+5.1% vs periodo anterior</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="impact-chart">
-            <div class="chart-header">
-                <h3>Tu Trayectoria de Impacto</h3>
-                <p>Visualiza cómo tu contribución ha crecido a lo largo del tiempo</p>
+        <div class="charts-section">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3>Tendencias de Participación</h3>
+                    <div class="chart-controls">
+                        <button class="chart-btn active" data-chart="line">Línea</button>
+                        <button class="chart-btn" data-chart="bar">Barras</button>
+                        <button class="chart-btn" data-chart="area">Área</button>
+                    </div>
+                </div>
+                <div class="chart-placeholder">
+                    [Gráfico de tendencias mensuales de participación]
+                </div>
             </div>
-            <div class="chart-placeholder">
-                [Gráfico de evolución mensual de impacto]
+
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Distribución por Tipo de Actividad</h3>
+                    </div>
+                    <div class="chart-placeholder">
+                        [Gráfico circular de distribución por actividad]
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Demográficos de Voluntarios</h3>
+                    </div>
+                    <div class="chart-placeholder">
+                        [Gráfico de demográficos: edad, género, profesión]
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="call-to-action">
-            <h3>¿Listo para Crear Más Impacto?</h3>
-            <p>Únete a nuevas actividades y continúa haciendo la diferencia en tu comunidad</p>
-            <button class="cta-button">Ver Actividades Disponibles</button>
+        <div class="demographics-section">
+            <div class="section-header">
+                <h2>Demográficos de Voluntarios</h2>
+                <span class="section-subtitle">Análisis detallado de la base de voluntarios</span>
+            </div>
+
+            <div class="demographics-grid">
+                <div class="demographic-card">
+                    <h3>Rango de Edad</h3>
+                    <div class="demographic-bars">
+                        <div class="demographic-bar">
+                            <span class="bar-label">18-25 años</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 35%"></div>
+                            </div>
+                            <span class="bar-value">35%</span>
+                        </div>
+                        <div class="demographic-bar">
+                            <span class="bar-label">26-35 años</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 42%"></div>
+                            </div>
+                            <span class="bar-value">42%</span>
+                        </div>
+                        <div class="demographic-bar">
+                            <span class="bar-label">36-50 años</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 18%"></div>
+                            </div>
+                            <span class="bar-value">18%</span>
+                        </div>
+                        <div class="demographic-bar">
+                            <span class="bar-label">50+ años</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 5%"></div>
+                            </div>
+                            <span class="bar-value">5%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demographic-card">
+                    <h3>Distribución por Género</h3>
+                    <div class="gender-stats">
+                        <div class="gender-stat">
+                            <div class="gender-icon">♀</div>
+                            <div class="gender-info">
+                                <div class="gender-label">Femenino</div>
+                                <div class="gender-value">58%</div>
+                            </div>
+                        </div>
+                        <div class="gender-stat">
+                            <div class="gender-icon">♂</div>
+                            <div class="gender-info">
+                                <div class="gender-label">Masculino</div>
+                                <div class="gender-value">40%</div>
+                            </div>
+                        </div>
+                        <div class="gender-stat">
+                            <div class="gender-icon">⚲</div>
+                            <div class="gender-info">
+                                <div class="gender-label">Otro</div>
+                                <div class="gender-value">2%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demographic-card">
+                    <h3>Profesiones Principales</h3>
+                    <div class="profession-list">
+                        <div class="profession-item">
+                            <span class="profession-name">Estudiantes</span>
+                            <span class="profession-count">28%</span>
+                        </div>
+                        <div class="profession-item">
+                            <span class="profession-name">Profesionales</span>
+                            <span class="profession-count">22%</span>
+                        </div>
+                        <div class="profession-item">
+                            <span class="profession-name">Docentes</span>
+                            <span class="profession-count">15%</span>
+                        </div>
+                        <div class="profession-item">
+                            <span class="profession-name">Técnicos</span>
+                            <span class="profession-count">12%</span>
+                        </div>
+                        <div class="profession-item">
+                            <span class="profession-name">Otros</span>
+                            <span class="profession-count">23%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonials-section">
+            <div class="section-header">
+                <h2>Testimonios de Voluntarios</h2>
+                <span class="section-subtitle">Voces de nuestros voluntarios sobre su experiencia</span>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "Participar en las actividades de voluntariado ha transformado mi perspectiva sobre el impacto que una persona puede tener en la comunidad. Cada hora dedicada vale la pena."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MA</div>
+                        <div class="author-info">
+                            <div class="author-name">María Alejandra</div>
+                            <div class="author-role">Voluntaria Educación</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "El programa de voluntariado me ha permitido desarrollar nuevas habilidades mientras ayudo a otros. Es una experiencia enriquecedora tanto personal como profesionalmente."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">CR</div>
+                        <div class="author-info">
+                            <div class="author-name">Carlos Rodríguez</div>
+                            <div class="author-role">Voluntario Medio Ambiente</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "Ver el cambio positivo que generamos en la comunidad me motiva a continuar. Cada actividad es una oportunidad para hacer la diferencia."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">LS</div>
+                        <div class="author-info">
+                            <div class="author-name">Laura Sánchez</div>
+                            <div class="author-role">Voluntaria Salud</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="comparison-section">
+            <div class="section-header">
+                <h2>Comparación de Periodos</h2>
+                <span class="section-subtitle">Análisis comparativo del impacto generado</span>
+            </div>
+
+            <div class="comparison-table">
+                <div class="comparison-header">
+                    <div class="period-cell">Métrica</div>
+                    <div class="period-cell">Periodo Actual</div>
+                    <div class="period-cell">Periodo Anterior</div>
+                    <div class="period-cell">Cambio</div>
+                </div>
+
+                <div class="comparison-row">
+                    <div class="metric-cell">Horas Totales</div>
+                    <div class="value-cell">3,247</div>
+                    <div class="value-cell">2,887</div>
+                    <div class="change-cell positive">+360 (+12.5%)</div>
+                </div>
+
+                <div class="comparison-row">
+                    <div class="metric-cell">Personas Beneficiadas</div>
+                    <div class="value-cell">1,847</div>
+                    <div class="value-cell">1,705</div>
+                    <div class="change-cell positive">+142 (+8.3%)</div>
+                </div>
+
+                <div class="comparison-row">
+                    <div class="metric-cell">Actividades Realizadas</div>
+                    <div class="value-cell">156</div>
+                    <div class="value-cell">135</div>
+                    <div class="change-cell positive">+21 (+15.2%)</div>
+                </div>
+
+                <div class="comparison-row">
+                    <div class="metric-cell">Voluntarios Activos</div>
+                    <div class="value-cell">284</div>
+                    <div class="value-cell">267</div>
+                    <div class="change-cell positive">+17 (+6.4%)</div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

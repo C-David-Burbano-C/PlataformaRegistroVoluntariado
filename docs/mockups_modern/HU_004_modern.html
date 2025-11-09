@@ -38,45 +38,6 @@
             padding: 40px 30px;
         }
 
-        .filters-section {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-        }
-
-        .filters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .filter-group label {
-            display: block;
-            color: #374151;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 0.9em;
-        }
-
-        .filter-group select,
-        .filter-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.3s ease;
-        }
-
-        .filter-group select:focus,
-        .filter-group input:focus {
-            outline: none;
-            border-color: #0ea5e9;
-        }
-
         .history-table {
             background: white;
             border-radius: 15px;
@@ -138,117 +99,14 @@
             color: #92400e;
         }
 
+        .status-in-progress {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
         .status-cancelled {
             background: #fee2e2;
             color: #991b1b;
-        }
-
-        .action-btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 6px;
-            font-size: 0.85em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-view {
-            background: #0ea5e9;
-            color: white;
-        }
-
-        .btn-download {
-            background: #10b981;
-            color: white;
-        }
-
-        .btn-view:hover,
-        .btn-download:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        .stats-summary {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 3em;
-            font-weight: 300;
-            color: #1e3a8a;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            color: #6b7280;
-            font-size: 1.1em;
-            font-weight: 600;
-        }
-
-        .export-section {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-            text-align: center;
-        }
-
-        .export-title {
-            color: #1e3a8a;
-            font-size: 1.5em;
-            margin-bottom: 25px;
-            border-bottom: 3px solid #0ea5e9;
-            padding-bottom: 10px;
-        }
-
-        .export-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .export-btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .export-btn.pdf {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            color: white;
-        }
-
-        .export-btn.excel {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-        }
-
-        .export-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
 
         @media (max-width: 768px) {
@@ -277,167 +135,52 @@
     </div>
 
     <div class="content">
-        <div class="stats-summary">
-            <div class="stat-card">
-                <div class="stat-value">23</div>
-                <div class="stat-label">Actividades Completadas</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">127</div>
-                <div class="stat-label">Horas Totales</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">8</div>
-                <div class="stat-label">Certificados Obtenidos</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">4.8</div>
-                <div class="stat-label">Calificación Promedio</div>
-            </div>
-        </div>
-
-        <div class="filters-section">
-            <div class="filters-grid">
-                <div class="filter-group">
-                    <label for="periodo">Período</label>
-                    <select id="periodo">
-                        <option>Todos los períodos</option>
-                        <option>Último mes</option>
-                        <option>Últimos 3 meses</option>
-                        <option>Último año</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="categoria">Categoría</label>
-                    <select id="categoria">
-                        <option>Todas las categorías</option>
-                        <option>Medio Ambiente</option>
-                        <option>Educación</option>
-                        <option>Alimentación</option>
-                        <option>Salud</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="estado">Estado</label>
-                    <select id="estado">
-                        <option>Todas</option>
-                        <option>Completadas</option>
-                        <option>Pendientes</option>
-                        <option>Canceladas</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="busqueda">Buscar</label>
-                    <input type="text" id="busqueda" placeholder="Nombre de actividad...">
-                </div>
-            </div>
-        </div>
-
         <div class="history-table">
             <div class="table-header">
-                <h2>Historial Detallado</h2>
+                <h2>Historial de Actividades</h2>
             </div>
             <table>
                 <thead>
                     <tr>
                         <th>Actividad</th>
                         <th>Fecha</th>
-                        <th>Categoría</th>
-                        <th>Horas</th>
                         <th>Estado</th>
                         <th>Observaciones</th>
-                        <th>Certificado</th>
-                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Limpieza Parque Central</td>
-                        <td>15 Nov 2025</td>
-                        <td>Medio Ambiente</td>
-                        <td>4</td>
+                        <td>Campaña de Reciclaje Comunitario</td>
+                        <td>15 Dic 2024</td>
                         <td><span class="status-badge status-completed">Completada</span></td>
-                        <td>Excelente desempeño, muy comprometido</td>
-                        <td><span class="status-badge status-completed">Disponible</span></td>
-                        <td>
-                            <button class="action-btn btn-view">Ver</button>
-                            <button class="action-btn btn-download">Descargar</button>
-                        </td>
+                        <td>Excelente participación, muy comprometido</td>
                     </tr>
                     <tr>
-                        <td>Apoyo Educativo - Matemáticas</td>
-                        <td>12 Nov 2025</td>
-                        <td>Educación</td>
-                        <td>3</td>
+                        <td>Apoyo Escolar Primaria</td>
+                        <td>18 Dic 2024</td>
                         <td><span class="status-badge status-completed">Completada</span></td>
-                        <td>Buen trabajo con los estudiantes</td>
-                        <td><span class="status-badge status-completed">Disponible</span></td>
-                        <td>
-                            <button class="action-btn btn-view">Ver</button>
-                            <button class="action-btn btn-download">Descargar</button>
-                        </td>
+                        <td>Buen desempeño en actividades educativas</td>
                     </tr>
                     <tr>
-                        <td>Banco de Alimentos</td>
-                        <td>08 Nov 2025</td>
-                        <td>Alimentación</td>
-                        <td>6</td>
-                        <td><span class="status-badge status-completed">Completada</span></td>
-                        <td>Participación activa y responsable</td>
-                        <td><span class="status-badge status-completed">Disponible</span></td>
-                        <td>
-                            <button class="action-btn btn-view">Ver</button>
-                            <button class="action-btn btn-download">Descargar</button>
-                        </td>
+                        <td>Distribución de Alimentos</td>
+                        <td>20 Dic 2024</td>
+                        <td><span class="status-badge status-in-progress">En Progreso</span></td>
+                        <td>Actividad en curso</td>
                     </tr>
                     <tr>
-                        <td>Taller de Arte para Niños</td>
-                        <td>05 Nov 2025</td>
-                        <td>Educación</td>
-                        <td>2</td>
-                        <td><span class="status-badge status-completed">Completada</span></td>
-                        <td>Creatividad y paciencia con los niños</td>
-                        <td><span class="status-badge status-completed">Disponible</span></td>
-                        <td>
-                            <button class="action-btn btn-view">Ver</button>
-                            <button class="action-btn btn-download">Descargar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Campaña Donación de Sangre</td>
-                        <td>01 Nov 2025</td>
-                        <td>Salud</td>
-                        <td>8</td>
-                        <td><span class="status-badge status-completed">Completada</span></td>
-                        <td>Desempeño sobresaliente, liderazgo</td>
-                        <td><span class="status-badge status-completed">Disponible</span></td>
-                        <td>
-                            <button class="action-btn btn-view">Ver</button>
-                            <button class="action-btn btn-download">Descargar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Visita Residencia Ancianos</td>
-                        <td>28 Oct 2025</td>
-                        <td>Social</td>
-                        <td>3</td>
+                        <td>Limpieza de Playa</td>
+                        <td>22 Dic 2024</td>
                         <td><span class="status-badge status-pending">Pendiente</span></td>
-                        <td>-</td>
-                        <td><span class="status-badge status-pending">Pendiente</span></td>
-                        <td>
-                            <button class="action-btn btn-view">Ver</button>
-                        </td>
+                        <td>Programada para mañana</td>
+                    </tr>
+                    <tr>
+                        <td>Visita a Centro de Día</td>
+                        <td>10 Dic 2024</td>
+                        <td><span class="status-badge status-cancelled">Cancelada</span></td>
+                        <td>Actividad cancelada por condiciones climáticas</td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-
-        <div class="export-section">
-            <h3 class="export-title">Exportar Historial</h3>
-            <div class="export-buttons">
-                <button class="export-btn pdf">Exportar PDF</button>
-                <button class="export-btn excel">Exportar Excel</button>
-            </div>
         </div>
     </div>
 </body>

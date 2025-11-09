@@ -158,56 +158,34 @@
             border-color: #d1d5db;
         }
 
+        .alert {
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin-top: 30px;
+            font-size: 0.95em;
+            border: 1px solid transparent;
+        }
+
+        .alert-success {
+            background: #ecfdf5;
+            border-color: #6ee7b7;
+            color: #047857;
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #b91c1c;
+        }
+
         .note {
             background: #fef3c7;
             border: 1px solid #f59e0b;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 30px;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin-top: 20px;
             color: #92400e;
-            font-size: 0.9em;
-        }
-
-        .success-message {
-            background: #dcfce7;
-            border: 2px solid #10b981;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 30px;
-            color: #166534;
-            font-size: 1em;
-            display: none;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .success-message.show {
-            display: flex;
-        }
-
-        .success-icon {
-            font-size: 2em;
-        }
-
-        .error-message {
-            background: #fee2e2;
-            border: 2px solid #ef4444;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 30px;
-            color: #991b1b;
-            font-size: 1em;
-            display: none;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .error-message.show {
-            display: flex;
-        }
-
-        .error-icon {
-            font-size: 2em;
+            font-size: 0.95em;
         }
 
         @media (max-width: 768px) {
@@ -282,22 +260,12 @@
                 <button class="btn btn-secondary">Cancelar</button>
             </div>
 
-            <!-- Mensaje de Confirmación Exitosa -->
-            <div class="success-message">
-                <div class="success-icon">✅</div>
-                <div>
-                    <strong>¡Voluntario registrado exitosamente!</strong><br>
-                    Los datos han sido guardados correctamente en el sistema.
-                </div>
+            <div class="alert alert-success">
+                ✅ Voluntario registrado correctamente. Se ha enviado confirmación al correo proporcionado.
             </div>
 
-            <!-- Mensaje de Error si Voluntario Ya Existe -->
-            <div class="error-message">
-                <div class="error-icon">❌</div>
-                <div>
-                    <strong>Error: El voluntario ya existe en la base de datos</strong><br>
-                    El correo electrónico o documento de identidad ya están registrados.
-                </div>
+            <div class="alert alert-error">
+                ⚠️ Ya existe un voluntario con el mismo correo electrónico o documento de identidad.
             </div>
 
             <div class="note">

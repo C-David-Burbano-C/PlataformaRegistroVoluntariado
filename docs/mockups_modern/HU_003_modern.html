@@ -242,21 +242,20 @@
 </head>
 <body>
     <div class="header">
-        <h1>Notificación de Actividad</h1>
-        <p>Detalles de tu asignación confirmada</p>
+    <h1>Correo de Notificación</h1>
+    <p>Detalles completos de tu nueva actividad asignada</p>
     </div>
 
     <div class="content">
         <div class="notification-card">
             <div class="notification-header">
                 <div class="notification-icon">✓</div>
-                <div class="notification-title">Asignación Confirmada</div>
+                <div class="notification-title">Nueva Actividad Asignada</div>
             </div>
 
             <div class="notification-content">
                 <div class="notification-message">
-                    ¡Felicitaciones! Has sido asignado exitosamente a la actividad <strong>"Limpieza de Parque Central"</strong>.
-                    Tu participación es muy importante para el éxito de esta iniciativa.
+                    ¡Hola, voluntario! Has sido asignado a la actividad <strong>"Limpieza de Parque Central"</strong>. A continuación encontrarás toda la información necesaria para tu participación. Si detectamos un correo inválido, no se enviará la notificación hasta que sea corregido.
                 </div>
 
                 <div class="notification-details">
@@ -266,14 +265,10 @@
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Descripción:</span>
-                        <span class="detail-value">Mantenimiento y limpieza de áreas verdes urbanas del Parque Central</span>
+                        <span class="detail-value">Jornada de limpieza y mantenimiento de zonas verdes para mejorar el entorno urbano.</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Fecha de Inicio:</span>
-                        <span class="detail-value">15 de Noviembre de 2025</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Fecha de Fin:</span>
+                        <span class="detail-label">Fecha:</span>
                         <span class="detail-value">15 de Noviembre de 2025</span>
                     </div>
                     <div class="detail-row">
@@ -293,8 +288,8 @@
                         <span class="detail-value">María González</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Acceso al Sistema:</span>
-                        <span class="detail-value"><a href="#" style="color: #0ea5e9; text-decoration: underline;">Ver actividad en el sistema</a></span>
+                        <span class="detail-label">Enlace:</span>
+                        <span class="detail-value"><a href="#" style="color:#0ea5e9; text-decoration:none;">Acceder a la actividad en la plataforma</a></span>
                     </div>
                 </div>
             </div>
@@ -303,6 +298,10 @@
                 <button class="btn btn-primary">Confirmar Asistencia</button>
                 <button class="btn btn-secondary">Ver Detalles</button>
             </div>
+
+            <div class="alert alert-warning" style="margin-top:25px; background:#fef3c7; border:1px solid #fcd34d; color:#92400e; border-radius:12px; padding:18px 20px;">
+                ⚠️ Si el primer intento de envío falla, el sistema reintentará automáticamente y registrará el resultado en auditoría.
+            </div>
         </div>
 
         <div class="notification-settings">
@@ -310,20 +309,8 @@
 
             <div class="setting-item">
                 <div>
-                    <div class="setting-label">Frecuencia de Notificaciones</div>
-                    <div class="setting-desc">Selecciona cómo deseas recibir notificaciones</div>
-                </div>
-                <select style="padding: 8px 15px; border: 2px solid #e5e7eb; border-radius: 8px; background: white; cursor: pointer;">
-                    <option value="instantaneas" selected>Instantáneas</option>
-                    <option value="diarias">Diarias</option>
-                    <option value="semanales">Semanales</option>
-                </select>
-            </div>
-
-            <div class="setting-item">
-                <div>
                     <div class="setting-label">Notificaciones por Email</div>
-                    <div class="setting-desc">Recibe actualizaciones sobre tus actividades (Validación de email activa)</div>
+                    <div class="setting-desc">Recibe actualizaciones sobre tus actividades</div>
                 </div>
                 <div class="toggle active">
                     <div class="toggle-slider"></div>
@@ -332,28 +319,66 @@
 
             <div class="setting-item">
                 <div>
-                    <div class="setting-label">Recordatorios</div>
-                    <div class="setting-desc">Recuerda tus actividades programadas</div>
+                    <div class="setting-label">Frecuencia de Notificaciones</div>
+                    <div class="setting-desc">Define cómo deseas recibir las nuevas asignaciones</div>
+                    <div style="margin-top:10px; display:flex; gap:15px;">
+                        <label style="display:flex; align-items:center; gap:6px;">
+                            <input type="radio" name="frecuencia" checked> Instantáneas
+                        </label>
+                        <label style="display:flex; align-items:center; gap:6px;">
+                            <input type="radio" name="frecuencia"> Diarias
+                        </label>
+                        <label style="display:flex; align-items:center; gap:6px;">
+                            <input type="radio" name="frecuencia"> Semanales
+                        </label>
+                    </div>
                 </div>
-                <div class="toggle active">
+                <div class="toggle active"><div class="toggle-slider"></div></div>
+            </div>
+
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">Notificaciones Push</div>
+                    <div class="setting-desc">Alertas instantáneas en tu dispositivo</div>
+                </div>
+                <div class="toggle">
                     <div class="toggle-slider"></div>
                 </div>
             </div>
 
             <div class="setting-item">
                 <div>
-                    <div class="setting-label">Registro de Auditoría</div>
-                    <div class="setting-desc">El sistema registra todas las notificaciones enviadas</div>
+                    <div class="setting-label">Resumen Semanal</div>
+                    <div class="setting-desc">Informe de tu actividad semanal</div>
                 </div>
-                <span style="color: #10b981; font-weight: 600;">✓ Activado</span>
+                <div class="toggle active">
+                    <div class="toggle-slider"></div>
+                </div>
             </div>
+        </div>
 
-            <div class="setting-item">
-                <div>
-                    <div class="setting-label">Reintento Automático</div>
-                    <div class="setting-desc">El sistema reintenta el envío si falla en el primer intento</div>
+        <div class="notification-card" style="margin-top:30px;">
+            <div class="notification-header">
+                <div class="notification-icon">🗂️</div>
+                <div class="notification-title">Registro de Auditoría</div>
+            </div>
+            <div class="notification-details">
+                <div class="detail-row">
+                    <span class="detail-label">Fecha de Envío:</span>
+                    <span class="detail-value">09 Nov 2025 - 08:30:12</span>
                 </div>
-                <span style="color: #10b981; font-weight: 600;">✓ Activado</span>
+                <div class="detail-row">
+                    <span class="detail-label">Estado:</span>
+                    <span class="detail-value">Envío exitoso (1 intento)</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Responsable:</span>
+                    <span class="detail-value">Sistema automático de notificaciones</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Intentos previos:</span>
+                    <span class="detail-value">0 fallidos • Reintento configurado en 5 minutos</span>
+                </div>
             </div>
         </div>
     </div>

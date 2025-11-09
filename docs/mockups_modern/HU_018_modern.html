@@ -43,34 +43,26 @@
             padding: 40px 30px;
         }
 
-        .filters-section {
+        .calendar-controls {
             background: white;
             border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
+            padding: 25px;
+            margin-bottom: 25px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             border: 1px solid #e5e7eb;
-        }
-
-        .filters-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
-        .filters-title {
-            color: #1e3a8a;
-            font-size: 1.4em;
-            font-weight: 600;
-        }
-
-        .filters-controls {
+        .view-controls {
             display: flex;
-            gap: 15px;
+            gap: 10px;
         }
 
-        .filter-btn {
+        .view-btn {
             padding: 10px 20px;
             border: 2px solid #e5e7eb;
             background: white;
@@ -82,468 +74,202 @@
             font-weight: 600;
         }
 
-        .filter-btn.active {
+        .view-btn.active {
             background: #1e3a8a;
             color: white;
             border-color: #1e3a8a;
         }
 
-        .filter-btn:hover {
+        .view-btn:hover {
             border-color: #0ea5e9;
             color: #0ea5e9;
         }
 
-        .filters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .filter-group {
+        .nav-controls {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .filter-label {
-            color: #374151;
-            font-size: 0.9em;
-            font-weight: 600;
-        }
-
-        .filter-input {
-            padding: 10px 12px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 0.9em;
-            transition: all 0.3s ease;
-        }
-
-        .filter-input:focus {
-            outline: none;
-            border-color: #0ea5e9;
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
-        }
-
-        .filter-select {
-            padding: 10px 12px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 0.9em;
-            background: white;
-            cursor: pointer;
-        }
-
-        .audit-log {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-        }
-
-        .audit-header {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            gap: 15px;
         }
 
-        .audit-title {
-            color: #1e3a8a;
-            font-size: 1.4em;
-            font-weight: 600;
-        }
-
-        .audit-controls {
-            display: flex;
-            gap: 10px;
-        }
-
-        .audit-btn {
-            padding: 8px 16px;
+        .nav-btn {
+            width: 40px;
+            height: 40px;
             border: 2px solid #e5e7eb;
             background: white;
             color: #374151;
-            border-radius: 8px;
+            border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.85em;
-            font-weight: 600;
-        }
-
-        .audit-btn:hover {
-            border-color: #0ea5e9;
-            color: #0ea5e9;
-        }
-
-        .audit-btn.primary {
-            background: #1e3a8a;
-            color: white;
-            border-color: #1e3a8a;
-        }
-
-        .audit-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .audit-table th,
-        .audit-table td {
-            padding: 15px 12px;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .audit-table th {
-            background: #f9fafb;
-            color: #1e3a8a;
-            font-weight: 600;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .audit-table tr:hover {
-            background: #f9fafb;
-        }
-
-        .audit-action {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .action-create {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .action-update {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        .action-delete {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .action-login {
-            background: #f3e8ff;
-            color: #6b21a8;
-        }
-
-        .action-logout {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .audit-user {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.8em;
-            font-weight: 600;
-        }
-
-        .user-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .user-name {
-            font-size: 0.9em;
-            font-weight: 600;
-            color: #1e3a8a;
-        }
-
-        .user-role {
-            font-size: 0.8em;
-            color: #6b7280;
-        }
-
-        .audit-details {
-            color: #6b7280;
-            font-size: 0.85em;
-            max-width: 300px;
-        }
-
-        .audit-timestamp {
-            color: #374151;
-            font-size: 0.9em;
-            font-weight: 600;
-        }
-
-        .audit-ip {
-            color: #6b7280;
-            font-size: 0.8em;
-        }
-
-        .stats-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-        }
-
-        .stat-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-        }
-
-        .stat-activities .stat-icon {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-        }
-
-        .stat-users .stat-icon {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: white;
-        }
-
-        .stat-security .stat-icon {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            color: white;
-        }
-
-        .stat-reports .stat-icon {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white;
-        }
-
-        .stat-trend {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.85em;
-            font-weight: 600;
-        }
-
-        .trend-up {
-            color: #10b981;
-        }
-
-        .trend-down {
-            color: #ef4444;
-        }
-
-        .stat-value {
-            font-size: 2.5em;
-            font-weight: 300;
-            color: #1e3a8a;
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            color: #6b7280;
-            font-size: 1em;
-            font-weight: 600;
-        }
-
-        .recent-activity {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-        }
-
-        .activity-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .activity-title {
-            color: #1e3a8a;
-            font-size: 1.4em;
-            font-weight: 600;
-        }
-
-        .activity-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .activity-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-            background: #f9fafb;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            transition: all 0.3s ease;
-        }
-
-        .activity-item:hover {
-            background: #f3f4f6;
-            border-color: #0ea5e9;
-        }
-
-        .activity-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
             font-size: 1.2em;
-        }
-
-        .activity-content {
-            flex: 1;
-        }
-
-        .activity-text {
-            color: #374151;
-            font-size: 1em;
-            margin-bottom: 4px;
-        }
-
-        .activity-meta {
-            color: #6b7280;
-            font-size: 0.85em;
-        }
-
-        .activity-time {
-            color: #6b7280;
-            font-size: 0.8em;
-            font-weight: 600;
-        }
-
-        .export-section {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-        }
-
-        .export-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            justify-content: center;
         }
 
-        .export-title {
+        .nav-btn:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+
+        .current-period {
             color: #1e3a8a;
             font-size: 1.4em;
             font-weight: 600;
+            margin: 0;
+            min-width: 200px;
+            text-align: center;
         }
 
-        .export-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+        .calendar-actions {
+            display: flex;
+            gap: 15px;
         }
 
-        .export-option {
+        .action-btn {
+            padding: 12px 24px;
             border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 20px;
+            background: white;
+            color: #374151;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: #f9fafb;
+            font-size: 0.9em;
+            font-weight: 600;
         }
 
-        .export-option:hover {
-            border-color: #0ea5e9;
-            background: white;
+        .action-btn.primary {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .action-btn.secondary {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .action-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        .export-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        .calendar-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5em;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .legend-color.confirmed {
+            background: #10b981;
+        }
+
+        .legend-color.pending {
+            background: #f59e0b;
+        }
+
+        .legend-color.completed {
+            background: #6b7280;
+        }
+
+        .legend-color.cancelled {
+            background: #ef4444;
+        }
+
+        .calendar-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .calendar-header {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
             margin-bottom: 15px;
         }
 
-        .export-name {
+        .day-header {
+            text-align: center;
             color: #1e3a8a;
-            font-size: 1.1em;
             font-weight: 600;
-            margin-bottom: 8px;
+            font-size: 0.9em;
+            padding: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .export-description {
-            color: #6b7280;
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+
+        .calendar-day {
+            min-height: 120px;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .calendar-day:hover {
+            background: #f9fafb;
+            border-color: #0ea5e9;
+        }
+
+        .calendar-day.other-month {
+            background: #f9fafb;
+            color: #9ca3af;
+        }
+
+        .day-number {
             font-size: 0.9em;
-            line-height: 1.4;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 5px;
         }
 
         @media (max-width: 768px) {
-            .filters-grid {
-                grid-template-columns: 1fr;
+            .calendar-controls {
+                flex-direction: column;
+                align-items: stretch;
             }
 
-            .stats-section {
-                grid-template-columns: 1fr;
+            .nav-controls {
+                justify-content: center;
             }
 
-            .audit-table {
+            .calendar-legend {
+                gap: 15px;
+            }
+
+            .calendar-header {
                 font-size: 0.8em;
             }
 
-            .audit-table th,
-            .audit-table td {
-                padding: 10px 8px;
+            .calendar-day {
+                min-height: 80px;
+                padding: 5px;
             }
 
             .activity-item {
@@ -552,360 +278,207 @@
                 gap: 10px;
             }
 
-            .export-grid {
+            .settings-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .sync-option {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Sistema de Auditoría</h1>
-        <p>Registro completo de actividades y cambios en el sistema</p>
+        <h1>Calendario de Actividades</h1>
+        <p>Visualiza y gestiona tus actividades voluntarias en un calendario interactivo</p>
     </div>
 
     <div class="content">
-        <div class="stats-section">
-            <div class="stat-card stat-activities">
-                <div class="stat-header">
-                    <div class="stat-icon"></div>
-                    <div class="stat-trend trend-up">
-                        <span></span>
-                        <span>+15%</span>
-                    </div>
-                </div>
-                <div class="stat-value">1,247</div>
-                <div class="stat-label">Registros de Auditoría</div>
+        <div class="calendar-controls">
+            <div class="view-controls">
+                <button class="view-btn active" data-view="month">Mes</button>
+                <button class="view-btn" data-view="week">Semana</button>
+                <button class="view-btn" data-view="day">Día</button>
             </div>
-
-            <div class="stat-card stat-users">
-                <div class="stat-header">
-                    <div class="stat-icon"></div>
-                    <div class="stat-trend trend-up">
-                        <span></span>
-                        <span>+8%</span>
-                    </div>
-                </div>
-                <div class="stat-value">89</div>
-                <div class="stat-label">Usuarios Activos</div>
+            <div class="nav-controls">
+                <button class="nav-btn" id="prev">&larr;</button>
+                <h2 class="current-period">Noviembre 2025</h2>
+                <button class="nav-btn" id="next">&rarr;</button>
             </div>
-
-            <div class="stat-card stat-security">
-                <div class="stat-header">
-                    <div class="stat-icon"></div>
-                    <div class="stat-trend trend-down">
-                        <span></span>
-                        <span>-5%</span>
-                    </div>
-                </div>
-                <div class="stat-value">3</div>
-                <div class="stat-label">Alertas de Seguridad</div>
-            </div>
-
-            <div class="stat-card stat-reports">
-                <div class="stat-header">
-                    <div class="stat-icon"></div>
-                    <div class="stat-trend trend-up">
-                        <span></span>
-                        <span>+12%</span>
-                    </div>
-                </div>
-                <div class="stat-value">23</div>
-                <div class="stat-label">Reportes Generados</div>
+            <div class="calendar-actions">
+                <button class="action-btn primary">Sincronizar con iCal</button>
+                <button class="action-btn secondary">Establecer Recordatorio</button>
             </div>
         </div>
 
-        <div class="filters-section">
-            <div class="filters-header">
-                <h2 class="filters-title">Filtros de Auditoría</h2>
-                <div class="filters-controls">
-                    <button class="filter-btn active">Hoy</button>
-                    <button class="filter-btn">Esta Semana</button>
-                    <button class="filter-btn">Este Mes</button>
-                    <button class="filter-btn">Personalizado</button>
-                </div>
+        <div class="calendar-legend">
+            <div class="legend-item">
+                <div class="legend-color confirmed"></div>
+                <span>Confirmada</span>
             </div>
-            <div class="filters-grid">
-                <div class="filter-group">
-                    <label class="filter-label">Usuario</label>
-                    <input type="text" class="filter-input" placeholder="Buscar por usuario...">
-                </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Acción</label>
-                    <select class="filter-select">
-                        <option value="">Todas las acciones</option>
-                        <option value="create">Crear</option>
-                        <option value="update">Actualizar</option>
-                        <option value="delete">Eliminar</option>
-                        <option value="login">Iniciar Sesión</option>
-                        <option value="logout">Cerrar Sesión</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Módulo</label>
-                    <select class="filter-select">
-                        <option value="">Todos los módulos</option>
-                        <option value="users">Usuarios</option>
-                        <option value="activities">Actividades</option>
-                        <option value="certificates">Certificados</option>
-                        <option value="reports">Reportes</option>
-                        <option value="system">Sistema</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Fecha Desde</label>
-                    <input type="date" class="filter-input">
-                </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Fecha Hasta</label>
-                    <input type="date" class="filter-input">
-                </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Dirección IP</label>
-                    <input type="text" class="filter-input" placeholder="192.168.1.1">
-                </div>
+            <div class="legend-item">
+                <div class="legend-color pending"></div>
+                <span>Pendiente</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color completed"></div>
+                <span>Completada</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color cancelled"></div>
+                <span>Cancelada</span>
             </div>
         </div>
 
-        <div class="audit-log">
-            <div class="audit-header">
-                <h2 class="audit-title">Registro de Auditoría</h2>
-                <div class="audit-controls">
-                    <button class="audit-btn">Actualizar</button>
-                    <button class="audit-btn primary">Exportar</button>
-                </div>
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <div class="day-header">Domingo</div>
+                <div class="day-header">Lunes</div>
+                <div class="day-header">Martes</div>
+                <div class="day-header">Miércoles</div>
+                <div class="day-header">Jueves</div>
+                <div class="day-header">Viernes</div>
+                <div class="day-header">Sábado</div>
             </div>
 
-            <table class="audit-table">
-                <thead>
-                    <tr>
-                        <th>Usuario</th>
-                        <th>Acción</th>
-                        <th>Detalles</th>
-                        <th>Fecha/Hora</th>
-                        <th>IP</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="audit-user">
-                                <div class="user-avatar">MG</div>
-                                <div class="user-info">
-                                    <div class="user-name">María González</div>
-                                    <div class="user-role">Coordinadora</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="audit-action action-create">Crear</span></td>
-                        <td class="audit-details">Creó nueva actividad "Limpieza Parque Central" en categoría Medio Ambiente</td>
-                        <td class="audit-timestamp">15 Nov 2025, 14:30:25</td>
-                        <td class="audit-ip">192.168.1.100</td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="audit-user">
-                                <div class="user-avatar">CR</div>
-                                <div class="user-info">
-                                    <div class="user-name">Carlos Rodríguez</div>
-                                    <div class="user-role">Voluntario</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="audit-action action-login">Login</span></td>
-                        <td class="audit-details">Inicio de sesión exitoso desde aplicación móvil</td>
-                        <td class="audit-timestamp">15 Nov 2025, 14:15:12</td>
-                        <td class="audit-ip">192.168.1.150</td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="audit-user">
-                                <div class="user-avatar">AL</div>
-                                <div class="user-info">
-                                    <div class="user-name">Ana López</div>
-                                    <div class="user-role">Administrador</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="audit-action action-update">Actualizar</span></td>
-                        <td class="audit-details">Actualizó información de usuario ID: 247, cambió email de confirmación</td>
-                        <td class="audit-timestamp">15 Nov 2025, 13:45:33</td>
-                        <td class="audit-ip">192.168.1.200</td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="audit-user">
-                                <div class="user-avatar">PM</div>
-                                <div class="user-info">
-                                    <div class="user-name">Pedro Martínez</div>
-                                    <div class="user-role">Voluntario</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="audit-action action-create">Crear</span></td>
-                        <td class="audit-details">Solicitó certificado de participación para actividad "Reforestación"</td>
-                        <td class="audit-timestamp">15 Nov 2025, 13:22:18</td>
-                        <td class="audit-ip">192.168.1.175</td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="audit-user">
-                                <div class="user-avatar">AL</div>
-                                <div class="user-info">
-                                    <div class="user-name">Ana López</div>
-                                    <div class="user-role">Administrador</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="audit-action action-delete">Eliminar</span></td>
-                        <td class="audit-details">Eliminó actividad cancelada "Taller de Manualidades" (ID: 156)</td>
-                        <td class="audit-timestamp">15 Nov 2025, 12:58:47</td>
-                        <td class="audit-ip">192.168.1.200</td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="audit-user">
-                                <div class="user-avatar">MG</div>
-                                <div class="user-info">
-                                    <div class="user-name">María González</div>
-                                    <div class="user-role">Coordinadora</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="audit-action action-update">Actualizar</span></td>
-                        <td class="audit-details">Modificó horario de actividad "Banco de Alimentos" de 10:00 a 11:00</td>
-                        <td class="audit-timestamp">15 Nov 2025, 12:30:15</td>
-                        <td class="audit-ip">192.168.1.100</td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="audit-user">
-                                <div class="user-avatar">CR</div>
-                                <div class="user-info">
-                                    <div class="user-name">Carlos Rodríguez</div>
-                                    <div class="user-role">Voluntario</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="audit-action action-logout">Logout</span></td>
-                        <td class="audit-details">Cierre de sesión desde aplicación web</td>
-                        <td class="audit-timestamp">15 Nov 2025, 11:45:22</td>
-                        <td class="audit-ip">192.168.1.150</td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="audit-user">
-                                <div class="user-avatar">AL</div>
-                                <div class="user-info">
-                                    <div class="user-name">Ana López</div>
-                                    <div class="user-role">Administrador</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="audit-action action-create">Crear</span></td>
-                        <td class="audit-details">Generó reporte mensual de actividades (Noviembre 2025)</td>
-                        <td class="audit-timestamp">15 Nov 2025, 11:15:08</td>
-                        <td class="audit-ip">192.168.1.200</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="recent-activity">
-            <div class="activity-header">
-                <h2 class="activity-title">Actividad Reciente</h2>
-                <span style="color: #6b7280; font-size: 0.9em;">Últimas 24 horas</span>
-            </div>
-            <div class="activity-list">
-                <div class="activity-item">
-                    <div class="activity-icon"></div>
-                    <div class="activity-content">
-                        <div class="activity-text">Intento de acceso fallido desde IP desconocida</div>
-                        <div class="activity-meta">IP: 203.0.113.45 • Usuario: admin</div>
-                    </div>
-                    <div class="activity-time">Hace 2 horas</div>
+            <div class="calendar-grid">
+                <div class="calendar-day other-month">
+                    <div class="day-number">27</div>
+                </div>
+                <div class="calendar-day other-month">
+                    <div class="day-number">28</div>
+                </div>
+                <div class="calendar-day other-month">
+                    <div class="day-number">29</div>
+                </div>
+                <div class="calendar-day other-month">
+                    <div class="day-number">30</div>
+                </div>
+                <div class="calendar-day other-month">
+                    <div class="day-number">31</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">1</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">2</div>
                 </div>
 
-                <div class="activity-item">
-                    <div class="activity-icon"></div>
-                    <div class="activity-content">
-                        <div class="activity-text">Generación de reporte de auditoría semanal</div>
-                        <div class="activity-meta">23 registros exportados • Formato: PDF</div>
-                    </div>
-                    <div class="activity-time">Hace 4 horas</div>
+                <div class="calendar-day">
+                    <div class="day-number">3</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">4</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">5</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">6</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">7</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">8</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">9</div>
                 </div>
 
-                <div class="activity-item">
-                    <div class="activity-icon"></div>
-                    <div class="activity-content">
-                        <div class="activity-text">Cambio de contraseña de usuario administrador</div>
-                        <div class="activity-meta">Usuario: Ana López • Método: Recuperación</div>
-                    </div>
-                    <div class="activity-time">Hace 6 horas</div>
+                <div class="calendar-day">
+                    <div class="day-number">10</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">11</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">12</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">13</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">14</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">15</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">16</div>
                 </div>
 
-                <div class="activity-item">
-                    <div class="activity-icon"></div>
-                    <div class="activity-content">
-                        <div class="activity-text">Actualización de configuración de seguridad</div>
-                        <div class="activity-meta">Habilitado 2FA obligatorio • Nivel: Alto</div>
-                    </div>
-                    <div class="activity-time">Hace 8 horas</div>
+                <div class="calendar-day">
+                    <div class="day-number">17</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">18</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">19</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">20</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">21</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">22</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">23</div>
                 </div>
 
-                <div class="activity-item">
-                    <div class="activity-icon"></div>
-                    <div class="activity-content">
-                        <div class="activity-text">Eliminación masiva de registros antiguos</div>
-                        <div class="activity-meta">156 registros • Período: > 2 años</div>
-                    </div>
-                    <div class="activity-time">Hace 12 horas</div>
+                <div class="calendar-day">
+                    <div class="day-number">24</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">25</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">26</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">27</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">28</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">29</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">30</div>
+                </div>
+
+                <div class="calendar-day other-month">
+                    <div class="day-number">1</div>
+                </div>
+                <div class="calendar-day other-month">
+                    <div class="day-number">2</div>
+                </div>
+                <div class="calendar-day other-month">
+                    <div class="day-number">3</div>
+                </div>
+                <div class="calendar-day other-month">
+                    <div class="day-number">4</div>
+                </div>
+                <div class="calendar-day other-month">
+                    <div class="day-number">5</div>
+                </div>
+                <div class="calendar-day other-month">
+                    <div class="day-number">6</div>
+                </div>
+                <div class="calendar-day other-month">
+                    <div class="day-number">7</div>
                 </div>
             </div>
         </div>
 
-        <div class="export-section">
-            <div class="export-header">
-                <h2 class="export-title">Exportar Datos de Auditoría</h2>
-                <span style="color: #6b7280; font-size: 0.9em;">Formatos disponibles</span>
-            </div>
-            <div class="export-grid">
-                <div class="export-option">
-                    <div class="export-icon"></div>
-                    <div class="export-name">PDF</div>
-                    <div class="export-description">Documento formateado con marcas de agua y firmas digitales</div>
-                </div>
-
-                <div class="export-option">
-                    <div class="export-icon"></div>
-                    <div class="export-name">Excel</div>
-                    <div class="export-description">Hoja de cálculo con filtros y fórmulas para análisis</div>
-                </div>
-
-                <div class="export-option">
-                    <div class="export-icon"></div>
-                    <div class="export-name">CSV</div>
-                    <div class="export-description">Archivo plano para importación en otras herramientas</div>
-                </div>
-
-                <div class="export-option">
-                    <div class="export-icon"></div>
-                    <div class="export-name">JSON</div>
-                    <div class="export-description">Formato estructurado para desarrolladores e integraciones</div>
-                </div>
-            </div>
         </div>
     </div>
 </body>

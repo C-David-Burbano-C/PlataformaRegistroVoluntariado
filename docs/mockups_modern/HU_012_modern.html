@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HU_012 - Gestión de Actividades Moderno</title>
+    <title>HU_012 - Exportación de Reportes Moderno</title>
     <style>
         * {
             margin: 0;
@@ -106,14 +106,14 @@
             border-color: #0ea5e9;
         }
 
-        .activities-grid {
+        .reports-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
             margin-bottom: 40px;
         }
 
-        .activity-card {
+        .report-card {
             background: white;
             border-radius: 15px;
             overflow: hidden;
@@ -123,89 +123,47 @@
             cursor: pointer;
         }
 
-        .activity-card:hover {
+        .report-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 30px rgba(0,0,0,0.15);
         }
 
-        .activity-header {
+        .report-header {
             background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
             color: white;
             padding: 20px;
         }
 
-        .activity-title {
+        .report-title {
             font-size: 1.2em;
             font-weight: 600;
             margin-bottom: 8px;
         }
 
-        .activity-meta {
-            display: flex;
-            gap: 15px;
+        .report-meta {
             font-size: 0.85em;
             opacity: 0.9;
         }
 
-        .activity-content {
+        .report-content {
             padding: 20px;
         }
 
-        .activity-description {
+        .report-description {
             color: #6b7280;
             font-size: 0.9em;
             line-height: 1.5;
             margin-bottom: 15px;
         }
 
-        .activity-details {
+        .report-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-bottom: 20px;
         }
 
-        .detail-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85em;
-        }
-
-        .detail-item strong {
-            color: #374151;
-        }
-
-        .activity-status {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status-active {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .status-draft {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .status-completed {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        .status-cancelled {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .activity-actions {
+        .report-actions {
             display: flex;
             gap: 10px;
             justify-content: flex-end;
@@ -248,7 +206,7 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
-        .add-activity-section {
+        .export-section {
             background: white;
             border-radius: 15px;
             padding: 30px;
@@ -388,7 +346,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .activities-grid {
+            .reports-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -417,375 +375,153 @@
 </head>
 <body>
     <div class="header">
-        <h1>Gestión de Actividades</h1>
-        <p>Administración completa de actividades voluntarias</p>
+        <h1>Exportación de Reportes</h1>
+        <p>Exporta reportes en diferentes formatos para análisis y presentaciones</p>
     </div>
 
     <div class="content">
-        <div class="stats-section">
-            <div class="stat-card">
-                <div class="stat-value">23</div>
-                <div class="stat-label">Actividades Totales</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">15</div>
-                <div class="stat-label">Actividades Activas</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">8</div>
-                <div class="stat-label">Actividades Completadas</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">156</div>
-                <div class="stat-label">Voluntarios Inscritos</div>
-            </div>
-        </div>
-
         <div class="filters-section">
             <div class="filters-grid">
                 <div class="filter-group">
-                    <label for="search">Buscar Actividad</label>
-                    <input type="text" id="search" placeholder="Nombre de actividad...">
+                    <label for="reportType">Tipo de Reporte</label>
+                    <select id="reportType">
+                        <option>Reporte de Voluntarios</option>
+                        <option>Reporte de Actividades</option>
+                        <option>Reporte de Impacto</option>
+                        <option>Reporte Mensual</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="format">Formato</label>
+                    <select id="format">
+                        <option>PDF</option>
+                        <option>Excel</option>
+                        <option>CSV</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="period">Período</label>
+                    <select id="period">
+                        <option>Último mes</option>
+                        <option>Últimos 3 meses</option>
+                        <option>Último año</option>
+                        <option>Personalizado</option>
+                    </select>
                 </div>
                 <div class="filter-group">
                     <label for="category">Categoría</label>
                     <select id="category">
-                        <option>Todas las categorías</option>
-                        <option>Medio Ambiente</option>
-                        <option>Educación</option>
-                        <option>Alimentación</option>
-                        <option>Salud</option>
-                        <option>Social</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="status">Estado</label>
-                    <select id="status">
                         <option>Todas</option>
-                        <option>Activa</option>
-                        <option>Borrador</option>
-                        <option>Completada</option>
-                        <option>Cancelada</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="date">Fecha</label>
-                    <input type="date" id="date">
-                </div>
-            </div>
-        </div>
-
-        <div class="add-activity-section">
-            <h3 class="section-title">Crear Nueva Actividad</h3>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="activityName">Nombre de la Actividad</label>
-                    <input type="text" id="activityName" placeholder="Limpieza Parque Central">
-                </div>
-                <div class="form-group">
-                    <label for="activityCategory">Categoría</label>
-                    <select id="activityCategory">
-                        <option>Seleccionar categoría</option>
-                        <option>Medio Ambiente</option>
                         <option>Educación</option>
-                        <option>Alimentación</option>
+                        <option>Medio Ambiente</option>
                         <option>Salud</option>
                         <option>Social</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="startDate">Fecha de Inicio</label>
-                    <input type="date" id="startDate">
-                </div>
-                <div class="form-group">
-                    <label for="endDate">Fecha de Fin</label>
-                    <input type="date" id="endDate">
-                </div>
-                <div class="form-group">
-                    <label for="startTime">Hora de Inicio</label>
-                    <input type="time" id="startTime">
-                </div>
-                <div class="form-group">
-                    <label for="endTime">Hora de Fin</label>
-                    <input type="time" id="endTime">
-                </div>
-                <div class="form-group">
-                    <label for="maxVolunteers">Máximo Voluntarios</label>
-                    <input type="number" id="maxVolunteers" placeholder="20">
-                </div>
-                <div class="form-group">
-                    <label for="coordinator">Coordinador</label>
-                    <select id="coordinator">
-                        <option>Seleccionar coordinador</option>
-                        <option>María González</option>
-                        <option>Juan Pérez</option>
-                        <option>Ana López</option>
-                    </select>
-                </div>
-                <div class="form-group full-width">
-                    <label for="description">Descripción</label>
-                    <textarea id="description" placeholder="Describe la actividad, objetivos, materiales necesarios, etc."></textarea>
-                </div>
-                <div class="form-group full-width">
-                    <label for="requirements">Requisitos</label>
-                    <textarea id="requirements" placeholder="Edad mínima, materiales, experiencia requerida, etc."></textarea>
-                </div>
             </div>
+        </div>
 
+        <div class="export-section">
+            <h3 class="section-title">Generar Reporte</h3>
             <div class="actions-section">
-                <button class="action-btn-large btn-add">Crear Actividad</button>
-                <button class="action-btn-large btn-cancel">Cancelar</button>
+                <button class="action-btn-large btn-add">Generar Reporte</button>
+                <button class="action-btn-large btn-save">Vista Previa</button>
+                <button class="action-btn-large btn-cancel">Programar Reporte</button>
             </div>
         </div>
 
-        <div class="activities-grid">
-            <div class="activity-card">
-                <div class="activity-header">
-                    <h3 class="activity-title">Limpieza Parque Central</h3>
-                    <div class="activity-meta">
-                        <span>Medio Ambiente</span>
-                        <span>•</span>
-                        <span>20 Nov 2025</span>
-                    </div>
+        <div class="reports-grid">
+            <div class="report-card">
+                <div class="report-header">
+                    <h3 class="report-title">Reporte de Voluntarios</h3>
                 </div>
-                <div class="activity-content">
-                    <p class="activity-description">Actividad de limpieza y mantenimiento del parque central de la ciudad. Recolección de residuos y plantación de árboles.</p>
-                    <div class="activity-details">
+                <div class="report-content">
+                    <p class="report-description">Lista completa de voluntarios registrados con información de contacto, categorías de interés y historial de participación.</p>
+                    <div class="report-details">
                         <div class="detail-item">
                             <span></span>
-                            <strong>15/20</strong> voluntarios
+                            <strong>247</strong> registros
                         </div>
                         <div class="detail-item">
                             <span></span>
-                            <strong>4 horas</strong>
-                        </div>
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>Parque Central</strong>
-                        </div>
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>María González</strong>
+                            <strong>PDF, Excel, CSV</strong>
                         </div>
                     </div>
-                    <div style="margin-bottom: 15px;">
-                        <span class="activity-status status-active">Activa</span>
-                    </div>
-                    <div class="activity-actions">
-                        <button class="action-btn btn-view">Ver</button>
-                        <button class="action-btn btn-edit">Editar</button>
-                        <button class="action-btn btn-duplicate">Duplicar</button>
+                    <div class="report-actions">
+                        <button class="action-btn btn-view">Vista Previa</button>
+                        <button class="action-btn btn-duplicate">Exportar</button>
                     </div>
                 </div>
             </div>
 
-            <div class="activity-card">
-                <div class="activity-header">
-                    <h3 class="activity-title">Apoyo Educativo - Matemáticas</h3>
-                    <div class="activity-meta">
-                        <span>Educación</span>
-                        <span>•</span>
-                        <span>18 Nov 2025</span>
-                    </div>
+            <div class="report-card">
+                <div class="report-header">
+                    <h3 class="report-title">Reporte de Actividades</h3>
                 </div>
-                <div class="activity-content">
-                    <p class="activity-description">Clases de apoyo en matemáticas para estudiantes de secundaria. Refuerzo de conceptos básicos y resolución de problemas.</p>
-                    <div class="activity-details">
+                <div class="report-content">
+                    <p class="report-description">Resumen de todas las actividades realizadas, incluyendo participantes, duración y categorías.</p>
+                    <div class="report-details">
                         <div class="detail-item">
                             <span></span>
-                            <strong>8/12</strong> voluntarios
+                            <strong>89</strong> actividades
                         </div>
                         <div class="detail-item">
                             <span></span>
-                            <strong>3 horas</strong>
-                        </div>
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>Biblioteca Municipal</strong>
-                        </div>
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>Juan Pérez</strong>
+                            <strong>PDF, Excel, CSV</strong>
                         </div>
                     </div>
-                    <div style="margin-bottom: 15px;">
-                        <span class="activity-status status-active">Activa</span>
-                    </div>
-                    <div class="activity-actions">
-                        <button class="action-btn btn-view">Ver</button>
-                        <button class="action-btn btn-edit">Editar</button>
-                        <button class="action-btn btn-duplicate">Duplicar</button>
+                    <div class="report-actions">
+                        <button class="action-btn btn-view">Vista Previa</button>
+                        <button class="action-btn btn-duplicate">Exportar</button>
                     </div>
                 </div>
             </div>
 
-            <div class="activity-card">
-                <div class="activity-header">
-                    <h3 class="activity-title">Banco de Alimentos</h3>
-                    <div class="activity-meta">
-                        <span>Alimentación</span>
-                        <span>•</span>
-                        <span>15 Nov 2025</span>
-                    </div>
+            <div class="report-card">
+                <div class="report-header">
+                    <h3 class="report-title">Reporte de Impacto</h3>
                 </div>
-                <div class="activity-content">
-                    <p class="activity-description">Clasificación y distribución de alimentos no perecederos para familias en situación de vulnerabilidad.</p>
-                    <div class="activity-details">
+                <div class="report-content">
+                    <p class="report-description">Métricas de impacto social incluyendo horas voluntarias, beneficiarios atendidos y categorías de ayuda.</p>
+                    <div class="report-details">
                         <div class="detail-item">
                             <span></span>
-                            <strong>12/15</strong> voluntarios
+                            <strong>1,247</strong> horas totales
                         </div>
                         <div class="detail-item">
                             <span></span>
-                            <strong>6 horas</strong>
-                        </div>
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>Centro Comunitario</strong>
-                        </div>
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>Ana López</strong>
+                            <strong>PDF, Excel</strong>
                         </div>
                     </div>
-                    <div style="margin-bottom: 15px;">
-                        <span class="activity-status status-completed">Completada</span>
-                    </div>
-                    <div class="activity-actions">
-                        <button class="action-btn btn-view">Ver</button>
-                        <button class="action-btn btn-edit">Editar</button>
-                        <button class="action-btn btn-duplicate">Duplicar</button>
+                    <div class="report-actions">
+                        <button class="action-btn btn-view">Vista Previa</button>
+                        <button class="action-btn btn-duplicate">Exportar</button>
                     </div>
                 </div>
             </div>
 
-            <div class="activity-card">
-                <div class="activity-header">
-                    <h3 class="activity-title">Taller de Arte para Niños</h3>
-                    <div class="activity-meta">
-                        <span>Educación</span>
-                        <span>•</span>
-                        <span>12 Nov 2025</span>
-                    </div>
+            <div class="report-card">
+                <div class="report-header">
+                    <h3 class="report-title">Reporte Mensual</h3>
                 </div>
-                <div class="activity-content">
-                    <p class="activity-description">Taller creativo de pintura y manualidades para niños de 6 a 12 años. Fomento de la expresión artística.</p>
-                    <div class="activity-details">
+                <div class="report-content">
+                    <p class="report-description">Resumen mensual de actividades, nuevos voluntarios y estadísticas generales de la plataforma.</p>
+                    <div class="report-details">
                         <div class="detail-item">
                             <span></span>
-                            <strong>6/10</strong> voluntarios
+                            <strong>Noviembre 2025</strong>
                         </div>
                         <div class="detail-item">
                             <span></span>
-                            <strong>2 horas</strong>
-                        </div>
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>Casa de la Cultura</strong>
-                        </div>
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>Carmen Ruiz</strong>
+                            <strong>PDF, Excel</strong>
                         </div>
                     </div>
-                    <div style="margin-bottom: 15px;">
-                        <span class="activity-status status-active">Activa</span>
-                    </div>
-                    <div class="activity-actions">
-                        <button class="action-btn btn-view">Ver</button>
-                        <button class="action-btn btn-edit">Editar</button>
-                        <button class="action-btn btn-duplicate">Duplicar</button>
+                    <div class="report-actions">
+                        <button class="action-btn btn-view">Vista Previa</button>
+                        <button class="action-btn btn-duplicate">Exportar</button>
                     </div>
                 </div>
             </div>
-
-            <div class="activity-card">
-                <div class="activity-header">
-                    <h3 class="activity-title">Campaña Donación de Sangre</h3>
-                    <div class="activity-meta">
-                        <span>Salud</span>
-                        <span>•</span>
-                        <span>10 Nov 2025</span>
-                    </div>
-                </div>
-                <div class="activity-content">
-                    <p class="activity-description">Campaña de donación de sangre organizada en conjunto con el banco de sangre local. Información y registro de donantes.</p>
-                    <div class="activity-details">
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>20/25</strong> voluntarios
-                        </div>
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>8 horas</strong>
-                        </div>
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>Hospital Central</strong>
-                        </div>
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>Dr. Roberto Díaz</strong>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <span class="activity-status status-draft">Borrador</span>
-                    </div>
-                    <div class="activity-actions">
-                        <button class="action-btn btn-view">Ver</button>
-                        <button class="action-btn btn-edit">Editar</button>
-                        <button class="action-btn btn-delete">Eliminar</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="activity-card">
-                <div class="activity-header">
-                    <h3 class="activity-title">Visita Residencia Ancianos</h3>
-                    <div class="activity-meta">
-                        <span>Social</span>
-                        <span>•</span>
-                        <span>08 Nov 2025</span>
-                    </div>
-                </div>
-                <div class="activity-content">
-                    <p class="activity-description">Visita a residencia de ancianos para compartir tiempo con los residentes, juegos, conversaciones y actividades recreativas.</p>
-                    <div class="activity-details">
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>8/12</strong> voluntarios
-                        </div>
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>3 horas</strong>
-                        </div>
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>Residencia San José</strong>
-                        </div>
-                        <div class="detail-item">
-                            <span></span>
-                            <strong>Laura Martínez</strong>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <span class="activity-status status-completed">Completada</span>
-                    </div>
-                    <div class="activity-actions">
-                        <button class="action-btn btn-view">Ver</button>
-                        <button class="action-btn btn-edit">Editar</button>
-                        <button class="action-btn btn-duplicate">Duplicar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="pagination">
-            <button class="page-btn">« Anterior</button>
-            <button class="page-btn active">1</button>
-            <button class="page-btn">2</button>
-            <button class="page-btn">3</button>
-            <button class="page-btn">Siguiente »</button>
         </div>
     </div>
 </body>

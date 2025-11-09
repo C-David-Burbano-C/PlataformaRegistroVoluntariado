@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HU_022 - Reportes Moderno</title>
+    <title>HU_022 - SUBIDA DE EVIDENCIAS DE PARTICIPACION Moderno</title>
     <style>
         * {
             margin: 0;
@@ -36,458 +36,754 @@
             font-size: 1.1em;
         }
 
-        .reports-content {
+        .content {
             max-width: 1400px;
             margin: 0 auto;
             padding: 40px 30px;
         }
 
-        .filters-section {
+        .upload-overview {
+            margin-bottom: 40px;
+        }
+
+        .overview-card {
             background: white;
             border-radius: 15px;
             padding: 30px;
-            margin-bottom: 40px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             border: 1px solid #e5e7eb;
         }
 
-        .filters-header {
+        .overview-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .upload-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5em;
+            font-weight: 300;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .upload-section {
+            margin-bottom: 40px;
+        }
+
+        .upload-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .upload-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .activity-selection,
+        .evidence-type,
+        .evidence-description {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .activity-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.95em;
+            background: white;
+            cursor: pointer;
+        }
+
+        .type-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .type-option {
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .type-option:hover,
+        .type-option.selected {
+            border-color: #1e3a8a;
+            background: #f0f4ff;
+            color: #1e3a8a;
+        }
+
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            background: #f9fafb;
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+        }
+
+        .upload-area:hover,
+        .upload-area.dragover {
+            border-color: #1e3a8a;
+            background: #f0f4ff;
+        }
+
+        .upload-placeholder .upload-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .upload-text strong {
+            display: block;
+            color: #1e3a8a;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+
+        .upload-text span {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .upload-btn {
+            margin-top: 15px;
+            padding: 12px 24px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background: #2d5aa0;
+            transform: translateY(-1px);
+        }
+
+        .file-requirements {
+            background: #f0f4ff;
+            border: 1px solid #c7d2fe;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .file-requirements h4 {
+            color: #1e3a8a;
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+
+        .file-requirements ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .file-requirements li {
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .description-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95em;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .upload-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        .btn-cancel,
+        .btn-upload {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background: #4b5563;
+        }
+
+        .btn-upload {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .btn-upload:hover {
+            background: #2d5aa0;
+            transform: translateY(-1px);
+        }
+
+        .evidence-gallery {
+            margin-bottom: 40px;
+        }
+
+        .gallery-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
         }
 
-        .filters-header h2 {
+        .gallery-title {
             color: #1e3a8a;
-            font-size: 1.8em;
-            font-weight: 300;
-        }
-
-        .filters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .filter-group label {
+            font-size: 1.4em;
             font-weight: 600;
-            color: #374151;
-            margin-bottom: 8px;
-            font-size: 0.9em;
         }
 
-        .filter-group select,
-        .filter-group input {
-            padding: 12px 15px;
+        .gallery-filters .filter-select {
+            padding: 8px 12px;
             border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.3s ease;
+            border-radius: 6px;
+            font-size: 0.9em;
+            background: white;
+            cursor: pointer;
         }
 
-        .filter-group select:focus,
-        .filter-group input:focus {
-            outline: none;
-            border-color: #0ea5e9;
-        }
-
-        .metrics-dashboard {
+        .evidence-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
+            gap: 25px;
         }
 
-        .metric-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-            transition: transform 0.3s ease;
-        }
-
-        .metric-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .metric-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .metric-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5em;
-            margin-right: 15px;
-        }
-
-        .metric-title {
-            font-size: 1.1em;
-            color: #6b7280;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-        }
-
-        .metric-value {
-            font-size: 3em;
-            font-weight: 300;
-            color: #1e3a8a;
-            margin-bottom: 10px;
-        }
-
-        .metric-change {
-            font-size: 0.9em;
-            font-weight: 600;
-        }
-
-        .metric-change.positive {
-            color: #10b981;
-        }
-
-        .metric-change.negative {
-            color: #ef4444;
-        }
-
-        .charts-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .chart-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-        }
-
-        .chart-header {
-            margin-bottom: 25px;
-        }
-
-        .chart-title {
-            font-size: 1.3em;
-            color: #1e3a8a;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .chart-subtitle {
-            color: #6b7280;
-            font-size: 0.9em;
-        }
-
-        .chart-placeholder {
-            height: 250px;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            border: 2px dashed #cbd5e1;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6b7280;
-            font-size: 1.1em;
-        }
-
-        .reports-table {
+        .evidence-item {
             background: white;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             border: 1px solid #e5e7eb;
-            margin-bottom: 40px;
+            transition: all 0.3s ease;
         }
 
-        .table-header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
-            color: white;
-            padding: 20px 30px;
+        .evidence-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
         }
 
-        .table-header h3 {
-            font-size: 1.4em;
-            font-weight: 300;
+        .evidence-preview {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
         }
 
-        .table-content {
-            padding: 0;
-        }
-
-        table {
+        .evidence-preview img {
             width: 100%;
-            border-collapse: collapse;
+            height: 100%;
+            object-fit: cover;
         }
 
-        th, td {
-            padding: 15px 30px;
-            text-align: left;
-            border-bottom: 1px solid #f3f4f6;
+        .video-placeholder,
+        .document-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
         }
 
-        th {
-            background: #f9fafb;
+        .video-icon,
+        .doc-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .video-duration,
+        .doc-type {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
             font-weight: 600;
+        }
+
+        .evidence-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .evidence-item:hover .evidence-overlay {
+            opacity: 1;
+        }
+
+        .btn-view {
+            background: white;
+            color: #1e3a8a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-view:hover {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .evidence-info {
+            padding: 20px;
+        }
+
+        .evidence-name {
+            color: #1e3a8a;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .evidence-activity {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .evidence-date {
+            color: #6b7280;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+
+        .evidence-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .status-approved {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-rejected {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .evidence-feedback {
+            color: #dc2626;
+            font-size: 0.85em;
+            font-style: italic;
+        }
+
+        .evidence-meta {
+            color: #6b7280;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+
+        .evidence-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-download,
+        .btn-delete {
+            padding: 6px 12px;
+            border: 2px solid #e5e7eb;
+            background: white;
             color: #374151;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-download:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+
+        .btn-delete:hover {
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+
+        .upload-progress-modal,
+        .view-evidence-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 30px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .modal-header h3 {
+            color: #1e3a8a;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .progress-list {
+            margin-bottom: 20px;
+        }
+
+        .progress-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .file-name {
+            flex: 1;
+            color: #374151;
+            font-size: 0.9em;
+        }
+
+        .progress-bar {
+            flex: 2;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1e3a8a 0%, #2d5aa0 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            flex: 0 0 60px;
+            text-align: right;
+            color: #6b7280;
             font-size: 0.85em;
         }
 
-        tr:hover {
-            background: #f9fafb;
-        }
-
-        .export-actions {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .export-btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .export-btn.pdf {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            color: white;
-        }
-
-        .export-btn.excel {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-        }
-
-        .export-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        }
-
-        @media (max-width: 1024px) {
-            .charts-section {
-                grid-template-columns: 1fr;
-            }
+        .upload-summary {
+            text-align: center;
+            color: #6b7280;
         }
 
         @media (max-width: 768px) {
-            .metrics-dashboard {
+            .evidence-grid {
                 grid-template-columns: 1fr;
             }
 
-            .filters-grid {
+            .upload-stats {
                 grid-template-columns: 1fr;
             }
 
-            .header h1 {
-                font-size: 2em;
+            .type-options {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .upload-actions {
+                flex-direction: column;
+            }
+
+            .progress-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Reportes y Analíticas</h1>
-        <p>Información detallada del impacto de voluntariado</p>
+        <h1>SUBIDA DE EVIDENCIAS DE PARTICIPACIÓN</h1>
+        <p>Comparte fotos y documentos de tus actividades voluntarias</p>
     </div>
 
-    <div class="reports-content">
-        <div class="filters-section">
-            <div class="filters-header">
-                <h2>Filtros de Reporte</h2>
-                <button style="padding: 10px 20px; background: #0ea5e9; color: white; border: none; border-radius: 8px; cursor: pointer;">Aplicar Filtros</button>
-            </div>
-            <div class="filters-grid">
-                <div class="filter-group">
-                    <label for="periodo">Período</label>
-                    <select id="periodo">
-                        <option>Último mes</option>
-                        <option>Últimos 3 meses</option>
-                        <option>Último año</option>
-                        <option>Personalizado</option>
+    <div class="content">
+        <div class="upload-section">
+            <div class="upload-card">
+                <h3 class="upload-title">Subir Evidencia de Participación</h3>
+
+                <div class="activity-selection">
+                    <label class="form-label">Seleccionar Actividad</label>
+                    <select class="activity-select" id="activitySelect">
+                        <option value="">Elegir actividad...</option>
+                        <option value="reciclaje">Campaña de Reciclaje Comunitario - 15 Dic 2024</option>
+                        <option value="apoyo">Apoyo Escolar Primaria - 18 Dic 2024</option>
+                        <option value="alimentos">Distribución de Alimentos - 20 Dic 2024</option>
+                        <option value="playa">Limpieza de Playa - 22 Dic 2024</option>
+                        <option value="centro">Visita a Centro de Día - 10 Dic 2024</option>
                     </select>
                 </div>
-                <div class="filter-group">
-                    <label for="tipo-actividad">Tipo de Actividad</label>
-                    <select id="tipo-actividad">
-                        <option>Todas las actividades</option>
-                        <option>Medio Ambiente</option>
-                        <option>Educación</option>
-                        <option>Alimentación</option>
-                        <option>Salud</option>
-                    </select>
+
+                <div class="evidence-type">
+                    <label class="form-label">Tipo de Archivo</label>
+                    <div class="type-options">
+                        <div class="type-option" data-type="photo">
+                            📸 Fotos
+                        </div>
+                        <div class="type-option" data-type="document">
+                            📄 Documentos
+                        </div>
+                    </div>
                 </div>
-                <div class="filter-group">
-                    <label for="region">Región</label>
-                    <select id="region">
-                        <option>Todas las regiones</option>
-                        <option>Centro</option>
-                        <option>Norte</option>
-                        <option>Sur</option>
-                        <option>Este</option>
-                    </select>
+
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-placeholder">
+                        <div class="upload-icon">📤</div>
+                        <div class="upload-text">
+                            <strong>Arrastra y suelta archivos aquí</strong>
+                            <span>o haz clic para seleccionar</span>
+                        </div>
+                        <input type="file" id="fileInput" multiple accept="image/*,.pdf,.docx,.xlsx" style="display: none;">
+                        <button class="upload-btn" onclick="document.getElementById('fileInput').click()">Seleccionar Archivos</button>
+                    </div>
                 </div>
-                <div class="filter-group">
-                    <label for="fecha-inicio">Fecha Inicio</label>
-                    <input type="date" id="fecha-inicio">
+
+                <div class="file-requirements">
+                    <h4>Requisitos de archivos:</h4>
+                    <ul>
+                        <li><strong>Formatos permitidos:</strong> JPG, PNG, PDF, DOCX, XLSX</li>
+                        <li><strong>Tamaño máximo:</strong> 5MB por archivo</li>
+                        <li><strong>Límite:</strong> Hasta 10 archivos por actividad</li>
+                    </ul>
                 </div>
-                <div class="filter-group">
-                    <label for="fecha-fin">Fecha Fin</label>
-                    <input type="date" id="fecha-fin">
+
+                <div class="evidence-description">
+                    <label class="form-label">Descripción de la Evidencia</label>
+                    <textarea class="description-textarea" placeholder="Describe brevemente qué muestra esta evidencia (lugar, actividad específica, participantes, etc.)" rows="4"></textarea>
+                </div>
+
+                <div class="upload-actions">
+                    <button class="btn-cancel">Cancelar</button>
+                    <button class="btn-upload">Subir Evidencia</button>
                 </div>
             </div>
         </div>
 
-        <div class="metrics-dashboard">
-            <div class="metric-card">
-                <div class="metric-header">
-                    <div class="metric-icon"></div>
-                    <div class="metric-title">Total Voluntarios</div>
-                </div>
-                <div class="metric-value">1,245</div>
-                <div class="metric-change positive">+12% vs mes anterior</div>
+        <div class="evidence-gallery">
+            <div class="gallery-header">
+                <h2 class="gallery-title">Evidencias Subidas</h2>
             </div>
 
-            <div class="metric-card">
-                <div class="metric-header">
-                    <div class="metric-icon"></div>
-                    <div class="metric-title">Actividades Completadas</div>
+            <div class="evidence-grid">
+                <div class="evidence-item">
+                    <div class="evidence-preview">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNkI3MjgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iPkZvdG88L3RleHQ+Cjwvc3ZnPg==" alt="Foto evidencia">
+                        <div class="evidence-overlay">
+                            <button class="btn-view">👁️ Ver</button>
+                        </div>
+                    </div>
+                    <div class="evidence-info">
+                        <h4 class="evidence-name">Foto_Reciclaje_001.jpg</h4>
+                        <p class="evidence-activity">Campaña de Reciclaje Comunitario</p>
+                        <p class="evidence-date">📅 Subido: 16 Dic 2024</p>
+                        <p class="evidence-meta">👤 Coordinador: María González | 📏 Tamaño: 2.3 MB | 📄 Tipo: JPG</p>
+                        <div class="evidence-actions">
+                            <button class="btn-download">⬇️ Descargar</button>
+                            <button class="btn-delete">🗑️ Eliminar</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="metric-value">89</div>
-                <div class="metric-change positive">+8% vs mes anterior</div>
-            </div>
 
-            <div class="metric-card">
-                <div class="metric-header">
-                    <div class="metric-icon"></div>
-                    <div class="metric-title">Horas Totales</div>
+                <div class="evidence-item">
+                    <div class="evidence-preview">
+                        <div class="document-placeholder">
+                            <div class="doc-icon">📄</div>
+                            <span class="doc-type">PDF</span>
+                        </div>
+                        <div class="evidence-overlay">
+                            <button class="btn-view">📖 Ver</button>
+                        </div>
+                    </div>
+                    <div class="evidence-info">
+                        <h4 class="evidence-name">Informe_Actividad_Educativa.pdf</h4>
+                        <p class="evidence-activity">Apoyo Escolar Primaria</p>
+                        <p class="evidence-date">📅 Subido: 19 Dic 2024</p>
+                        <p class="evidence-meta">👤 Coordinador: Carlos Rodríguez | 📏 Tamaño: 1.8 MB | 📄 Tipo: PDF</p>
+                        <div class="evidence-actions">
+                            <button class="btn-download">⬇️ Descargar</button>
+                            <button class="btn-delete">🗑️ Eliminar</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="metric-value">3,456</div>
-                <div class="metric-change positive">+15% vs mes anterior</div>
-            </div>
 
-            <div class="metric-card">
-                <div class="metric-header">
-                    <div class="metric-icon"></div>
-                    <div class="metric-title">Proyectos Activos</div>
+                <div class="evidence-item">
+                    <div class="evidence-preview">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwIiB5PSI1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNkI3MjgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iPkZvdG88L3RleHQ+Cjwvc3ZnPg==" alt="Foto evidencia">
+                        <div class="evidence-overlay">
+                            <button class="btn-view">👁️ Ver</button>
+                        </div>
+                    </div>
+                    <div class="evidence-info">
+                        <h4 class="evidence-name">Grupo_Trabajo_Centro_Dia.jpg</h4>
+                        <p class="evidence-activity">Visita a Centro de Día</p>
+                        <p class="evidence-date">📅 Subido: 11 Dic 2024</p>
+                        <p class="evidence-meta">👤 Coordinador: Ana López | 📏 Tamaño: 3.1 MB | 📄 Tipo: JPG</p>
+                        <div class="evidence-actions">
+                            <button class="btn-download">⬇️ Descargar</button>
+                            <button class="btn-delete">🗑️ Eliminar</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="metric-value">12</div>
-                <div class="metric-change">Sin cambios</div>
-            </div>
-        </div>
 
-        <div class="charts-section">
-            <div class="chart-card">
-                <div class="chart-header">
-                    <div class="chart-title">Participación Mensual</div>
-                    <div class="chart-subtitle">Evolución de voluntarios activos</div>
+                <div class="evidence-item">
+                    <div class="evidence-preview">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjUwIiB5PSI1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNkI3MjgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iPkZvdG88L3RleHQ+Cjwvc3ZnPg==" alt="Foto evidencia">
+                        <div class="evidence-overlay">
+                            <button class="btn-view">👁️ Ver</button>
+                        </div>
+                    </div>
+                    <div class="evidence-info">
+                        <h4 class="evidence-name">Distribucion_Alimentos_002.jpg</h4>
+                        <p class="evidence-activity">Distribución de Alimentos</p>
+                        <p class="evidence-date">📅 Subido: 21 Dic 2024</p>
+                        <p class="evidence-meta">👤 Coordinador: Carlos Rodríguez | 📏 Tamaño: 4.2 MB | 📄 Tipo: JPG</p>
+                        <div class="evidence-actions">
+                            <button class="btn-download">⬇️ Descargar</button>
+                            <button class="btn-delete">🗑️ Eliminar</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="chart-placeholder">
-                    [Gráfico de líneas - Participación mensual]
-                </div>
-            </div>
 
-            <div class="chart-card">
-                <div class="chart-header">
-                    <div class="chart-title">Distribución por Categoría</div>
-                    <div class="chart-subtitle">Tipos de actividades más populares</div>
+                <div class="evidence-item">
+                    <div class="evidence-preview">
+                        <div class="document-placeholder">
+                            <div class="doc-icon">📄</div>
+                            <span class="doc-type">DOCX</span>
+                        </div>
+                        <div class="evidence-overlay">
+                            <button class="btn-view">📖 Ver</button>
+                        </div>
+                    </div>
+                    <div class="evidence-info">
+                        <h4 class="evidence-name">Lista_Asistencia_Apoyo_Escolar.docx</h4>
+                        <p class="evidence-activity">Apoyo Escolar Primaria</p>
+                        <p class="evidence-date">📅 Subido: 19 Dic 2024</p>
+                        <p class="evidence-meta">👤 Coordinador: María González | 📏 Tamaño: 0.9 MB | 📄 Tipo: DOCX</p>
+                        <div class="evidence-actions">
+                            <button class="btn-download">⬇️ Descargar</button>
+                            <button class="btn-delete">🗑️ Eliminar</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="chart-placeholder">
-                    [Gráfico circular - Distribución por categoría]
-                </div>
             </div>
-        </div>
-
-        <div class="reports-table">
-            <div class="table-header">
-                <h3>Detalle de Actividades Recientes</h3>
-            </div>
-            <div class="table-content">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Actividad</th>
-                            <th>Fecha</th>
-                            <th>Participantes</th>
-                            <th>Horas</th>
-                            <th>Categoría</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Limpieza Parque Central</td>
-                            <td>2025-10-15</td>
-                            <td>25</td>
-                            <td>75</td>
-                            <td>Medio Ambiente</td>
-                            <td style="color: #10b981; font-weight: 600;">Completada</td>
-                        </tr>
-                        <tr>
-                            <td>Apoyo Educativo - Matemáticas</td>
-                            <td>2025-10-12</td>
-                            <td>8</td>
-                            <td>24</td>
-                            <td>Educación</td>
-                            <td style="color: #10b981; font-weight: 600;">Completada</td>
-                        </tr>
-                        <tr>
-                            <td>Banco de Alimentos</td>
-                            <td>2025-10-08</td>
-                            <td>15</td>
-                            <td>45</td>
-                            <td>Alimentación</td>
-                            <td style="color: #10b981; font-weight: 600;">Completada</td>
-                        </tr>
-                        <tr>
-                            <td>Taller de Arte para Niños</td>
-                            <td>2025-10-05</td>
-                            <td>12</td>
-                            <td>36</td>
-                            <td>Educación</td>
-                            <td style="color: #10b981; font-weight: 600;">Completada</td>
-                        </tr>
-                        <tr>
-                            <td>Campaña de Donación de Sangre</td>
-                            <td>2025-10-01</td>
-                            <td>30</td>
-                            <td>90</td>
-                            <td>Salud</td>
-                            <td style="color: #10b981; font-weight: 600;">Completada</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="export-actions">
-            <button class="export-btn pdf">Exportar PDF</button>
-            <button class="export-btn excel">Exportar Excel</button>
         </div>
     </div>
 </body>

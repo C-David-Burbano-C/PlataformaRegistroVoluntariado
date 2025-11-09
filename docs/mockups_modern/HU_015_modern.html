@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HU_015 - Dashboard Administrativo Moderno</title>
+    <title>HU_015 - Comunicación entre Voluntarios</title>
     <style>
         * {
             margin: 0;
@@ -43,127 +43,59 @@
             padding: 40px 30px;
         }
 
-        .stats-grid {
+        .chat-layout {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: 350px 1fr;
             gap: 30px;
-            margin-bottom: 40px;
+            height: calc(100vh - 200px);
         }
 
-        .stat-card {
+        .conversations-sidebar {
             background: white;
             border-radius: 15px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             border: 1px solid #e5e7eb;
-            transition: all 0.3s ease;
+            overflow-y: auto;
         }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-        }
-
-        .stat-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-        }
-
-        .stat-volunteers .stat-icon {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: white;
-        }
-
-        .stat-activities .stat-icon {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-        }
-
-        .stat-hours .stat-icon {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white;
-        }
-
-        .stat-categories .stat-icon {
-            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-            color: white;
-        }
-
-        .stat-trend {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.85em;
-            font-weight: 600;
-        }
-
-        .trend-up {
-            color: #10b981;
-        }
-
-        .trend-down {
-            color: #ef4444;
-        }
-
-        .stat-value {
-            font-size: 2.5em;
-            font-weight: 300;
-            color: #1e3a8a;
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            color: #6b7280;
-            font-size: 1em;
-            font-weight: 600;
-        }
-
-        .charts-section {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .chart-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-        }
-
-        .chart-header {
+        .sidebar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
         }
 
-        .chart-title {
+        .sidebar-title {
             color: #1e3a8a;
             font-size: 1.4em;
             font-weight: 600;
         }
 
-        .chart-controls {
-            display: flex;
-            gap: 10px;
+        .new-chat-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .chart-btn {
+        .new-chat-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .conversation-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
             padding: 8px 16px;
             border: 2px solid #e5e7eb;
             background: white;
@@ -175,107 +107,41 @@
             font-weight: 600;
         }
 
-        .chart-btn.active {
+        .tab-btn.active {
             background: #1e3a8a;
             color: white;
             border-color: #1e3a8a;
         }
 
-        .chart-btn:hover {
+        .tab-btn:hover {
             border-color: #0ea5e9;
             color: #0ea5e9;
         }
 
-        .chart-placeholder {
-            height: 300px;
-            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6b7280;
-            font-size: 1.2em;
-            border: 2px dashed #e5e7eb;
-        }
-
-        .sidebar-charts {
+        .conversations-list {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 15px;
         }
 
-        .mini-chart {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-        }
-
-        .mini-chart-title {
-            color: #1e3a8a;
-            font-size: 1.2em;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        .mini-chart-placeholder {
-            height: 150px;
-            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-            border-radius: 8px;
+        .conversation-item {
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: #6b7280;
-            font-size: 0.9em;
-            border: 2px dashed #e5e7eb;
-        }
-
-        .recent-activity {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-        }
-
-        .activity-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .activity-title {
-            color: #1e3a8a;
-            font-size: 1.4em;
-            font-weight: 600;
-        }
-
-        .activity-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .activity-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-            background: #f9fafb;
+            gap: 15px;
+            padding: 15px;
             border-radius: 12px;
-            border: 1px solid #e5e7eb;
+            cursor: pointer;
             transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
         }
 
-        .activity-item:hover {
-            background: #f3f4f6;
+        .conversation-item:hover,
+        .conversation-item.active {
+            background: #f0f9ff;
             border-color: #0ea5e9;
         }
 
-        .activity-icon {
+        .conversation-avatar {
             width: 50px;
             height: 50px;
             border-radius: 50%;
@@ -285,154 +151,297 @@
             justify-content: center;
             color: white;
             font-size: 1.2em;
-        }
-
-        .activity-content {
-            flex: 1;
-        }
-
-        .activity-text {
-            color: #374151;
-            font-size: 1em;
-            margin-bottom: 4px;
-        }
-
-        .activity-meta {
-            color: #6b7280;
-            font-size: 0.85em;
-        }
-
-        .activity-time {
-            color: #6b7280;
-            font-size: 0.8em;
             font-weight: 600;
         }
 
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
+        .conversation-info {
+            flex: 1;
         }
 
-        .action-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        .conversation-name {
+            color: #1e3a8a;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
-        .action-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+        .conversation-last-msg {
+            color: #6b7280;
+            font-size: 0.85em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
-        .action-header {
+        .conversation-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .conversation-time {
+            color: #6b7280;
+            font-size: 0.75em;
+        }
+
+        .conversation-badge {
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
-            gap: 20px;
-            margin-bottom: 20px;
+            justify-content: center;
+            font-size: 0.7em;
+            font-weight: 600;
         }
 
-        .action-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        .chat-main {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 25px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.5em;
+            font-size: 1.2em;
+            font-weight: 600;
         }
 
-        .action-info h3 {
+        .chat-details h3 {
             color: #1e3a8a;
             font-size: 1.3em;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
-        .action-description {
-            color: #6b7280;
+        .chat-status {
+            color: #10b981;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .messages-container {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message {
+            display: flex;
+            gap: 15px;
+            max-width: 70%;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9em;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .message.sent .message-avatar {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        }
+
+        .message-content {
+            background: #f9fafb;
+            padding: 15px 20px;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            position: relative;
+        }
+
+        .message.sent .message-content {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-text {
             font-size: 0.95em;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
-        .alerts-section {
+        .message-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 0.75em;
+            opacity: 0.7;
+        }
+
+        .message-time {
+            font-weight: 600;
+        }
+
+        .message-input-area {
+            padding: 25px;
+            border-top: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+
+        .message-form {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 25px;
+            font-size: 0.95em;
+            resize: none;
+            min-height: 50px;
+            max-height: 120px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .message-send-btn {
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .message-send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .notifications-panel {
             background: white;
             border-radius: 15px;
-            padding: 30px;
+            padding: 25px;
+            margin-bottom: 30px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             border: 1px solid #e5e7eb;
         }
 
-        .alerts-header {
+        .notifications-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
-        .alerts-title {
+        .notifications-title {
             color: #1e3a8a;
             font-size: 1.4em;
             font-weight: 600;
         }
 
-        .alerts-list {
+        .notifications-count {
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: 600;
         }
 
-        .alert-item {
+        .notification-item {
             display: flex;
             align-items: center;
             gap: 15px;
             padding: 15px;
             border-radius: 10px;
-            border-left: 4px solid;
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            margin-bottom: 10px;
         }
 
-        .alert-warning {
-            background: #fef3c7;
-            border-left-color: #f59e0b;
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1em;
         }
 
-        .alert-info {
-            background: #dbeafe;
-            border-left-color: #0ea5e9;
-        }
-
-        .alert-success {
-            background: #dcfce7;
-            border-left-color: #10b981;
-        }
-
-        .alert-icon {
-            font-size: 1.2em;
-        }
-
-        .alert-content {
+        .notification-content {
             flex: 1;
         }
 
-        .alert-text {
-            color: #374151;
-            font-size: 0.9em;
+        .notification-text {
+            color: #1e3a8a;
             font-weight: 600;
+            margin-bottom: 4px;
         }
 
-        .alert-meta {
+        .notification-meta {
             color: #6b7280;
-            font-size: 0.8em;
+            font-size: 0.85em;
         }
 
-        .alert-action {
+        .notification-action {
             padding: 6px 12px;
+            background: #1e3a8a;
+            color: white;
             border: none;
             border-radius: 6px;
             font-size: 0.8em;
@@ -441,265 +450,221 @@
             transition: all 0.3s ease;
         }
 
-        .alert-action.primary {
-            background: #1e3a8a;
-            color: white;
-        }
-
-        .alert-action.secondary {
-            background: #6b7280;
-            color: white;
+        .notification-action:hover {
+            background: #2d5aa0;
         }
 
         @media (max-width: 768px) {
-            .stats-grid {
+            .chat-layout {
                 grid-template-columns: 1fr;
+                height: auto;
             }
 
-            .charts-section {
-                grid-template-columns: 1fr;
+            .conversations-sidebar {
+                order: 2;
             }
 
-            .quick-actions {
-                grid-template-columns: 1fr;
+            .chat-main {
+                order: 1;
+                height: 500px;
             }
 
-            .activity-header,
-            .alerts-header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-
-            .activity-item {
-                flex-direction: column;
-                text-align: center;
-                gap: 10px;
-            }
-
-            .alert-item {
-                flex-direction: column;
-                text-align: center;
-                gap: 10px;
+            .message.sent {
+                max-width: 85%;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Dashboard Administrativo</h1>
-        <p>Panel de control completo del sistema de voluntariado</p>
+        <h1>Comunicación entre Voluntarios</h1>
+        <p>Sistema de mensajes interno para coordinación de actividades</p>
     </div>
 
     <div class="content">
-        <div class="stats-grid">
-            <div class="stat-card stat-volunteers">
-                <div class="stat-header">
-                    <div class="stat-icon"></div>
-                    <div class="stat-trend trend-up">
-                        <span></span>
-                        <span>+12%</span>
-                    </div>
-                </div>
-                <div class="stat-value">247</div>
-                <div class="stat-label">Voluntarios Registrados</div>
+        <div class="notifications-panel">
+            <div class="notifications-header">
+                <h3 class="notifications-title">Notificaciones de Mensajes</h3>
+                <div class="notifications-count">3</div>
             </div>
-
-            <div class="stat-card stat-activities">
-                <div class="stat-header">
-                    <div class="stat-icon"></div>
-                    <div class="stat-trend trend-up">
-                        <span></span>
-                        <span>+8%</span>
-                    </div>
+            <div class="notification-item">
+                <div class="notification-icon">💬</div>
+                <div class="notification-content">
+                    <div class="notification-text">Nuevo mensaje en "Grupo Limpieza Parque"</div>
+                    <div class="notification-meta">María González • Hace 5 min</div>
                 </div>
-                <div class="stat-value">23</div>
-                <div class="stat-label">Actividades Activas</div>
+                <button class="notification-action">Ver</button>
             </div>
-
-            <div class="stat-card stat-hours">
-                <div class="stat-header">
-                    <div class="stat-icon"></div>
-                    <div class="stat-trend trend-up">
-                        <span></span>
-                        <span>+15%</span>
-                    </div>
+            <div class="notification-item">
+                <div class="notification-icon">👥</div>
+                <div class="notification-content">
+                    <div class="notification-text">Mensaje privado de Carlos Rodríguez</div>
+                    <div class="notification-meta">Sobre actividad "Banco de Alimentos" • Hace 12 min</div>
                 </div>
-                <div class="stat-value">1,247</div>
-                <div class="stat-label">Horas de Servicio</div>
+                <button class="notification-action">Ver</button>
             </div>
-
-            <div class="stat-card stat-categories">
-                <div class="stat-header">
-                    <div class="stat-icon"></div>
-                    <div class="stat-trend trend-up">
-                        <span></span>
-                        <span>+2%</span>
-                    </div>
+            <div class="notification-item">
+                <div class="notification-icon">📝</div>
+                <div class="notification-content">
+                    <div class="notification-text">Ana López creó nuevo grupo "Taller de Arte"</div>
+                    <div class="notification-meta">Grupo de actividad • Hace 1 hora</div>
                 </div>
-                <div class="stat-value">5</div>
-                <div class="stat-label">Categorías Activas</div>
+                <button class="notification-action">Ver</button>
             </div>
         </div>
 
-        <div class="charts-section">
-            <div class="chart-card">
-                <div class="chart-header">
-                    <h3 class="chart-title">Participación por Categorías</h3>
-                    <div class="chart-controls">
-                        <button class="chart-btn active">Mensual</button>
-                        <button class="chart-btn">Trimestral</button>
-                        <button class="chart-btn">Anual</button>
-                    </div>
-                </div>
-                <div class="chart-placeholder">
-                     Gráfico de Participación por Categorías
-                </div>
+        <div class="chat-layout">
+        <div class="conversations-sidebar">
+            <div class="sidebar-header">
+                <h3 class="sidebar-title">Conversaciones</h3>
+                <button class="new-chat-btn">Nuevo Chat</button>
             </div>
 
-            <div class="sidebar-charts">
-                <div class="mini-chart">
-                    <h4 class="mini-chart-title">Tendencia de Inscripciones</h4>
-                    <div class="mini-chart-placeholder">
-                        Gráfico de Tendencia
+            <div class="conversations-list">
+                <div class="conversation-item active">
+                    <div class="conversation-avatar">LP</div>
+                    <div class="conversation-info">
+                        <div class="conversation-name">Limpieza Parque Central</div>
+                        <div class="conversation-last-msg">¿Alguien puede traer guantes extra?</div>
+                    </div>
+                    <div class="conversation-meta">
+                        <div class="conversation-time">14:30</div>
                     </div>
                 </div>
 
-                <div class="mini-chart">
-                    <h4 class="mini-chart-title">Distribución por Edad</h4>
-                    <div class="mini-chart-placeholder">
-                         Gráfico Demográfico
+                <div class="conversation-item">
+                    <div class="conversation-avatar">BA</div>
+                    <div class="conversation-info">
+                        <div class="conversation-name">Banco de Alimentos</div>
+                        <div class="conversation-last-msg">La actividad fue un éxito, gracias a todos</div>
+                    </div>
+                    <div class="conversation-meta">
+                        <div class="conversation-time">12:15</div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="quick-actions">
-            <div class="action-card">
-                <div class="action-header">
-                    <div class="action-icon"></div>
-                    <div class="action-info">
-                        <h3>Crear Actividad</h3>
-                        <p>Agrega una nueva actividad de voluntariado al sistema</p>
+                <div class="conversation-item">
+                    <div class="conversation-avatar">TA</div>
+                    <div class="conversation-info">
+                        <div class="conversation-name">Taller de Arte</div>
+                        <div class="conversation-last-msg">Nuevo grupo creado por Ana López</div>
+                    </div>
+                    <div class="conversation-meta">
+                        <div class="conversation-time">11:45</div>
                     </div>
                 </div>
-            </div>
 
-            <div class="action-card">
-                <div class="action-header">
-                    <div class="action-icon"></div>
-                    <div class="action-info">
-                        <h3>Generar Reporte</h3>
-                        <p>Crea reportes personalizados con datos del sistema</p>
+                <div class="conversation-item">
+                    <div class="conversation-avatar">EC</div>
+                    <div class="conversation-info">
+                        <div class="conversation-name">Educación Comunitaria</div>
+                        <div class="conversation-last-msg">Próxima reunión el viernes</div>
+                    </div>
+                    <div class="conversation-meta">
+                        <div class="conversation-time">09:20</div>
                     </div>
                 </div>
-            </div>
 
-            <div class="action-card">
-                <div class="action-header">
-                    <div class="action-icon"></div>
-                    <div class="action-info">
-                        <h3>Gestionar Usuarios</h3>
-                        <p>Administra usuarios, roles y permisos del sistema</p>
+                <div class="conversation-item">
+                    <div class="conversation-avatar">CR</div>
+                    <div class="conversation-info">
+                        <div class="conversation-name">Carlos Rodríguez</div>
+                        <div class="conversation-last-msg">¿Podemos coordinar para mañana?</div>
+                    </div>
+                    <div class="conversation-meta">
+                        <div class="conversation-time">16:45</div>
                     </div>
                 </div>
-            </div>
 
-            <div class="action-card">
-                <div class="action-header">
-                    <div class="action-icon"></div>
-                    <div class="action-info">
-                        <h3>Configuración</h3>
-                        <p>Ajusta configuraciones generales del sistema</p>
+                <div class="conversation-item">
+                    <div class="conversation-avatar">MG</div>
+                    <div class="conversation-info">
+                        <div class="conversation-name">María González</div>
+                        <div class="conversation-last-msg">Gracias por tu ayuda en la actividad</div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="recent-activity">
-            <div class="activity-header">
-                <h3 class="activity-title">Actividad Reciente</h3>
-                <span style="color: #6b7280; font-size: 0.9em;">Últimas 24 horas</span>
-            </div>
-            <div class="activity-list">
-                <div class="activity-item">
-                    <div class="activity-icon"></div>
-                    <div class="activity-content">
-                        <div class="activity-text">Nueva actividad "Limpieza Parque Central" creada</div>
-                        <div class="activity-meta">Por María González • Coordinadora</div>
+                    <div class="conversation-meta">
+                        <div class="conversation-time">Ayer</div>
                     </div>
-                    <div class="activity-time">Hace 2 horas</div>
-                </div>
-
-                <div class="activity-item">
-                    <div class="activity-icon"></div>
-                    <div class="activity-content">
-                        <div class="activity-text">15 voluntarios confirmaron asistencia a "Banco de Alimentos"</div>
-                        <div class="activity-meta">Actividad completada • 12 participantes</div>
-                    </div>
-                    <div class="activity-time">Hace 4 horas</div>
-                </div>
-
-                <div class="activity-item">
-                    <div class="activity-icon"></div>
-                    <div class="activity-content">
-                        <div class="activity-text">5 nuevos voluntarios se registraron en el sistema</div>
-                        <div class="activity-meta">Categorías: Educación, Medio Ambiente</div>
-                    </div>
-                    <div class="activity-time">Hace 6 horas</div>
-                </div>
-
-                <div class="activity-item">
-                    <div class="activity-icon"></div>
-                    <div class="activity-content">
-                        <div class="activity-text">Reporte mensual generado automáticamente</div>
-                        <div class="activity-meta">Noviembre 2025 • 23 actividades registradas</div>
-                    </div>
-                    <div class="activity-time">Hace 8 horas</div>
-                </div>
-
-                <div class="activity-item">
-                    <div class="activity-icon"></div>
-                    <div class="activity-content">
-                        <div class="activity-text">8 certificados emitidos por actividades completadas</div>
-                        <div class="activity-meta">Voluntarios destacados • 127 horas totales</div>
-                    </div>
-                    <div class="activity-time">Hace 12 horas</div>
                 </div>
             </div>
-        </div>
-
-        <div class="alerts-section">
-            <div class="alerts-header">
-                <h3 class="alerts-title">Alertas y Notificaciones</h3>
-                <span style="color: #6b7280; font-size: 0.9em;">3 alertas activas</span>
-            </div>
-            <div class="alerts-list">
-                <div class="alert-item alert-warning">
-                    <div class="alert-icon"></div>
-                    <div class="alert-content">
-                        <div class="alert-text">Actividad "Taller de Arte" programada para mañana tiene solo 3 inscritos</div>
-                        <div class="alert-meta">Requiere mínimo 5 participantes • Coordinar con Ana López</div>
+        </div>            <div class="chat-main">
+                <div class="chat-header">
+                    <div class="chat-info">
+                        <div class="chat-avatar">LP</div>
+                        <div class="chat-details">
+                            <h3>Limpieza Parque Central</h3>
+                            <div class="chat-status">8 miembros • Grupo activo</div>
+                        </div>
                     </div>
-                    <button class="alert-action primary">Ver Detalles</button>
                 </div>
 
-                <div class="alert-item alert-info">
-                    <div class="alert-icon"></div>
-                    <div class="alert-content">
-                        <div class="alert-text">12 voluntarios pendientes de aprobación de registro</div>
-                        <div class="alert-meta">Esperando verificación de documentos • 3 días en espera</div>
+                <div class="messages-container">
+                    <div class="message">
+                        <div class="message-avatar">AL</div>
+                        <div class="message-content">
+                            <div class="message-text">¡Hola equipo! ¿Todos listos para la limpieza del parque mañana?</div>
+                            <div class="message-meta">
+                                <span class="message-time">Ana López • 09:15</span>
+                            </div>
+                        </div>
                     </div>
-                    <button class="alert-action primary">Revisar</button>
+
+                    <div class="message sent">
+                        <div class="message-avatar">YO</div>
+                        <div class="message-content">
+                            <div class="message-text">¡Sí! Ya tengo preparados los materiales. ¿Alguien puede traer guantes extra?</div>
+                            <div class="message-meta">
+                                <span class="message-time">Tú • 09:18</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message">
+                        <div class="message-avatar">CR</div>
+                        <div class="message-content">
+                            <div class="message-text">Yo puedo llevar guantes. También tengo bolsas de basura adicionales.</div>
+                            <div class="message-meta">
+                                <span class="message-time">Carlos Rodríguez • 09:22</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message">
+                        <div class="message-avatar">MG</div>
+                        <div class="message-content">
+                            <div class="message-text">Perfecto Carlos. Yo me encargo de coordinar el punto de encuentro. ¿Alguien más necesita transporte?</div>
+                            <div class="message-meta">
+                                <span class="message-time">María González • 09:25</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message sent">
+                        <div class="message-avatar">YO</div>
+                        <div class="message-content">
+                            <div class="message-text">Yo tengo carro, puedo llevar a 3 personas más.</div>
+                            <div class="message-meta">
+                                <span class="message-time">Tú • 09:28</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message">
+                        <div class="message-avatar">AL</div>
+                        <div class="message-content">
+                            <div class="message-text">Excelente coordinación equipo. Recuerden llegar 15 minutos antes. ¡Nos vemos mañana!</div>
+                            <div class="message-meta">
+                                <span class="message-time">Ana López • 09:30</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="alert-item alert-success">
-                    <div class="alert-icon"></div>
-                    <div class="alert-content">
-                        <div class="alert-text">Meta mensual de horas superada: 1,247 horas registradas</div>
-                        <div class="alert-meta">Objetivo: 1,200 horas • +47 horas adicionales</div>
-                    </div>
-                    <button class="alert-action secondary">Ver Reporte</button>
+                <div class="message-input-area">
+                    <form class="message-form">
+                        <textarea class="message-input" placeholder="Escribe tu mensaje..." rows="1"></textarea>
+                        <button type="submit" class="message-send-btn">Enviar</button>
+                    </form>
                 </div>
             </div>
         </div>

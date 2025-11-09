@@ -216,14 +216,13 @@
         <div class="login-form">
             <div class="form-group">
                 <label for="usuario">Usuario</label>
-                <input type="text" id="usuario" placeholder="correo@dominio.com" value="correo@dominio.com">
+                <input type="text" id="usuario" placeholder="correo@dominio.com">
             </div>
 
             <div class="form-group">
                 <label for="password">Contraseña</label>
                 <div class="password-input">
-                    <input type="password" id="password" placeholder="********" value="********">
-                    <button class="password-toggle" type="button"></button>
+                    <input type="password" id="password" placeholder="********">
                 </div>
             </div>
 
@@ -231,38 +230,26 @@
                 <h3>Seguridad del Sistema</h3>
                 <ul class="security-list">
                     <li>Mínimo 8 caracteres, mayúscula, número, símbolo</li>
-                    <li>Máximo 5 intentos fallidos (Intentos restantes: 5)</li>
+                    <li>Máximo 5 intentos fallidos, bloqueo temporal</li>
                     <li>Hash seguro, no texto plano</li>
-                    <li>Sesión activa por 30 minutos sin actividad</li>
-                    <li>Registro de auditoría de intentos de acceso</li>
+                    <li>Sesiones activas 30 minutos sin actividad</li>
+                    <li>Validación de correo electrónico válido</li>
+                    <li>Reintento automático de envío si falla</li>
+                    <li>Registro de todos los intentos de acceso</li>
                 </ul>
             </div>
 
             <button class="login-btn">Iniciar Sesión</button>
 
-            <div class="forgot-password">
-                <a href="#">¿Olvidaste tu contraseña?</a>
-            </div>
-
             <div class="roles-info">
                 <h4>Roles del Sistema</h4>
                 <div class="roles-list">
-                    Administrador • Coordinador • Voluntario
+                    <strong>Administrador:</strong> Control total del sistema<br>
+                    <strong>Coordinador:</strong> Gestión de actividades y voluntarios<br>
+                    <strong>Voluntario:</strong> Participación en actividades
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        // Simple password toggle functionality
-        const toggleBtn = document.querySelector('.password-toggle');
-        const passwordInput = document.querySelector('#password');
-
-        toggleBtn.addEventListener('click', function() {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.textContent = type === 'password' ? '' : '';
-        });
-    </script>
 </body>
 </html>

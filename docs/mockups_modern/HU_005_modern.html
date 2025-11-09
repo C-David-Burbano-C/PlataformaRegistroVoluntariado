@@ -192,8 +192,9 @@
         }
 
         .attendance-controls {
-            display: flex;
-            gap: 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
             align-items: center;
         }
 
@@ -255,6 +256,27 @@
         .status-pending {
             background: #f3f4f6;
             color: #6b7280;
+        }
+
+        .time-input {
+            padding: 8px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.85em;
+            background: #f9fafb;
+        }
+
+        .time-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+        }
+
+        .observation-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.85em;
         }
 
         .summary-section {
@@ -405,6 +427,10 @@
                     <input type="time" id="hora" value="09:00">
                 </div>
                 <div class="form-group">
+                    <label for="hora_salida">Hora de Cierre</label>
+                    <input type="time" id="hora_salida" value="13:00">
+                </div>
+                <div class="form-group">
                     <label for="responsable">Responsable</label>
                     <select id="responsable">
                         <option>María González</option>
@@ -416,7 +442,18 @@
                     <label for="observaciones">Observaciones</label>
                     <input type="text" id="observaciones" placeholder="Observaciones adicionales...">
                 </div>
+                <div class="form-group">
+                    <label for="desempeno">Nivel de Desempeño</label>
+                    <select id="desempeno">
+                        <option>Seleccionar...</option>
+                        <option>Excelente</option>
+                        <option>Bueno</option>
+                        <option>Regular</option>
+                        <option>Deficiente</option>
+                    </select>
+                </div>
             </div>
+            <p style="margin-top:25px; color:#ef4444;">⚠️ El registro solo se habilita el día de la actividad y debe realizarlo un coordinador autorizado.</p>
         </div>
 
         <div class="attendance-list">
@@ -434,9 +471,12 @@
                 </div>
                 <div class="attendance-controls">
                     <span class="status-indicator status-present">Presente</span>
+                    <input type="time" class="time-input" value="09:02" aria-label="Hora de llegada">
+                    <input type="time" class="time-input" value="13:00" aria-label="Hora de salida">
+                    <input type="text" class="observation-input" placeholder="Observaciones...">
                     <button class="attendance-btn btn-present">✓</button>
                     <button class="attendance-btn btn-absent">✗</button>
-                    <button class="attendance-btn btn-late"></button>
+                    <button class="attendance-btn btn-late">Tarde</button>
                 </div>
             </div>
 
@@ -450,9 +490,12 @@
                 </div>
                 <div class="attendance-controls">
                     <span class="status-indicator status-present">Presente</span>
+                    <input type="time" class="time-input" value="08:58" aria-label="Hora de llegada">
+                    <input type="time" class="time-input" value="13:05" aria-label="Hora de salida">
+                    <input type="text" class="observation-input" placeholder="Observaciones...">
                     <button class="attendance-btn btn-present">✓</button>
                     <button class="attendance-btn btn-absent">✗</button>
-                    <button class="attendance-btn btn-late"></button>
+                    <button class="attendance-btn btn-late">Tarde</button>
                 </div>
             </div>
 
@@ -466,9 +509,12 @@
                 </div>
                 <div class="attendance-controls">
                     <span class="status-indicator status-late">Tarde</span>
+                    <input type="time" class="time-input" value="09:25" aria-label="Hora de llegada">
+                    <input type="time" class="time-input" value="13:00" aria-label="Hora de salida">
+                    <input type="text" class="observation-input" placeholder="Observaciones...">
                     <button class="attendance-btn btn-present">✓</button>
                     <button class="attendance-btn btn-absent">✗</button>
-                    <button class="attendance-btn btn-late"></button>
+                    <button class="attendance-btn btn-late">Tarde</button>
                 </div>
             </div>
 
@@ -482,9 +528,12 @@
                 </div>
                 <div class="attendance-controls">
                     <span class="status-indicator status-absent">Ausente</span>
+                    <input type="time" class="time-input" placeholder="Entrada" aria-label="Hora de llegada">
+                    <input type="time" class="time-input" placeholder="Salida" aria-label="Hora de salida">
+                    <input type="text" class="observation-input" placeholder="Motivo de ausencia...">
                     <button class="attendance-btn btn-present">✓</button>
                     <button class="attendance-btn btn-absent">✗</button>
-                    <button class="attendance-btn btn-late"></button>
+                    <button class="attendance-btn btn-late">Tarde</button>
                 </div>
             </div>
 
@@ -498,39 +547,20 @@
                 </div>
                 <div class="attendance-controls">
                     <span class="status-indicator status-pending">Pendiente</span>
+                    <input type="time" class="time-input" placeholder="Entrada" aria-label="Hora de llegada">
+                    <input type="time" class="time-input" placeholder="Salida" aria-label="Hora de salida">
+                    <input type="text" class="observation-input" placeholder="Observaciones...">
                     <button class="attendance-btn btn-present">✓</button>
                     <button class="attendance-btn btn-absent">✗</button>
-                    <button class="attendance-btn btn-late"></button>
+                    <button class="attendance-btn btn-late">Tarde</button>
                 </div>
             </div>
         </div>
 
         <div class="summary-section">
-            <h3 class="section-title">Resumen de Asistencia</h3>
-            <div class="summary-grid">
-                <div class="summary-item">
-                    <div class="summary-value">3</div>
-                    <div class="summary-label">Presentes</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-value">1</div>
-                    <div class="summary-label">Ausentes</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-value">1</div>
-                    <div class="summary-label">Tarde</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-value">1</div>
-                    <div class="summary-label">Pendientes</div>
-                </div>
-            </div>
-
-            <div class="actions-section">
-                <button class="action-btn btn-save">Guardar Asistencia</button>
-                <button class="action-btn btn-export">Exportar Reporte</button>
-                <button class="action-btn btn-cancel">Cancelar</button>
-            </div>
+            <h3 class="section-title">Resumen</h3>
+            <p style="text-align:center; margin-top:25px; color:#374151;">Horas trabajadas calculadas automáticamente: <strong>12</strong></p>
+            <p style="text-align:center; color:#6b7280;">Solo el coordinador puede modificar registros de asistencia.</p>
         </div>
     </div>
 </body>

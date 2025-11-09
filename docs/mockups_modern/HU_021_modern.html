@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HU_021 - Estadísticas y Métricas Moderno</title>
+    <title>HU_021 - GESTIÓN DE ROLES Y PERMISOS Moderno</title>
     <style>
         * {
             margin: 0;
@@ -43,31 +43,1079 @@
             padding: 40px 30px;
         }
 
-        .filters-section {
+        .roles-overview {
+            margin-bottom: 40px;
+        }
+
+        .overview-card {
             background: white;
             border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 30px;
+            padding: 30px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             border: 1px solid #e5e7eb;
         }
 
-        .filters-grid {
+        .overview-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .roles-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
         }
 
-        .filter-group {
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5em;
+            font-weight: 300;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .roles-management {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn.primary {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: #2d5aa0;
+            transform: translateY(-1px);
+        }
+
+        .action-btn.secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .action-btn.secondary:hover {
+            background: #4b5563;
+        }
+
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .role-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .role-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .role-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .role-info h4 {
+            color: #1e3a8a;
+            font-size: 1.2em;
+            margin-bottom: 8px;
+        }
+
+        .role-description {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .role-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-admin {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .badge-coordinator {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-volunteer {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-custom {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .permissions-list {
             display: flex;
             flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .permission-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+        }
+
+        .permission-checkbox {
+            width: 16px;
+            height: 16px;
+            accent-color: #1e3a8a;
+        }
+
+        .permission-label {
+            color: #374151;
+            font-size: 0.9em;
+        }
+
+        .role-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .role-action-btn {
+            padding: 8px 12px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .role-action-btn:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+
+        .role-action-btn.edit {
+            border-color: #1e3a8a;
+            color: #1e3a8a;
+        }
+
+        .role-action-btn.edit:hover {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .role-action-btn.delete {
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+
+        .role-action-btn.delete:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        .users-assignment {
+            margin-bottom: 40px;
+        }
+
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .user-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .user-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-color: #0ea5e9;
+        }
+
+        .user-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-info h4 {
+            color: #1e3a8a;
+            margin-bottom: 4px;
+        }
+
+        .user-email {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .user-roles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .user-role-tag {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .user-actions {
+            display: flex;
             gap: 8px;
         }
 
-        .filter-label {
+        .user-action-btn {
+            padding: 6px 12px;
+            border: 2px solid #e5e7eb;
+            background: white;
             color: #374151;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .user-action-btn:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+
+        .user-action-btn.assign {
+            border-color: #10b981;
+            color: #10b981;
+        }
+
+        .user-action-btn.assign:hover {
+            background: #10b981;
+            color: white;
+        }
+
+        .permissions-matrix {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .matrix-header {
+            margin-bottom: 25px;
+        }
+
+        .matrix-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .matrix-description {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .permissions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .permissions-table th,
+        .permissions-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .permissions-table th {
+            background: #f9fafb;
+            color: #1e3a8a;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .permissions-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .permission-toggle {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .permission-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #1e3a8a;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .role-create-modal,
+        .role-edit-modal,
+        .user-assign-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 30px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .modal-header h3 {
+            color: #1e3a8a;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9em;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9em;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .permissions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .permission-group {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .permission-group h4 {
+            color: #1e3a8a;
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 25px 30px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
             font-size: 0.9em;
             font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.cancel {
+            background: #6b7280;
+            color: white;
+        }
+
+        .modal-btn.cancel:hover {
+            background: #4b5563;
+        }
+
+        .modal-btn.save {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .modal-btn.save:hover {
+            background: #2d5aa0;
+        }
+
+        @media (max-width: 768px) {
+            .roles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .users-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .role-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .user-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .permissions-table {
+                font-size: 0.8em;
+            }
+
+            .permissions-table th,
+            .permissions-table td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Gestión de Roles y Permisos</h1>
+        <p>Administra roles, permisos y asignaciones de usuarios en el sistema</p>
+    </div>
+
+    <div class="content">
+        <div class="roles-overview">
+            <div class="overview-card">
+                <h3 class="overview-title">Resumen del Sistema</h3>
+                <div class="roles-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">4</span>
+                        <span class="stat-label">Roles Activos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">25</span>
+                        <span class="stat-label">Usuarios Asignados</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Permisos Totales</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="roles-management">
+            <div class="section-header">
+                <h2 class="section-title">Roles del Sistema</h2>
+                <div class="section-actions">
+                    <button class="action-btn secondary">Importar Roles</button>
+                    <button class="action-btn primary">Crear Nuevo Rol</button>
+                </div>
+            </div>
+
+            <div class="roles-grid">
+                <div class="role-card">
+                    <div class="role-header">
+                        <div class="role-info">
+                            <h4>Administrador</h4>
+                            <p class="role-description">Acceso completo al sistema con todos los permisos</p>
+                        </div>
+                        <span class="role-badge badge-admin">Sistema</span>
+                    </div>
+                    <div class="permissions-list">
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox" checked disabled>
+                            <label class="permission-label">Gestión de usuarios</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox" checked disabled>
+                            <label class="permission-label">Gestión de actividades</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox" checked disabled>
+                            <label class="permission-label">Reportes y estadísticas</label>
+                        </div>
+                    </div>
+                    <div class="role-actions">
+                        <button class="role-action-btn edit">Editar</button>
+                        <button class="role-action-btn" disabled>Duplicar</button>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <div class="role-header">
+                        <div class="role-info">
+                            <h4>Coordinador</h4>
+                            <p class="role-description">Gestión de actividades y voluntarios asignados</p>
+                        </div>
+                        <span class="role-badge badge-coordinator">Sistema</span>
+                    </div>
+                    <div class="permissions-list">
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox" checked disabled>
+                            <label class="permission-label">Crear actividades</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox" checked disabled>
+                            <label class="permission-label">Asignar voluntarios</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox" disabled>
+                            <label class="permission-label">Eliminar usuarios</label>
+                        </div>
+                    </div>
+                    <div class="role-actions">
+                        <button class="role-action-btn edit">Editar</button>
+                        <button class="role-action-btn" disabled>Duplicar</button>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <div class="role-header">
+                        <div class="role-info">
+                            <h4>Voluntario</h4>
+                            <p class="role-description">Acceso básico para registro e inscripción</p>
+                        </div>
+                        <span class="role-badge badge-volunteer">Sistema</span>
+                    </div>
+                    <div class="permissions-list">
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox" checked disabled>
+                            <label class="permission-label">Ver actividades</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox" checked disabled>
+                            <label class="permission-label">Inscribirse en actividades</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox" disabled>
+                            <label class="permission-label">Modificar actividades</label>
+                        </div>
+                    </div>
+                    <div class="role-actions">
+                        <button class="role-action-btn edit">Editar</button>
+                        <button class="role-action-btn" disabled>Duplicar</button>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <div class="role-header">
+                        <div class="role-info">
+                            <h4>Supervisor de Área</h4>
+                            <p class="role-description">Rol personalizado para supervisión específica</p>
+                        </div>
+                        <span class="role-badge badge-custom">Personalizado</span>
+                    </div>
+                    <div class="permissions-list">
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox" checked disabled>
+                            <label class="permission-label">Ver reportes de área</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox" checked disabled>
+                            <label class="permission-label">Aprobar actividades</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox" disabled>
+                            <label class="permission-label">Eliminar actividades</label>
+                        </div>
+                    </div>
+                    <div class="role-actions">
+                        <button class="role-action-btn edit">Editar</button>
+                        <button class="role-action-btn delete">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="users-assignment">
+            <div class="section-header">
+                <h2 class="section-title">Asignación de Usuarios</h2>
+                <div class="section-actions">
+                    <button class="action-btn secondary">Filtrar Usuarios</button>
+                    <button class="action-btn primary">Asignar Roles</button>
+                </div>
+            </div>
+
+            <div class="users-grid">
+                <div class="user-card">
+                    <div class="user-header">
+                        <div class="user-avatar">MG</div>
+                        <div class="user-info">
+                            <h4>María González</h4>
+                            <p class="user-email">maria.gonzalez@email.com</p>
+                        </div>
+                    </div>
+                    <div class="user-roles">
+                        <span class="user-role-tag badge-admin">Administrador</span>
+                    </div>
+                    <div class="user-actions">
+                        <button class="user-action-btn assign">Cambiar Roles</button>
+                        <button class="user-action-btn">Ver Permisos</button>
+                    </div>
+                </div>
+
+                <div class="user-card">
+                    <div class="user-header">
+                        <div class="user-avatar">CR</div>
+                        <div class="user-info">
+                            <h4>Carlos Rodríguez</h4>
+                            <p class="user-email">carlos.rodriguez@email.com</p>
+                        </div>
+                    </div>
+                    <div class="user-roles">
+                        <span class="user-role-tag badge-coordinator">Coordinador</span>
+                        <span class="user-role-tag badge-custom">Supervisor</span>
+                    </div>
+                    <div class="user-actions">
+                        <button class="user-action-btn assign">Cambiar Roles</button>
+                        <button class="user-action-btn">Ver Permisos</button>
+                    </div>
+                </div>
+
+                <div class="user-card">
+                    <div class="user-header">
+                        <div class="user-avatar">AL</div>
+                        <div class="user-info">
+                            <h4>Ana López</h4>
+                            <p class="user-email">ana.lopez@email.com</p>
+                        </div>
+                    </div>
+                    <div class="user-roles">
+                        <span class="user-role-tag badge-volunteer">Voluntario</span>
+                    </div>
+                    <div class="user-actions">
+                        <button class="user-action-btn assign">Cambiar Roles</button>
+                        <button class="user-action-btn">Ver Permisos</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="permissions-matrix">
+            <div class="matrix-header">
+                <h3 class="matrix-title">Matriz de Permisos</h3>
+                <p class="matrix-description">Vista detallada de permisos por rol y módulo del sistema</p>
+            </div>
+
+            <table class="permissions-table">
+                <thead>
+                    <tr>
+                        <th>Módulo / Acción</th>
+                        <th>Administrador</th>
+                        <th>Coordinador</th>
+                        <th>Voluntario</th>
+                        <th>Supervisor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Usuarios</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Crear usuarios</td>
+                        <td><label class="permission-toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" disabled><span class="toggle-slider"></span></label></td>
+                    </tr>
+                    <tr>
+                        <td>Editar usuarios</td>
+                        <td><label class="permission-toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" disabled><span class="toggle-slider"></span></label></td>
+                    </tr>
+                    <tr>
+                        <td>Eliminar usuarios</td>
+                        <td><label class="permission-toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" disabled><span class="toggle-slider"></span></label></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Actividades</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Crear actividades</td>
+                        <td><label class="permission-toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></td>
+                    </tr>
+                    <tr>
+                        <td>Ver actividades</td>
+                        <td><label class="permission-toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></td>
+                    </tr>
+                    <tr>
+                        <td>Inscribirse en actividades</td>
+                        <td><label class="permission-toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></td>
+                        <td><label class="permission-toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="role-create-modal" id="roleCreateModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Crear Nuevo Rol</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nombre del Rol</label>
+                    <input type="text" class="form-input" placeholder="Ej: Coordinador de Eventos">
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea class="form-textarea" placeholder="Describe las responsabilidades de este rol..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Permisos del Sistema</label>
+                    <div class="permissions-grid">
+                        <div class="permission-group">
+                            <h4>Usuarios</h4>
+                            <div class="permission-item">
+                                <input type="checkbox" class="permission-checkbox" id="create-users">
+                                <label for="create-users">Crear usuarios</label>
+                            </div>
+                            <div class="permission-item">
+                                <input type="checkbox" class="permission-checkbox" id="edit-users">
+                                <label for="edit-users">Editar usuarios</label>
+                            </div>
+                            <div class="permission-item">
+                                <input type="checkbox" class="permission-checkbox" id="delete-users">
+                                <label for="delete-users">Eliminar usuarios</label>
+                            </div>
+                        </div>
+                        <div class="permission-group">
+                            <h4>Actividades</h4>
+                            <div class="permission-item">
+                                <input type="checkbox" class="permission-checkbox" id="create-activities">
+                                <label for="create-activities">Crear actividades</label>
+                            </div>
+                            <div class="permission-item">
+                                <input type="checkbox" class="permission-checkbox" id="edit-activities">
+                                <label for="edit-activities">Editar actividades</label>
+                            </div>
+                            <div class="permission-item">
+                                <input type="checkbox" class="permission-checkbox" id="delete-activities">
+                                <label for="delete-activities">Eliminar actividades</label>
+                            </div>
+                        </div>
+                        <div class="permission-group">
+                            <h4>Reportes</h4>
+                            <div class="permission-item">
+                                <input type="checkbox" class="permission-checkbox" id="view-reports">
+                                <label for="view-reports">Ver reportes</label>
+                            </div>
+                            <div class="permission-item">
+                                <input type="checkbox" class="permission-checkbox" id="export-reports">
+                                <label for="export-reports">Exportar reportes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn cancel">Cancelar</button>
+                <button class="modal-btn save">Crear Rol</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .participation-overview {
+            margin-bottom: 40px;
+        }
+
+        .overview-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .overview-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .participation-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5em;
+            font-weight: 300;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .activities-section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .section-filters {
+            display: flex;
+            gap: 15px;
         }
 
         .filter-select {
@@ -79,202 +1127,140 @@
             cursor: pointer;
         }
 
-        .metrics-overview {
+        .activities-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 25px;
-            margin-bottom: 30px;
         }
 
-        .metric-card {
+        .activity-card {
             background: white;
             border-radius: 15px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             border: 1px solid #e5e7eb;
             transition: all 0.3s ease;
         }
 
-        .metric-card:hover {
+        .activity-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 30px rgba(0,0,0,0.15);
         }
 
-        .metric-header {
+        .activity-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 20px;
         }
 
-        .metric-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-        }
-
-        .metric-volunteers .metric-icon {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: white;
-        }
-
-        .metric-activities .metric-icon {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-        }
-
-        .metric-hours .metric-icon {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white;
-        }
-
-        .metric-growth .metric-icon {
-            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-            color: white;
-        }
-
-        .metric-trend {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.85em;
-            font-weight: 600;
-        }
-
-        .trend-up {
-            color: #10b981;
-        }
-
-        .trend-down {
-            color: #ef4444;
-        }
-
-        .metric-value {
-            font-size: 2.5em;
-            font-weight: 300;
+        .activity-info h4 {
             color: #1e3a8a;
+            font-size: 1.2em;
             margin-bottom: 8px;
         }
 
-        .metric-label {
+        .activity-date,
+        .activity-location {
             color: #6b7280;
-            font-size: 1em;
+            font-size: 0.9em;
+            margin-bottom: 4px;
+        }
+
+        .activity-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
             font-weight: 600;
+            text-transform: uppercase;
         }
 
-        .charts-section {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
+        .status-upcoming {
+            background: #dbeafe;
+            color: #1e40af;
         }
 
-        .chart-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
+        .status-ongoing {
+            background: #dcfce7;
+            color: #166534;
         }
 
-        .chart-header {
+        .status-completed {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .activity-details {
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 8px;
         }
 
-        .chart-title {
-            color: #1e3a8a;
-            font-size: 1.4em;
+        .detail-label {
+            color: #6b7280;
             font-weight: 600;
         }
 
-        .chart-controls {
+        .detail-value {
+            color: #374151;
+        }
+
+        .activity-actions {
             display: flex;
             gap: 10px;
         }
 
-        .chart-btn {
-            padding: 8px 16px;
-            border: 2px solid #e5e7eb;
-            background: white;
-            color: #374151;
+        .btn-modify,
+        .btn-cancel,
+        .btn-view {
+            padding: 10px 16px;
+            border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.85em;
+            font-size: 0.9em;
             font-weight: 600;
+            transition: all 0.3s ease;
         }
 
-        .chart-btn.active {
+        .btn-modify {
             background: #1e3a8a;
             color: white;
-            border-color: #1e3a8a;
         }
 
-        .chart-btn:hover {
-            border-color: #0ea5e9;
-            color: #0ea5e9;
+        .btn-modify:hover {
+            background: #2d5aa0;
+            transform: translateY(-1px);
         }
 
-        .chart-placeholder {
-            height: 350px;
-            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6b7280;
-            font-size: 1.2em;
-            border: 2px dashed #e5e7eb;
+        .btn-cancel {
+            background: #ef4444;
+            color: white;
         }
 
-        .sidebar-metrics {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
+        .btn-cancel:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
         }
 
-        .mini-chart {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
+        .btn-view {
+            background: #6b7280;
+            color: white;
         }
 
-        .mini-chart-title {
-            color: #1e3a8a;
-            font-size: 1.2em;
-            font-weight: 600;
-            margin-bottom: 20px;
+        .btn-view:hover {
+            background: #4b5563;
+            transform: translateY(-1px);
         }
 
-        .mini-chart-placeholder {
-            height: 150px;
-            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6b7280;
-            font-size: 0.9em;
-            border: 2px dashed #e5e7eb;
+        .modification-section {
+            margin-bottom: 40px;
         }
 
-        .detailed-metrics {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .detail-card {
+        .modification-card {
             background: white;
             border-radius: 15px;
             padding: 30px;
@@ -282,723 +1268,641 @@
             border: 1px solid #e5e7eb;
         }
 
-        .detail-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .modification-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
             margin-bottom: 25px;
         }
 
-        .detail-title {
+        .modification-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .modification-info h4 {
+            color: #1e3a8a;
+            margin-bottom: 5px;
+        }
+
+        .modification-info p {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+
+        .modification-status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-approved {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-rejected {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .modification-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-edit,
+        .btn-delete {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #2d5aa0;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+
+        .cancellation-modal,
+        .modification-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 30px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .modal-header h3 {
             color: #1e3a8a;
             font-size: 1.3em;
             font-weight: 600;
         }
 
-        .detail-export {
-            padding: 8px 16px;
-            background: #6b7280;
-            color: white;
+        .modal-close {
+            background: none;
             border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.85em;
-            font-weight: 600;
-        }
-
-        .detail-export:hover {
-            background: #4b5563;
-            transform: translateY(-1px);
-        }
-
-        .metrics-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .metrics-table th,
-        .metrics-table td {
-            padding: 15px 12px;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .metrics-table th {
-            background: #f9fafb;
-            color: #1e3a8a;
-            font-weight: 600;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .metrics-table tr:hover {
-            background: #f9fafb;
-        }
-
-        .metric-category {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .category-color {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .category-education {
-            background: #0ea5e9;
-        }
-
-        .category-environment {
-            background: #10b981;
-        }
-
-        .category-social {
-            background: #f59e0b;
-        }
-
-        .category-health {
-            background: #ef4444;
-        }
-
-        .category-cultural {
-            background: #8b5cf6;
-        }
-
-        .category-name {
-            font-weight: 600;
-            color: #1e3a8a;
-        }
-
-        .metric-number {
-            font-weight: 600;
-            color: #374151;
-        }
-
-        .metric-percentage {
-            color: #6b7280;
-            font-size: 0.9em;
-        }
-
-        .performance-indicators {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-        }
-
-        .performance-title {
-            color: #1e3a8a;
-            font-size: 1.4em;
-            font-weight: 600;
-            margin-bottom: 25px;
-        }
-
-        .indicators-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .indicator-card {
-            background: #f9fafb;
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #e5e7eb;
-            transition: all 0.3s ease;
-        }
-
-        .indicator-card:hover {
-            background: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .indicator-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .indicator-name {
-            color: #1e3a8a;
-            font-size: 1.1em;
-            font-weight: 600;
-        }
-
-        .indicator-value {
             font-size: 1.5em;
-            font-weight: 300;
-            color: #374151;
+            cursor: pointer;
+            color: #6b7280;
         }
 
-        .indicator-bar {
-            width: 100%;
-            height: 8px;
-            background: #e5e7eb;
-            border-radius: 4px;
-            overflow: hidden;
+        .modal-body {
+            padding: 30px;
+        }
+
+        .activity-summary {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .activity-summary h4 {
+            color: #1e3a8a;
             margin-bottom: 10px;
         }
 
-        .indicator-fill {
-            height: 100%;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .fill-excellent {
-            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
-        }
-
-        .fill-good {
-            background: linear-gradient(90deg, #0ea5e9 0%, #0284c7 100%);
-        }
-
-        .fill-average {
-            background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
-        }
-
-        .fill-poor {
-            background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
-        }
-
-        .indicator-label {
+        .activity-summary p {
             color: #6b7280;
-            font-size: 0.85em;
-        }
-
-        .reports-section {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-        }
-
-        .reports-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .reports-title {
-            color: #1e3a8a;
-            font-size: 1.4em;
-            font-weight: 600;
-        }
-
-        .reports-generate {
-            padding: 10px 20px;
-            background: #1e3a8a;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
             font-size: 0.9em;
-            font-weight: 600;
-        }
-
-        .reports-generate:hover {
-            background: #2d5aa0;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .reports-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .report-card {
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 20px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .report-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-color: #0ea5e9;
-        }
-
-        .report-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .report-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2em;
-        }
-
-        .report-info h4 {
-            color: #1e3a8a;
-            font-size: 1.1em;
             margin-bottom: 5px;
         }
 
-        .report-description {
-            color: #6b7280;
+        .cancellation-reason {
+            margin-bottom: 20px;
+        }
+
+        .cancellation-reason label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .reason-select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 10px;
             font-size: 0.9em;
-            line-height: 1.4;
+        }
+
+        .reason-select + textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9em;
+            resize: vertical;
+        }
+
+        .cancellation-warning {
+            background: #fef3c7;
+            color: #d97706;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #f59e0b;
+            font-size: 0.9em;
+        }
+
+        .modification-form {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .datetime-input,
+        .role-select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9em;
+            resize: vertical;
+        }
+
+        .modification-notice {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #3b82f6;
+            font-size: 0.9em;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 25px 30px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .btn-cancel-modal,
+        .btn-confirm-cancel,
+        .btn-submit-modification {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel-modal {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-cancel-modal:hover {
+            background: #4b5563;
+        }
+
+        .btn-confirm-cancel {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-confirm-cancel:hover {
+            background: #dc2626;
+        }
+
+        .btn-submit-modification {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .btn-submit-modification:hover {
+            background: #2d5aa0;
         }
 
         @media (max-width: 768px) {
-            .metrics-overview {
+            .activities-grid {
                 grid-template-columns: 1fr;
             }
 
-            .charts-section {
+            .participation-stats {
                 grid-template-columns: 1fr;
             }
 
-            .detailed-metrics {
-                grid-template-columns: 1fr;
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
             }
 
-            .indicators-grid {
-                grid-template-columns: 1fr;
+            .modification-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
             }
 
-            .reports-grid {
-                grid-template-columns: 1fr;
+            .activity-actions {
+                flex-direction: column;
             }
 
-            .filters-grid {
-                grid-template-columns: 1fr;
+            .modal-footer {
+                flex-direction: column;
+            }
+
+            .modal-content {
+                width: 95%;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Estadísticas y Métricas</h1>
-        <p>Análisis completo del rendimiento del sistema de voluntariado</p>
+        <h1>CANCELACIÓN Y MODIFICACIÓN DE PARTICIPACIÓN</h1>
+        <p>Gestiona tu participación en actividades voluntarias</p>
     </div>
 
     <div class="content">
-        <div class="filters-section">
-            <div class="filters-grid">
-                <div class="filter-group">
-                    <label class="filter-label">Período</label>
-                    <select class="filter-select">
-                        <option value="today">Hoy</option>
-                        <option value="week">Esta Semana</option>
-                        <option value="month" selected>Este Mes</option>
-                        <option value="quarter">Este Trimestre</option>
-                        <option value="year">Este Año</option>
-                    </select>
+        <div class="participation-overview">
+            <div class="overview-card">
+                <h3 class="overview-title">Mis Participaciones Activas</h3>
+                <div class="participation-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">5</span>
+                        <span class="stat-label">Actividades Inscritas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">2</span>
+                        <span class="stat-label">Próximas Esta Semana</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">Modificaciones Pendientes</span>
+                    </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="filter-group">
-                    <label class="filter-label">Categoría</label>
+        <div class="activities-section">
+            <div class="section-header">
+                <h2 class="section-title">Actividades Inscritas</h2>
+                <div class="section-filters">
                     <select class="filter-select">
-                        <option value="all" selected>Todas las Categorías</option>
-                        <option value="education">Educación</option>
-                        <option value="environment">Medio Ambiente</option>
-                        <option value="social">Social</option>
-                        <option value="health">Salud</option>
-                        <option value="cultural">Cultural</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Tipo de Métrica</label>
-                    <select class="filter-select">
-                        <option value="all" selected>Todas</option>
-                        <option value="participation">Participación</option>
-                        <option value="impact">Impacto</option>
-                        <option value="engagement">Compromiso</option>
-                        <option value="growth">Crecimiento</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Vista</label>
-                    <select class="filter-select">
-                        <option value="summary" selected>Resumen</option>
-                        <option value="detailed">Detallado</option>
-                        <option value="comparative">Comparativo</option>
+                        <option value="all" selected>Todas las Actividades</option>
+                        <option value="upcoming">Próximas</option>
+                        <option value="ongoing">En Curso</option>
+                        <option value="completed">Completadas</option>
                     </select>
                 </div>
             </div>
-        </div>
 
-        <div class="metrics-overview">
-            <div class="metric-card metric-volunteers">
-                <div class="metric-header">
-                    <div class="metric-icon"></div>
-                    <div class="metric-trend trend-up">
-                        <span></span>
-                        <span>+12.5%</span>
+            <div class="activities-grid">
+                <div class="activity-card">
+                    <div class="activity-header">
+                        <div class="activity-info">
+                            <h4 class="activity-title">Campaña de Reciclaje Comunitario</h4>
+                            <p class="activity-date">📅 15 de diciembre, 2024 - 09:00 AM</p>
+                            <p class="activity-location">📍 Parque Central, Ciudad</p>
+                        </div>
+                        <div class="activity-status status-upcoming">
+                            Próxima
+                        </div>
                     </div>
-                </div>
-                <div class="metric-value">247</div>
-                <div class="metric-label">Voluntarios Activos</div>
-            </div>
-
-            <div class="metric-card metric-activities">
-                <div class="metric-header">
-                    <div class="metric-icon"></div>
-                    <div class="metric-trend trend-up">
-                        <span></span>
-                        <span>+8.3%</span>
+                    <div class="activity-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Rol asignado:</span>
+                            <span class="detail-value">Coordinador de Equipo</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Duración:</span>
+                            <span class="detail-value">4 horas</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Organización:</span>
+                            <span class="detail-value">Fundación Verde</span>
+                        </div>
                     </div>
-                </div>
-                <div class="metric-value">23</div>
-                <div class="metric-label">Actividades Completadas</div>
-            </div>
-
-            <div class="metric-card metric-hours">
-                <div class="metric-header">
-                    <div class="metric-icon"></div>
-                    <div class="metric-trend trend-up">
-                        <span></span>
-                        <span>+15.7%</span>
-                    </div>
-                </div>
-                <div class="metric-value">1,247</div>
-                <div class="metric-label">Horas de Servicio</div>
-            </div>
-
-            <div class="metric-card metric-growth">
-                <div class="metric-header">
-                    <div class="metric-icon"></div>
-                    <div class="metric-trend trend-up">
-                        <span></span>
-                        <span>+23.1%</span>
-                    </div>
-                </div>
-                <div class="metric-value">94.2%</div>
-                <div class="metric-label">Tasa de Retención</div>
-            </div>
-        </div>
-
-        <div class="charts-section">
-            <div class="chart-card">
-                <div class="chart-header">
-                    <h3 class="chart-title">Tendencia de Participación</h3>
-                    <div class="chart-controls">
-                        <button class="chart-btn active">Mensual</button>
-                        <button class="chart-btn">Trimestral</button>
-                        <button class="chart-btn">Anual</button>
-                    </div>
-                </div>
-                <div class="chart-placeholder">
-                     Gráfico de Tendencia de Participación Mensual
-                </div>
-            </div>
-
-            <div class="sidebar-metrics">
-                <div class="mini-chart">
-                    <h4 class="mini-chart-title">Distribución por Categoría</h4>
-                    <div class="mini-chart-placeholder">
-                         Gráfico Circular de Categorías
+                    <div class="activity-actions">
+                        <button class="btn-modify">Modificar Participación</button>
+                        <button class="btn-cancel">Cancelar Inscripción</button>
                     </div>
                 </div>
 
-                <div class="mini-chart">
-                    <h4 class="mini-chart-title">Crecimiento de Usuarios</h4>
-                    <div class="mini-chart-placeholder">
-                        Gráfico de Crecimiento
+                <div class="activity-card">
+                    <div class="activity-header">
+                        <div class="activity-info">
+                            <h4 class="activity-title">Apoyo Escolar Primaria</h4>
+                            <p class="activity-date">📅 18 de diciembre, 2024 - 14:00 PM</p>
+                            <p class="activity-location">📍 Escuela Pública #5</p>
+                        </div>
+                        <div class="activity-status status-upcoming">
+                            Próxima
+                        </div>
+                    </div>
+                    <div class="activity-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Rol asignado:</span>
+                            <span class="detail-value">Tutor de Matemáticas</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Duración:</span>
+                            <span class="detail-value">3 horas</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Organización:</span>
+                            <span class="detail-value">Ministerio de Educación</span>
+                        </div>
+                    </div>
+                    <div class="activity-actions">
+                        <button class="btn-modify">Modificar Participación</button>
+                        <button class="btn-cancel">Cancelar Inscripción</button>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="detailed-metrics">
-            <div class="detail-card">
-                <div class="detail-header">
-                    <h3 class="detail-title">Participación por Categoría</h3>
-                    <button class="detail-export">Exportar</button>
-                </div>
-                <table class="metrics-table">
-                    <thead>
-                        <tr>
-                            <th>Categoría</th>
-                            <th>Actividades</th>
-                            <th>Voluntarios</th>
-                            <th>Horas Totales</th>
-                            <th>% del Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="metric-category">
-                                    <div class="category-color category-education"></div>
-                                    <span class="category-name">Educación</span>
-                                </div>
-                            </td>
-                            <td class="metric-number">8</td>
-                            <td class="metric-number">89</td>
-                            <td class="metric-number">456</td>
-                            <td class="metric-percentage">36.5%</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="metric-category">
-                                    <div class="category-color category-environment"></div>
-                                    <span class="category-name">Medio Ambiente</span>
-                                </div>
-                            </td>
-                            <td class="metric-number">6</td>
-                            <td class="metric-number">67</td>
-                            <td class="metric-number">345</td>
-                            <td class="metric-percentage">27.7%</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="metric-category">
-                                    <div class="category-color category-social"></div>
-                                    <span class="category-name">Social</span>
-                                </div>
-                            </td>
-                            <td class="metric-number">5</td>
-                            <td class="metric-number">54</td>
-                            <td class="metric-number">267</td>
-                            <td class="metric-percentage">21.4%</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="metric-category">
-                                    <div class="category-color category-health"></div>
-                                    <span class="category-name">Salud</span>
-                                </div>
-                            </td>
-                            <td class="metric-number">3</td>
-                            <td class="metric-number">28</td>
-                            <td class="metric-number">134</td>
-                            <td class="metric-percentage">10.7%</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="metric-category">
-                                    <div class="category-color category-cultural"></div>
-                                    <span class="category-name">Cultural</span>
-                                </div>
-                            </td>
-                            <td class="metric-number">1</td>
-                            <td class="metric-number">9</td>
-                            <td class="metric-number">45</td>
-                            <td class="metric-percentage">3.7%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="detail-card">
-                <div class="detail-header">
-                    <h3 class="detail-title">Métricas de Rendimiento</h3>
-                    <button class="detail-export">Exportar</button>
-                </div>
-                <table class="metrics-table">
-                    <thead>
-                        <tr>
-                            <th>Métrica</th>
-                            <th>Valor Actual</th>
-                            <th>Objetivo</th>
-                            <th>% Cumplimiento</th>
-                            <th>Tendencia</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="category-name">Tasa de Inscripción</td>
-                            <td class="metric-number">87.3%</td>
-                            <td class="metric-number">85%</td>
-                            <td class="metric-percentage">102.7%</td>
-                            <td class="trend-up"> +2.1%</td>
-                        </tr>
-                        <tr>
-                            <td class="category-name">Satisfacción de Usuarios</td>
-                            <td class="metric-number">4.6/5</td>
-                            <td class="metric-number">4.5/5</td>
-                            <td class="metric-percentage">102.2%</td>
-                            <td class="trend-up"> +0.1</td>
-                        </tr>
-                        <tr>
-                            <td class="category-name">Tiempo de Respuesta</td>
-                            <td class="metric-number">2.3h</td>
-                            <td class="metric-number">4h</td>
-                            <td class="metric-percentage">57.5%</td>
-                            <td class="trend-up"> -0.4h</td>
-                        </tr>
-                        <tr>
-                            <td class="category-name">Certificados Emitidos</td>
-                            <td class="metric-number">234</td>
-                            <td class="metric-number">200</td>
-                            <td class="metric-percentage">117%</td>
-                            <td class="trend-up"> +12</td>
-                        </tr>
-                        <tr>
-                            <td class="category-name">Actividades por Mes</td>
-                            <td class="metric-number">23</td>
-                            <td class="metric-number">20</td>
-                            <td class="metric-percentage">115%</td>
-                            <td class="trend-up"> +3</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="performance-indicators">
-            <h2 class="performance-title">Indicadores de Rendimiento</h2>
-            <div class="indicators-grid">
-                <div class="indicator-card">
-                    <div class="indicator-header">
-                        <span class="indicator-name">Eficiencia Operativa</span>
-                        <span class="indicator-value">92%</span>
+                <div class="activity-card">
+                    <div class="activity-header">
+                        <div class="activity-info">
+                            <h4 class="activity-title">Distribución de Alimentos</h4>
+                            <p class="activity-date">📅 20 de diciembre, 2024 - 10:00 AM</p>
+                            <p class="activity-location">📍 Banco de Alimentos Central</p>
+                        </div>
+                        <div class="activity-status status-upcoming">
+                            Próxima
+                        </div>
                     </div>
-                    <div class="indicator-bar">
-                        <div class="indicator-fill fill-excellent" style="width: 92%"></div>
+                    <div class="activity-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Rol asignado:</span>
+                            <span class="detail-value">Voluntario General</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Duración:</span>
+                            <span class="detail-value">6 horas</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Organización:</span>
+                            <span class="detail-value">Cruz Roja</span>
+                        </div>
                     </div>
-                    <div class="indicator-label">Excelente rendimiento del sistema</div>
+                    <div class="activity-actions">
+                        <button class="btn-modify">Modificar Participación</button>
+                        <button class="btn-cancel">Cancelar Inscripción</button>
+                    </div>
                 </div>
 
-                <div class="indicator-card">
-                    <div class="indicator-header">
-                        <span class="indicator-name">Satisfacción del Usuario</span>
-                        <span class="indicator-value">88%</span>
+                <div class="activity-card">
+                    <div class="activity-header">
+                        <div class="activity-info">
+                            <h4 class="activity-title">Limpieza de Playa</h4>
+                            <p class="activity-date">📅 22 de diciembre, 2024 - 08:00 AM</p>
+                            <p class="activity-location">📍 Playa Municipal</p>
+                        </div>
+                        <div class="activity-status status-ongoing">
+                            En Curso
+                        </div>
                     </div>
-                    <div class="indicator-bar">
-                        <div class="indicator-fill fill-good" style="width: 88%"></div>
+                    <div class="activity-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Rol asignado:</span>
+                            <span class="detail-value">Coordinador de Área</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Duración:</span>
+                            <span class="detail-value">5 horas</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Organización:</span>
+                            <span class="detail-value">ONG Ambiental</span>
+                        </div>
                     </div>
-                    <div class="indicator-label">Buena experiencia general</div>
+                    <div class="activity-actions">
+                        <button class="btn-modify">Modificar Participación</button>
+                        <button class="btn-cancel">Cancelar Inscripción</button>
+                    </div>
                 </div>
 
-                <div class="indicator-card">
-                    <div class="indicator-header">
-                        <span class="indicator-name">Tasa de Conversión</span>
-                        <span class="indicator-value">76%</span>
+                <div class="activity-card">
+                    <div class="activity-header">
+                        <div class="activity-info">
+                            <h4 class="activity-title">Visita a Centro de Día</h4>
+                            <p class="activity-date">📅 10 de diciembre, 2024 - 16:00 PM</p>
+                            <p class="activity-location">📍 Centro de Día San José</p>
+                        </div>
+                        <div class="activity-status status-completed">
+                            Completada
+                        </div>
                     </div>
-                    <div class="indicator-bar">
-                        <div class="indicator-fill fill-good" style="width: 76%"></div>
+                    <div class="activity-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Rol asignado:</span>
+                            <span class="detail-value">Animador</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Duración:</span>
+                            <span class="detail-value">2 horas</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Organización:</span>
+                            <span class="detail-value">Fundación Mayores</span>
+                        </div>
                     </div>
-                    <div class="indicator-label">De registro a participación activa</div>
-                </div>
-
-                <div class="indicator-card">
-                    <div class="indicator-header">
-                        <span class="indicator-name">Retención de Voluntarios</span>
-                        <span class="indicator-value">94%</span>
+                    <div class="activity-actions">
+                        <button class="btn-view">Ver Detalles</button>
                     </div>
-                    <div class="indicator-bar">
-                        <div class="indicator-fill fill-excellent" style="width: 94%"></div>
-                    </div>
-                    <div class="indicator-label">Excelente fidelización</div>
-                </div>
-
-                <div class="indicator-card">
-                    <div class="indicator-header">
-                        <span class="indicator-name">Tiempo de Carga</span>
-                        <span class="indicator-value">1.2s</span>
-                    </div>
-                    <div class="indicator-bar">
-                        <div class="indicator-fill fill-excellent" style="width: 85%"></div>
-                    </div>
-                    <div class="indicator-label">Rendimiento óptimo</div>
-                </div>
-
-                <div class="indicator-card">
-                    <div class="indicator-header">
-                        <span class="indicator-name">Disponibilidad del Sistema</span>
-                        <span class="indicator-value">99.7%</span>
-                    </div>
-                    <div class="indicator-bar">
-                        <div class="indicator-fill fill-excellent" style="width: 99.7%"></div>
-                    </div>
-                    <div class="indicator-label">Alta confiabilidad</div>
                 </div>
             </div>
         </div>
 
-        <div class="reports-section">
-            <div class="reports-header">
-                <h2 class="reports-title">Reportes Disponibles</h2>
-                <button class="reports-generate">Generar Reporte Personalizado</button>
+        <div class="modification-section">
+            <div class="modification-card">
+                <h3 class="modification-title">Solicitudes de Modificación Pendientes</h3>
+                <div class="modification-list">
+                    <div class="modification-item">
+                        <div class="modification-info">
+                            <h4>Cambio de horario - Campaña de Reciclaje</h4>
+                            <p>De 09:00 AM a 11:00 AM</p>
+                            <span class="modification-status status-pending">Pendiente de Aprobación</span>
+                        </div>
+                        <div class="modification-actions">
+                            <button class="btn-edit">Editar Solicitud</button>
+                            <button class="btn-delete">Cancelar Solicitud</button>
+                        </div>
+                    </div>
+                    <div class="modification-item">
+                        <div class="modification-info">
+                            <h4>Cambio de rol - Apoyo Escolar</h4>
+                            <p>De Tutor de Matemáticas a Tutor de Lenguaje</p>
+                            <span class="modification-status status-approved">Aprobada</span>
+                        </div>
+                        <div class="modification-actions">
+                            <button class="btn-view">Ver Detalles</button>
+                        </div>
+                    </div>
+                    <div class="modification-item">
+                        <div class="modification-info">
+                            <h4>Cancelación - Visita a Centro de Día</h4>
+                            <p>Motivo: Conflicto de horario</p>
+                            <span class="modification-status status-rejected">Rechazada</span>
+                        </div>
+                        <div class="modification-actions">
+                            <button class="btn-view">Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="reports-grid">
-                <div class="report-card">
-                    <div class="report-header">
-                        <div class="report-icon"></div>
-                        <div class="report-info">
-                            <h4>Reporte Ejecutivo</h4>
-                            <p class="report-description">Resumen completo de métricas clave y KPIs del mes</p>
-                        </div>
+        </div>
+
+        <div class="cancellation-modal" id="cancellationModal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Confirmar Cancelación</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro de que deseas cancelar tu participación en esta actividad?</p>
+                    <div class="activity-summary">
+                        <h4>Campaña de Reciclaje Comunitario</h4>
+                        <p><strong>Fecha:</strong> 15 de diciembre, 2024</p>
+                        <p><strong>Hora:</strong> 09:00 AM</p>
+                        <p><strong>Ubicación:</strong> Parque Central</p>
+                    </div>
+                    <div class="cancellation-reason">
+                        <label for="reason">Motivo de la cancelación (opcional):</label>
+                        <select id="reason" class="reason-select">
+                            <option value="">Seleccionar motivo...</option>
+                            <option value="schedule">Conflicto de horario</option>
+                            <option value="health">Problemas de salud</option>
+                            <option value="personal">Motivos personales</option>
+                            <option value="transport">Problemas de transporte</option>
+                            <option value="other">Otro</option>
+                        </select>
+                        <textarea id="additionalReason" placeholder="Detalles adicionales..." rows="3"></textarea>
+                    </div>
+                    <div class="cancellation-warning">
+                        ⚠️ <strong>Importante:</strong> Las cancelaciones con menos de 48 horas de anticipación pueden afectar tu historial de participación.
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button class="btn-cancel-modal">Mantener Inscripción</button>
+                    <button class="btn-confirm-cancel">Confirmar Cancelación</button>
+                </div>
+            </div>
+        </div>
 
-                <div class="report-card">
-                    <div class="report-header">
-                        <div class="report-icon"></div>
-                        <div class="report-info">
-                            <h4>Reporte de Voluntarios</h4>
-                            <p class="report-description">Análisis detallado de participación y engagement</p>
+        <div class="modification-modal" id="modificationModal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Modificar Participación</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="activity-summary">
+                        <h4>Campaña de Reciclaje Comunitario</h4>
+                        <p><strong>Fecha actual:</strong> 15 de diciembre, 2024</p>
+                        <p><strong>Hora actual:</strong> 09:00 AM</p>
+                        <p><strong>Rol actual:</strong> Coordinador de Equipo</p>
+                    </div>
+                    <div class="modification-form">
+                        <div class="form-group">
+                            <label>Nueva fecha y hora:</label>
+                            <input type="datetime-local" class="datetime-input">
                         </div>
+                        <div class="form-group">
+                            <label>Nuevo rol (opcional):</label>
+                            <select class="role-select">
+                                <option value="">Mantener rol actual</option>
+                                <option value="coordinator">Coordinador de Equipo</option>
+                                <option value="volunteer">Voluntario General</option>
+                                <option value="support">Apoyo Logístico</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Motivo del cambio:</label>
+                            <textarea placeholder="Explica el motivo de la modificación..." rows="3" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modification-notice">
+                        ℹ️ Los cambios están sujetos a aprobación por parte de la organización.
                     </div>
                 </div>
-
-                <div class="report-card">
-                    <div class="report-header">
-                        <div class="report-icon"></div>
-                        <div class="report-info">
-                            <h4>Reporte de Actividades</h4>
-                            <p class="report-description">Estadísticas completas de todas las actividades realizadas</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="report-card">
-                    <div class="report-header">
-                        <div class="report-icon"></div>
-                        <div class="report-info">
-                            <h4>Reporte de Impacto</h4>
-                            <p class="report-description">Medición del impacto social generado por las actividades</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="report-card">
-                    <div class="report-header">
-                        <div class="report-icon"></div>
-                        <div class="report-info">
-                            <h4>Reporte de Tendencias</h4>
-                            <p class="report-description">Análisis de tendencias y proyecciones futuras</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="report-card">
-                    <div class="report-header">
-                        <div class="report-icon"></div>
-                        <div class="report-info">
-                            <h4>Reporte Técnico</h4>
-                            <p class="report-description">Métricas técnicas del sistema y rendimiento</p>
-                        </div>
-                    </div>
+                <div class="modal-footer">
+                    <button class="btn-cancel-modal">Cancelar</button>
+                    <button class="btn-submit-modification">Enviar Solicitud</button>
                 </div>
             </div>
         </div>
