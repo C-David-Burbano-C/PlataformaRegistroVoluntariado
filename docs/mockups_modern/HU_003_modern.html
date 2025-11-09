@@ -265,7 +265,15 @@
                         <span class="detail-value">Limpieza de Parque Central</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Fecha:</span>
+                        <span class="detail-label">Descripción:</span>
+                        <span class="detail-value">Mantenimiento y limpieza de áreas verdes urbanas del Parque Central</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Fecha de Inicio:</span>
+                        <span class="detail-value">15 de Noviembre de 2025</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Fecha de Fin:</span>
                         <span class="detail-value">15 de Noviembre de 2025</span>
                     </div>
                     <div class="detail-row">
@@ -284,6 +292,10 @@
                         <span class="detail-label">Coordinador:</span>
                         <span class="detail-value">María González</span>
                     </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Acceso al Sistema:</span>
+                        <span class="detail-value"><a href="#" style="color: #0ea5e9; text-decoration: underline;">Ver actividad en el sistema</a></span>
+                    </div>
                 </div>
             </div>
 
@@ -298,8 +310,20 @@
 
             <div class="setting-item">
                 <div>
+                    <div class="setting-label">Frecuencia de Notificaciones</div>
+                    <div class="setting-desc">Selecciona cómo deseas recibir notificaciones</div>
+                </div>
+                <select style="padding: 8px 15px; border: 2px solid #e5e7eb; border-radius: 8px; background: white; cursor: pointer;">
+                    <option value="instantaneas" selected>Instantáneas</option>
+                    <option value="diarias">Diarias</option>
+                    <option value="semanales">Semanales</option>
+                </select>
+            </div>
+
+            <div class="setting-item">
+                <div>
                     <div class="setting-label">Notificaciones por Email</div>
-                    <div class="setting-desc">Recibe actualizaciones sobre tus actividades</div>
+                    <div class="setting-desc">Recibe actualizaciones sobre tus actividades (Validación de email activa)</div>
                 </div>
                 <div class="toggle active">
                     <div class="toggle-slider"></div>
@@ -318,22 +342,18 @@
 
             <div class="setting-item">
                 <div>
-                    <div class="setting-label">Notificaciones Push</div>
-                    <div class="setting-desc">Alertas instantáneas en tu dispositivo</div>
+                    <div class="setting-label">Registro de Auditoría</div>
+                    <div class="setting-desc">El sistema registra todas las notificaciones enviadas</div>
                 </div>
-                <div class="toggle">
-                    <div class="toggle-slider"></div>
-                </div>
+                <span style="color: #10b981; font-weight: 600;">✓ Activado</span>
             </div>
 
             <div class="setting-item">
                 <div>
-                    <div class="setting-label">Resumen Semanal</div>
-                    <div class="setting-desc">Informe de tu actividad semanal</div>
+                    <div class="setting-label">Reintento Automático</div>
+                    <div class="setting-desc">El sistema reintenta el envío si falla en el primer intento</div>
                 </div>
-                <div class="toggle active">
-                    <div class="toggle-slider"></div>
-                </div>
+                <span style="color: #10b981; font-weight: 600;">✓ Activado</span>
             </div>
         </div>
     </div>

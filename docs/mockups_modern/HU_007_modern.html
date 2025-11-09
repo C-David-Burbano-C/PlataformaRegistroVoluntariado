@@ -152,6 +152,45 @@
             font-style: italic;
         }
 
+        .logo-placeholder {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px auto;
+            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+            font-weight: bold;
+        }
+
+        .download-section {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .download-btn {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+        }
+
         .decorative-elements {
             position: absolute;
             top: 30px;
@@ -206,6 +245,10 @@
         <div class="decorative-elements"></div>
 
         <div class="content">
+            <div class="logo-placeholder">
+                ONG
+            </div>
+            
             <div class="title">Certificado</div>
             <div class="subtitle">de Voluntariado</div>
 
@@ -235,6 +278,10 @@
 
             <div class="date">
                 29 de Octubre de 2025
+            </div>
+
+            <div class="download-section">
+                <button class="download-btn">📄 Descargar PDF</button>
             </div>
         </div>
     </div>

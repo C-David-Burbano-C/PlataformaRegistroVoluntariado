@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HU_006 - Asistencia Estudiantes Moderno</title>
+    <title>HU_006 - Control de Asistencia Semanal</title>
     <style>
         * {
             margin: 0;
@@ -33,57 +33,26 @@
         }
 
         .content {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 40px 30px;
         }
 
-        .class-info {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-        }
-
-        .class-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .class-title {
-            font-size: 1.8em;
-            color: #1e3a8a;
+        .constants-info {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
             font-weight: 600;
+            color: #856404;
         }
 
-        .class-meta {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #6b7280;
-        }
-
-        .meta-item strong {
-            color: #374151;
-        }
-
-        .attendance-section {
+        .attendance-grid {
             background: white;
             border-radius: 15px;
             padding: 30px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             border: 1px solid #e5e7eb;
         }
@@ -96,532 +65,269 @@
             padding-bottom: 10px;
         }
 
-        .quick-actions {
-            display: flex;
-            gap: 20px;
+        .grid-table {
+            width: 100%;
+            border-collapse: collapse;
             margin-bottom: 30px;
-            flex-wrap: wrap;
         }
 
-        .quick-btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.9em;
+        .grid-table th {
+            background: #1e3a8a;
+            color: white;
+            padding: 15px;
+            text-align: center;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        .btn-mark-all-present {
-            background: #10b981;
-            color: white;
+        .grid-table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
         }
 
-        .btn-mark-all-absent {
-            background: #ef4444;
-            color: white;
-        }
-
-        .btn-clear-all {
-            background: #6b7280;
-            color: white;
-        }
-
-        .quick-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        .student-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .student-card {
+        .grid-table tr:nth-child(even) {
             background: #f9fafb;
-            border-radius: 12px;
-            padding: 20px;
+        }
+
+        .attendance-input {
+            width: 60px;
+            padding: 8px;
             border: 2px solid #e5e7eb;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .student-card:hover {
-            border-color: #0ea5e9;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .student-card.present {
-            border-color: #10b981;
-            background: #f0fdf4;
-        }
-
-        .student-card.absent {
-            border-color: #ef4444;
-            background: #fef2f2;
-        }
-
-        .student-card.late {
-            border-color: #f59e0b;
-            background: #fffbeb;
-        }
-
-        .student-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .student-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 1.2em;
-        }
-
-        .student-info h3 {
-            color: #374151;
-            font-size: 1.1em;
-            margin-bottom: 4px;
-        }
-
-        .student-info p {
-            color: #6b7280;
-            font-size: 0.9em;
-        }
-
-        .attendance-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .attendance-btn {
-            padding: 8px 16px;
-            border: none;
             border-radius: 6px;
-            font-size: 0.8em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-present {
-            background: #10b981;
-            color: white;
-        }
-
-        .btn-absent {
-            background: #ef4444;
-            color: white;
-        }
-
-        .btn-late {
-            background: #f59e0b;
-            color: white;
-        }
-
-        .attendance-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        .status-indicator {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.75em;
+            text-align: center;
             font-weight: 600;
             text-transform: uppercase;
-            margin-top: 10px;
         }
 
-        .status-present {
+        .attendance-input.valid-p {
             background: #dcfce7;
+            border-color: #10b981;
             color: #166534;
         }
 
-        .status-absent {
+        .attendance-input.valid-a {
             background: #fee2e2;
+            border-color: #ef4444;
             color: #991b1b;
         }
 
-        .status-late {
-            background: #fef3c7;
-            color: #92400e;
+        .validation-info {
+            background: #e0f2fe;
+            border-left: 4px solid #0ea5e9;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            color: #075985;
         }
 
-        .status-pending {
-            background: #f3f4f6;
-            color: #6b7280;
-        }
-
-        .summary-section {
+        .menu-section {
             background: white;
             border-radius: 15px;
             padding: 30px;
+            margin-bottom: 30px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             border: 1px solid #e5e7eb;
         }
 
-        .summary-grid {
+        .menu-buttons {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
+            gap: 15px;
         }
 
-        .summary-item {
-            text-align: center;
-            padding: 20px;
+        .menu-btn {
+            padding: 15px 25px;
+            border: none;
             border-radius: 10px;
-            background: #f9fafb;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .summary-value {
+        .btn-individual {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+        }
+
+        .btn-summary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-register {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .btn-exit {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            color: white;
+        }
+
+        .menu-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .statistics-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: #f9fafb;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #e5e7eb;
+        }
+
+        .stat-value {
             font-size: 2.5em;
             font-weight: 300;
             color: #1e3a8a;
             margin-bottom: 8px;
         }
 
-        .summary-label {
+        .stat-label {
             color: #6b7280;
-            font-size: 1em;
+            font-size: 0.95em;
             font-weight: 600;
         }
 
-        .actions-section {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .action-btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-save {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-        }
-
-        .btn-export {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: white;
-        }
-
-        .btn-print {
-            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-            color: white;
-        }
-
-        .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        }
-
-        .search-section {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e5e7eb;
+        .cycle-info {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin-bottom: 20px;
             border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.3s ease;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #0ea5e9;
+            color: #92400e;
         }
 
         @media (max-width: 768px) {
-            .class-header {
-                flex-direction: column;
-                align-items: flex-start;
+            .grid-table {
+                font-size: 0.9em;
             }
 
-            .student-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .quick-actions {
-                flex-direction: column;
-            }
-
-            .quick-btn {
-                width: 100%;
-            }
-
-            .actions-section {
-                flex-direction: column;
-            }
-
-            .action-btn {
-                width: 100%;
+            .attendance-input {
+                width: 50px;
+                padding: 6px;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Asistencia de Estudiantes</h1>
-        <p>Control de asistencia para clases y talleres educativos</p>
+        <h1>Control de Asistencia Semanal</h1>
+        <p>Registro de asistencia de estudiantes (5 días, 4 estudiantes)</p>
     </div>
 
     <div class="content">
-        <div class="class-info">
-            <div class="class-header">
-                <h2 class="class-title">Taller de Matemáticas - Nivel Básico</h2>
-                <div class="class-meta">
-                    <div class="meta-item">
-                        <span>Fecha:</span>
-                        <strong>18 Nov 2025</strong>
-                    </div>
-                    <div class="meta-item">
-                        <span>Hora:</span>
-                        <strong>14:00 - 16:00</strong>
-                    </div>
-                    <div class="meta-item">
-                        <span>Inscritos:</span>
-                        <strong>12 estudiantes</strong>
-                    </div>
+        <div class="constants-info">
+            📊 Constantes del Sistema: DIAS_SEMANA = 5 | NUM_ESTUDIANTES = 4
+        </div>
+
+        <div class="validation-info">
+            ℹ️ Validación: Solo se aceptan valores <strong>P</strong> (Presente) o <strong>A</strong> (Ausente)
+        </div>
+
+        <div class="cycle-info">
+            🔄 Captura mediante ciclos: Ciclo 1 (Estudiantes) → Ciclo 2 (Días de la semana)
+        </div>
+
+        <div class="attendance-grid">
+            <h3 class="section-title">Matriz de Asistencia Semanal</h3>
+            
+            <table class="grid-table">
+                <thead>
+                    <tr>
+                        <th>Estudiante</th>
+                        <th>Lunes</th>
+                        <th>Martes</th>
+                        <th>Miércoles</th>
+                        <th>Jueves</th>
+                        <th>Viernes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Estudiante 1</strong></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-a" value="A" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Estudiante 2</strong></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-a" value="A" maxlength="1"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Estudiante 3</strong></td>
+                        <td><input type="text" class="attendance-input valid-a" value="A" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-a" value="A" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Estudiante 4</strong></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                        <td><input type="text" class="attendance-input valid-p" value="P" maxlength="1"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="statistics-section">
+            <h3 class="section-title">Estadísticas de Asistencia</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">17</div>
+                    <div class="stat-label">Asistencias (P)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Ausencias (A)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">85%</div>
+                    <div class="stat-label">Cumplimiento Global</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">20</div>
+                    <div class="stat-label">Total Registros</div>
                 </div>
             </div>
         </div>
 
-        <div class="search-section">
-            <input type="text" class="search-input" placeholder="Buscar estudiante por nombre...">
-        </div>
-
-        <div class="attendance-section">
-            <h3 class="section-title">Lista de Estudiantes</h3>
-
-            <div class="quick-actions">
-                <button class="quick-btn btn-mark-all-present">Marcar Todos Presentes</button>
-                <button class="quick-btn btn-mark-all-absent">Marcar Todos Ausentes</button>
-                <button class="quick-btn btn-clear-all">Limpiar Todo</button>
-            </div>
-
-            <div class="student-grid">
-                <div class="student-card present">
-                    <div class="student-header">
-                        <div class="student-avatar">AG</div>
-                        <div class="student-info">
-                            <h3>Ana García</h3>
-                            <p>Estudiante - 5to grado</p>
-                        </div>
-                    </div>
-                    <div class="attendance-buttons">
-                        <button class="attendance-btn btn-present">✓</button>
-                        <button class="attendance-btn btn-absent">✗</button>
-                        <button class="attendance-btn btn-late"></button>
-                    </div>
-                    <div class="status-indicator status-present">Presente</div>
-                </div>
-
-                <div class="student-card present">
-                    <div class="student-header">
-                        <div class="student-avatar">MR</div>
-                        <div class="student-info">
-                            <h3>Miguel Rodríguez</h3>
-                            <p>Estudiante - 4to grado</p>
-                        </div>
-                    </div>
-                    <div class="attendance-buttons">
-                        <button class="attendance-btn btn-present">✓</button>
-                        <button class="attendance-btn btn-absent">✗</button>
-                        <button class="attendance-btn btn-late"></button>
-                    </div>
-                    <div class="status-indicator status-present">Presente</div>
-                </div>
-
-                <div class="student-card late">
-                    <div class="student-header">
-                        <div class="student-avatar">CL</div>
-                        <div class="student-info">
-                            <h3>Carmen López</h3>
-                            <p>Estudiante - 5to grado</p>
-                        </div>
-                    </div>
-                    <div class="attendance-buttons">
-                        <button class="attendance-btn btn-present">✓</button>
-                        <button class="attendance-btn btn-absent">✗</button>
-                        <button class="attendance-btn btn-late"></button>
-                    </div>
-                    <div class="status-indicator status-late">Tarde</div>
-                </div>
-
-                <div class="student-card absent">
-                    <div class="student-header">
-                        <div class="student-avatar">JS</div>
-                        <div class="student-info">
-                            <h3>Javier Sánchez</h3>
-                            <p>Estudiante - 4to grado</p>
-                        </div>
-                    </div>
-                    <div class="attendance-buttons">
-                        <button class="attendance-btn btn-present">✓</button>
-                        <button class="attendance-btn btn-absent">✗</button>
-                        <button class="attendance-btn btn-late"></button>
-                    </div>
-                    <div class="status-indicator status-absent">Ausente</div>
-                </div>
-
-                <div class="student-card present">
-                    <div class="student-header">
-                        <div class="student-avatar">LM</div>
-                        <div class="student-info">
-                            <h3>Laura Martínez</h3>
-                            <p>Estudiante - 5to grado</p>
-                        </div>
-                    </div>
-                    <div class="attendance-buttons">
-                        <button class="attendance-btn btn-present">✓</button>
-                        <button class="attendance-btn btn-absent">✗</button>
-                        <button class="attendance-btn btn-late"></button>
-                    </div>
-                    <div class="status-indicator status-present">Presente</div>
-                </div>
-
-                <div class="student-card present">
-                    <div class="student-header">
-                        <div class="student-avatar">DH</div>
-                        <div class="student-info">
-                            <h3>David Hernández</h3>
-                            <p>Estudiante - 4to grado</p>
-                        </div>
-                    </div>
-                    <div class="attendance-buttons">
-                        <button class="attendance-btn btn-present">✓</button>
-                        <button class="attendance-btn btn-absent">✗</button>
-                        <button class="attendance-btn btn-late"></button>
-                    </div>
-                    <div class="status-indicator status-present">Presente</div>
-                </div>
-
-                <div class="student-card absent">
-                    <div class="student-header">
-                        <div class="student-avatar">PT</div>
-                        <div class="student-info">
-                            <h3>Paula Torres</h3>
-                            <p>Estudiante - 5to grado</p>
-                        </div>
-                    </div>
-                    <div class="attendance-buttons">
-                        <button class="attendance-btn btn-present">✓</button>
-                        <button class="attendance-btn btn-absent">✗</button>
-                        <button class="attendance-btn btn-late"></button>
-                    </div>
-                    <div class="status-indicator status-absent">Ausente</div>
-                </div>
-
-                <div class="student-card present">
-                    <div class="student-header">
-                        <div class="student-avatar">RG</div>
-                        <div class="student-info">
-                            <h3>Roberto Gómez</h3>
-                            <p>Estudiante - 4to grado</p>
-                        </div>
-                    </div>
-                    <div class="attendance-buttons">
-                        <button class="attendance-btn btn-present">✓</button>
-                        <button class="attendance-btn btn-absent">✗</button>
-                        <button class="attendance-btn btn-late"></button>
-                    </div>
-                    <div class="status-indicator status-present">Presente</div>
-                </div>
-
-                <div class="student-card late">
-                    <div class="student-header">
-                        <div class="student-avatar">SF</div>
-                        <div class="student-info">
-                            <h3>Sofia Fernández</h3>
-                            <p>Estudiante - 5to grado</p>
-                        </div>
-                    </div>
-                    <div class="attendance-buttons">
-                        <button class="attendance-btn btn-present">✓</button>
-                        <button class="attendance-btn btn-absent">✗</button>
-                        <button class="attendance-btn btn-late"></button>
-                    </div>
-                    <div class="status-indicator status-late">Tarde</div>
-                </div>
-
-                <div class="student-card present">
-                    <div class="student-header">
-                        <div class="student-avatar">AD</div>
-                        <div class="student-info">
-                            <h3>Antonio Díaz</h3>
-                            <p>Estudiante - 4to grado</p>
-                        </div>
-                    </div>
-                    <div class="attendance-buttons">
-                        <button class="attendance-btn btn-present">✓</button>
-                        <button class="attendance-btn btn-absent">✗</button>
-                        <button class="attendance-btn btn-late"></button>
-                    </div>
-                    <div class="status-indicator status-present">Presente</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="summary-section">
-            <h3 class="section-title">Resumen de Asistencia</h3>
-            <div class="summary-grid">
-                <div class="summary-item">
-                    <div class="summary-value">7</div>
-                    <div class="summary-label">Presentes</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-value">2</div>
-                    <div class="summary-label">Ausentes</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-value">2</div>
-                    <div class="summary-label">Tarde</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-value">0</div>
-                    <div class="summary-label">Pendientes</div>
-                </div>
-            </div>
-
-            <div class="actions-section">
-                <button class="action-btn btn-save">Guardar Asistencia</button>
-                <button class="action-btn btn-export">Exportar Lista</button>
-                <button class="action-btn btn-print">Imprimir Reporte</button>
+        <div class="menu-section">
+            <h3 class="section-title">Menú de Opciones</h3>
+            <div class="menu-buttons">
+                <button class="menu-btn btn-individual">Ver Asistencia Individual</button>
+                <button class="menu-btn btn-summary">Resumen General</button>
+                <button class="menu-btn btn-register">Volver a Registrar</button>
+                <button class="menu-btn btn-exit">Salir</button>
             </div>
         </div>
     </div>

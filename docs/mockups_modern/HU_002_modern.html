@@ -136,6 +136,48 @@
             border-color: #d1d5db;
         }
 
+        .validation-message {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 12px 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            color: #92400e;
+            font-size: 0.9em;
+        }
+
+        .success-message {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            color: #065f46;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notification-info {
+            background: #e0f2fe;
+            border-left: 4px solid #0ea5e9;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            color: #075985;
+            font-size: 0.9em;
+        }
+
+        .modification-note {
+            background: #fef9c3;
+            border: 1px solid #fef08a;
+            padding: 12px 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            color: #854d0e;
+            font-size: 0.9em;
+        }
+
         .available-activities {
             background: white;
             border-radius: 15px;
@@ -267,8 +309,18 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="fecha">Fecha de Actividad</label>
-                    <input type="date" id="fecha">
+                    <label for="fechaAsignacion">Fecha de Asignación</label>
+                    <input type="date" id="fechaAsignacion">
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaInicio">Fecha de Inicio</label>
+                    <input type="date" id="fechaInicio">
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaFin">Fecha de Fin</label>
+                    <input type="date" id="fechaFin">
                 </div>
 
                 <div class="form-group">
@@ -280,6 +332,22 @@
                     <label for="notas">Notas Adicionales</label>
                     <input type="text" id="notas" placeholder="Comentarios sobre la asignación...">
                 </div>
+            </div>
+
+            <div class="validation-message">
+                ⚠️ Validación: La fecha de fin debe ser posterior a la fecha de inicio
+            </div>
+
+            <div class="success-message" style="display: none;">
+                ✓ Actividad asignada exitosamente. Se ha enviado una notificación al voluntario.
+            </div>
+
+            <div class="notification-info">
+                ℹ️ El sistema enviará una notificación automática al voluntario asignado con los detalles de la actividad
+            </div>
+
+            <div class="modification-note">
+                📝 Nota: Las asignaciones pueden ser modificadas posteriormente desde el historial de actividades
             </div>
 
             <div class="actions">
