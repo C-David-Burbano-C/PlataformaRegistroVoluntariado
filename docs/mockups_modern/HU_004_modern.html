@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_004 - Historial Moderno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .history-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .table-header h2 {
+            font-size: 1.4em;
+            font-weight: 300;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85em;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-in-progress {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        @media (max-width: 768px) {
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .export-buttons {
+                flex-direction: column;
+            }
+
+            .export-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Historial de Actividades</h1>
+        <p>Tu registro completo de participación voluntaria</p>
+    </div>
+
+    <div class="content">
+        <div class="history-table">
+            <div class="table-header">
+                <h2>Historial de Actividades</h2>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Actividad</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Campaña de Reciclaje Comunitario</td>
+                        <td>15 Dic 2024</td>
+                        <td><span class="status-badge status-completed">Completada</span></td>
+                        <td>Excelente participación, muy comprometido</td>
+                    </tr>
+                    <tr>
+                        <td>Apoyo Escolar Primaria</td>
+                        <td>18 Dic 2024</td>
+                        <td><span class="status-badge status-completed">Completada</span></td>
+                        <td>Buen desempeño en actividades educativas</td>
+                    </tr>
+                    <tr>
+                        <td>Distribución de Alimentos</td>
+                        <td>20 Dic 2024</td>
+                        <td><span class="status-badge status-in-progress">En Progreso</span></td>
+                        <td>Actividad en curso</td>
+                    </tr>
+                    <tr>
+                        <td>Limpieza de Playa</td>
+                        <td>22 Dic 2024</td>
+                        <td><span class="status-badge status-pending">Pendiente</span></td>
+                        <td>Programada para mañana</td>
+                    </tr>
+                    <tr>
+                        <td>Visita a Centro de Día</td>
+                        <td>10 Dic 2024</td>
+                        <td><span class="status-badge status-cancelled">Cancelada</span></td>
+                        <td>Actividad cancelada por condiciones climáticas</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

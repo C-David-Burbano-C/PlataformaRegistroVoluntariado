@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_023 - CONFIRMACIÓN DIGITAL DE ASISTENCIA Moderno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .qr-generator-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .qr-generator {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .qr-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            color: #374151;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .form-input {
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 0.9em;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .generate-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .qr-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #e5e7eb;
+            border-radius: 12px;
+            padding: 40px;
+            background: #f9fafb;
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: #6b7280;
+        }
+
+        .qr-info {
+            text-align: center;
+            margin-top: 20px;
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .qr-info p {
+            margin-bottom: 5px;
+        }
+
+        .confirmation-realtime {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .realtime-status {
+            margin-bottom: 30px;
+        }
+
+        .status-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .status-item {
+            text-align: center;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .status-number {
+            display: block;
+            font-size: 2.5em;
+            font-weight: 300;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .status-label {
+            color: #6b7280;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .attendees-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .attendee-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .attendee-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-color: #0ea5e9;
+        }
+
+        .attendee-info h4 {
+            color: #1e3a8a;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+
+        .attendee-info p {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-bottom: 2px;
+        }
+
+        .attendee-status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-present {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-absent {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .pin-verification {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .pin-form {
+            max-width: 400px;
+        }
+
+        @media (max-width: 768px) {
+            .qr-generator {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>CONFIRMACIÓN DIGITAL DE ASISTENCIA</h1>
+        <p>Verifica la asistencia de voluntarios mediante códigos QR y PIN</p>
+    </div>
+
+    <div class="content">
+        <div class="qr-generator-section">
+            <div class="section-header">
+                <h2 class="section-title">Generar Código QR para Actividad</h2>
+            </div>
+            <div class="qr-generator">
+                <div class="qr-form">
+                    <div class="form-group">
+                        <label class="form-label">Seleccionar Actividad</label>
+                        <select class="form-input">
+                            <option value="">Elegir actividad...</option>
+                            <option value="reciclaje">Campaña de Reciclaje Comunitario - 15 Dic 2024</option>
+                            <option value="apoyo">Apoyo Escolar Primaria - 18 Dic 2024</option>
+                            <option value="alimentos">Distribución de Alimentos - 20 Dic 2024</option>
+                            <option value="playa">Limpieza de Playa - 22 Dic 2024</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Horario de Validez</label>
+                        <input type="datetime-local" class="form-input" placeholder="Fecha y hora de inicio">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duración (horas)</label>
+                        <input type="number" class="form-input" placeholder="2" min="1" max="24">
+                    </div>
+                    <button class="generate-btn">Generar Código QR</button>
+                </div>
+                <div class="qr-display">
+                    <div class="qr-placeholder">
+                        Código QR aparecerá aquí
+                    </div>
+                    <div class="qr-info">
+                        <p><strong>Código único generado:</strong> QR-2024-001</p>
+                        <p><strong>Válido desde:</strong> 15 Dic 2024, 09:00</p>
+                        <p><strong>Hasta:</strong> 15 Dic 2024, 11:00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="confirmation-realtime">
+            <div class="section-header">
+                <h2 class="section-title">Estado de Asistencia en Tiempo Real</h2>
+            </div>
+
+            <div class="realtime-status">
+                <div class="status-summary">
+                    <div class="status-item">
+                        <span class="status-number">8</span>
+                        <span class="status-label">Presentes</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-number">3</span>
+                        <span class="status-label">Pendientes</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-number">2</span>
+                        <span class="status-label">Ausentes</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="attendees-list">
+                <div class="attendee-item">
+                    <div class="attendee-info">
+                        <h4>María González</h4>
+                        <p>Confirmado: 15 Dic 2024, 09:15:23</p>
+                        <p>Método: Código QR</p>
+                    </div>
+                    <span class="attendee-status status-present">Presente</span>
+                </div>
+
+                <div class="attendee-item">
+                    <div class="attendee-info">
+                        <h4>Carlos Rodríguez</h4>
+                        <p>Confirmado: 15 Dic 2024, 09:22:45</p>
+                        <p>Método: PIN Manual</p>
+                    </div>
+                    <span class="attendee-status status-present">Presente</span>
+                </div>
+
+                <div class="attendee-item">
+                    <div class="attendee-info">
+                        <h4>Ana López</h4>
+                        <p>Sin confirmar (Alerta: +15 min)</p>
+                        <p>Último intento: 15 Dic 2024, 09:35:12</p>
+                    </div>
+                    <span class="attendee-status status-absent">Ausente</span>
+                </div>
+
+                <div class="attendee-item">
+                    <div class="attendee-info">
+                        <h4>Javier Martínez</h4>
+                        <p>Pendiente de confirmación</p>
+                        <p>Esperando check-in</p>
+                    </div>
+                    <span class="attendee-status status-pending">Pendiente</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="pin-verification">
+            <div class="section-header">
+                <h2 class="section-title">Verificación Manual con PIN</h2>
+            </div>
+
+            <div class="pin-form">
+                <div class="form-group">
+                    <label class="form-label">Código PIN (6 dígitos)</label>
+                    <input type="text" class="form-input" placeholder="000000" maxlength="6" pattern="[0-9]{6}">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nombre del Voluntario</label>
+                    <input type="text" class="form-input" placeholder="Buscar voluntario...">
+                </div>
+                <button class="generate-btn">Verificar Asistencia</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

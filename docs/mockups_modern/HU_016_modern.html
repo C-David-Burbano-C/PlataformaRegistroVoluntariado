@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_016 - Evaluación de Desempeño</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .evaluation-form {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .form-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .form-activity {
+            background: #f0f9ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #0ea5e9;
+        }
+
+        .activity-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .activity-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .activity-details h3 {
+            color: #1e3a8a;
+            font-size: 1.2em;
+            margin-bottom: 4px;
+        }
+
+        .activity-meta {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .rating-section {
+            margin-bottom: 25px;
+        }
+
+        .rating-label {
+            color: #1e3a8a;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .stars-rating {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .star {
+            font-size: 2em;
+            color: #d1d5db;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #fbbf24;
+        }
+
+        .rating-text {
+            color: #6b7280;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
+        .feedback-section {
+            margin-bottom: 25px;
+        }
+
+        .feedback-label {
+            color: #1e3a8a;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .feedback-textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+            max-height: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .feedback-textarea:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+
+        .form-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-btn.primary {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+        }
+
+        .form-btn.secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .form-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .evaluations-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .evaluation-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .evaluation-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+        }
+
+        .evaluation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .volunteer-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .volunteer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .volunteer-details h3 {
+            color: #1e3a8a;
+            font-size: 1.2em;
+            margin-bottom: 4px;
+        }
+
+        .volunteer-activity {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .evaluation-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .rating-star {
+            font-size: 1.2em;
+            color: #fbbf24;
+        }
+
+        .rating-number {
+            color: #1e3a8a;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .evaluation-content {
+            margin-bottom: 20px;
+        }
+
+        .evaluation-feedback {
+            color: #374151;
+            font-size: 0.95em;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .evaluation-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85em;
+            color: #6b7280;
+        }
+
+        @media (max-width: 768px) {
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .certificates-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .templates-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bulk-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Evaluación de Desempeño</h1>
+        <p>Evaluación y feedback del desempeño de voluntarios en actividades</p>
+    </div>
+
+    <div class="content">
+        <div class="evaluation-form">
+            <div class="form-header">
+                <h3 class="form-title">Nueva Evaluación</h3>
+                <span style="color: #6b7280; font-size: 0.9em;">Solo coordinadores pueden crear evaluaciones</span>
+            </div>
+
+            <div class="form-activity">
+                <div class="activity-info">
+                    <div class="activity-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="activity-details">
+                        <h3>Limpieza Parque Central</h3>
+                        <div class="activity-meta">Completada el 15 Nov 2025 • 8 voluntarios participaron</div>
+                    </div>
+                </div>
+            </div>
+
+            <form>
+                <div class="rating-section">
+                    <label class="rating-label">Calificación del Desempeño</label>
+                    <div class="stars-rating">
+                        <span class="star active">★</span>
+                        <span class="star active">★</span>
+                        <span class="star active">★</span>
+                        <span class="star active">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <div class="rating-text">4 de 5 estrellas - Desempeño Excelente</div>
+                </div>
+
+                <div class="feedback-section">
+                    <label class="feedback-label">Comentarios y Feedback</label>
+                    <textarea class="feedback-textarea" placeholder="Describe el desempeño del voluntario, aspectos positivos, áreas de mejora..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="form-btn secondary">Cancelar</button>
+                    <button type="submit" class="form-btn primary">Guardar Evaluación</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="evaluations-list">
+            <div class="evaluation-card">
+                <div class="evaluation-header">
+                    <div class="volunteer-info">
+                        <div class="volunteer-avatar">MG</div>
+                        <div class="volunteer-details">
+                            <h3>María González</h3>
+                            <div class="volunteer-activity">Limpieza Parque Central</div>
+                        </div>
+                    </div>
+                    <div class="evaluation-rating">
+                        <div class="rating-stars">
+                            <span class="rating-star">★</span>
+                            <span class="rating-star">★</span>
+                            <span class="rating-star">★</span>
+                            <span class="rating-star">★</span>
+                            <span class="rating-star">★</span>
+                        </div>
+                        <span class="rating-number">5.0</span>
+                    </div>
+                </div>
+                <div class="evaluation-content">
+                    <div class="evaluation-feedback">
+                        María demostró un desempeño excepcional durante la actividad de limpieza del parque. Su liderazgo natural motivó al equipo completo, llegando incluso 30 minutos antes para organizar el material. Mostró gran iniciativa al proponer mejoras en el proceso de recolección de residuos.
+                    </div>
+                    <div class="evaluation-meta">
+                        <span>Evaluado por Ana López • Coordinadora</span>
+                        <span>15 Nov 2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="evaluation-card">
+                <div class="evaluation-header">
+                    <div class="volunteer-info">
+                        <div class="volunteer-avatar">CR</div>
+                        <div class="volunteer-details">
+                            <h3>Carlos Rodríguez</h3>
+                            <div class="volunteer-activity">Banco de Alimentos</div>
+                        </div>
+                    </div>
+                    <div class="evaluation-rating">
+                        <div class="rating-stars">
+                            <span class="rating-star">★</span>
+                            <span class="rating-star">★</span>
+                            <span class="rating-star">★</span>
+                            <span class="rating-star">★</span>
+                            <span class="rating-star">☆</span>
+                        </div>
+                        <span class="rating-number">4.0</span>
+                    </div>
+                </div>
+                <div class="evaluation-content">
+                    <div class="evaluation-feedback">
+                        Carlos realizó un trabajo muy solidó durante la jornada del banco de alimentos. Su organización y atención al detalle fueron notables. Podría mejorar en la comunicación con el equipo para coordinar mejor las tareas asignadas.
+                    </div>
+                    <div class="evaluation-meta">
+                        <span>Evaluado por María González • Coordinadora</span>
+                        <span>12 Nov 2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="evaluation-card">
+                <div class="evaluation-header">
+                    <div class="volunteer-info">
+                        <div class="volunteer-avatar">AL</div>
+                        <div class="volunteer-details">
+                            <h3>Ana López</h3>
+                            <div class="volunteer-activity">Taller de Arte Comunitario</div>
+                        </div>
+                    </div>
+                    <div class="evaluation-rating">
+                        <div class="rating-stars">
+                            <span class="rating-star">★</span>
+                            <span class="rating-star">★</span>
+                            <span class="rating-star">★</span>
+                            <span class="rating-star">☆</span>
+                            <span class="rating-star">☆</span>
+                        </div>
+                        <span class="rating-number">3.0</span>
+                    </div>
+                </div>
+                <div class="evaluation-content">
+                    <div class="evaluation-feedback">
+                        Ana participó activamente en el taller de arte, mostrando creatividad en sus propuestas. Sin embargo, llegó 15 minutos tarde y esto afectó ligeramente el ritmo del grupo. Recomiendo trabajar en la puntualidad para futuras actividades.
+                    </div>
+                    <div class="evaluation-meta">
+                        <span>Evaluado por Carlos Rodríguez • Coordinador</span>
+                        <span>10 Nov 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

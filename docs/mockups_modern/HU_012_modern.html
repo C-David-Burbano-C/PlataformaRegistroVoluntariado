@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_012 - Exportación de Reportes Moderno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: 300;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        .filters-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            outline: none;
+            border-color: #0ea5e9;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .report-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .report-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 20px;
+        }
+
+        .report-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .report-meta {
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+
+        .report-content {
+            padding: 20px;
+        }
+
+        .report-description {
+            color: #6b7280;
+            font-size: 0.9em;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .report-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .report-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-edit {
+            background: #0ea5e9;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-duplicate {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-view {
+            background: #10b981;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .export-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .section-title {
+            color: #1e3a8a;
+            font-size: 1.5em;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #0ea5e9;
+            padding-bottom: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            color: #374151;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0ea5e9;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .actions-section {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn-large {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-cancel {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            color: white;
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+        }
+
+        .action-btn-large:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .page-btn {
+            padding: 10px 15px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .page-btn.active {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .page-btn:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+
+        @media (max-width: 768px) {
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-grid,
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .activity-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .activity-details {
+                grid-template-columns: 1fr;
+            }
+
+            .activity-actions {
+                justify-content: center;
+            }
+
+            .actions-section {
+                flex-direction: column;
+            }
+
+            .action-btn-large {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Exportación de Reportes</h1>
+        <p>Exporta reportes en diferentes formatos para análisis y presentaciones</p>
+    </div>
+
+    <div class="content">
+        <div class="filters-section">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label for="reportType">Tipo de Reporte</label>
+                    <select id="reportType">
+                        <option>Reporte de Voluntarios</option>
+                        <option>Reporte de Actividades</option>
+                        <option>Reporte de Impacto</option>
+                        <option>Reporte Mensual</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="format">Formato</label>
+                    <select id="format">
+                        <option>PDF</option>
+                        <option>Excel</option>
+                        <option>CSV</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="period">Período</label>
+                    <select id="period">
+                        <option>Último mes</option>
+                        <option>Últimos 3 meses</option>
+                        <option>Último año</option>
+                        <option>Personalizado</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="category">Categoría</label>
+                    <select id="category">
+                        <option>Todas</option>
+                        <option>Educación</option>
+                        <option>Medio Ambiente</option>
+                        <option>Salud</option>
+                        <option>Social</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="export-section">
+            <h3 class="section-title">Generar Reporte</h3>
+            <div class="actions-section">
+                <button class="action-btn-large btn-add">Generar Reporte</button>
+                <button class="action-btn-large btn-save">Vista Previa</button>
+                <button class="action-btn-large btn-cancel">Programar Reporte</button>
+            </div>
+        </div>
+
+        <div class="reports-grid">
+            <div class="report-card">
+                <div class="report-header">
+                    <h3 class="report-title">Reporte de Voluntarios</h3>
+                </div>
+                <div class="report-content">
+                    <p class="report-description">Lista completa de voluntarios registrados con información de contacto, categorías de interés y historial de participación.</p>
+                    <div class="report-details">
+                        <div class="detail-item">
+                            <span></span>
+                            <strong>247</strong> registros
+                        </div>
+                        <div class="detail-item">
+                            <span></span>
+                            <strong>PDF, Excel, CSV</strong>
+                        </div>
+                    </div>
+                    <div class="report-actions">
+                        <button class="action-btn btn-view">Vista Previa</button>
+                        <button class="action-btn btn-duplicate">Exportar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-card">
+                <div class="report-header">
+                    <h3 class="report-title">Reporte de Actividades</h3>
+                </div>
+                <div class="report-content">
+                    <p class="report-description">Resumen de todas las actividades realizadas, incluyendo participantes, duración y categorías.</p>
+                    <div class="report-details">
+                        <div class="detail-item">
+                            <span></span>
+                            <strong>89</strong> actividades
+                        </div>
+                        <div class="detail-item">
+                            <span></span>
+                            <strong>PDF, Excel, CSV</strong>
+                        </div>
+                    </div>
+                    <div class="report-actions">
+                        <button class="action-btn btn-view">Vista Previa</button>
+                        <button class="action-btn btn-duplicate">Exportar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-card">
+                <div class="report-header">
+                    <h3 class="report-title">Reporte de Impacto</h3>
+                </div>
+                <div class="report-content">
+                    <p class="report-description">Métricas de impacto social incluyendo horas voluntarias, beneficiarios atendidos y categorías de ayuda.</p>
+                    <div class="report-details">
+                        <div class="detail-item">
+                            <span></span>
+                            <strong>1,247</strong> horas totales
+                        </div>
+                        <div class="detail-item">
+                            <span></span>
+                            <strong>PDF, Excel</strong>
+                        </div>
+                    </div>
+                    <div class="report-actions">
+                        <button class="action-btn btn-view">Vista Previa</button>
+                        <button class="action-btn btn-duplicate">Exportar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-card">
+                <div class="report-header">
+                    <h3 class="report-title">Reporte Mensual</h3>
+                </div>
+                <div class="report-content">
+                    <p class="report-description">Resumen mensual de actividades, nuevos voluntarios y estadísticas generales de la plataforma.</p>
+                    <div class="report-details">
+                        <div class="detail-item">
+                            <span></span>
+                            <strong>Noviembre 2025</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span></span>
+                            <strong>PDF, Excel</strong>
+                        </div>
+                    </div>
+                    <div class="report-actions">
+                        <button class="action-btn btn-view">Vista Previa</button>
+                        <button class="action-btn btn-duplicate">Exportar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

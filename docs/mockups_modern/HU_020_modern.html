@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_020 - Soporte y Ayuda Moderno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .backup-controls {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .controls-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .controls-header h2 {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .control-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-btn {
+            padding: 12px 24px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .action-btn.primary {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .action-btn.secondary {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .action-btn.danger {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        .action-btn.small {
+            padding: 8px 16px;
+            font-size: 0.8em;
+        }
+
+        .action-btn.large {
+            padding: 15px 30px;
+            font-size: 1em;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .backup-status {
+            margin-top: 20px;
+        }
+
+        .status-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .status-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .status-info h3 {
+            color: #1e3a8a;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+        }
+
+        .status-info p {
+            color: #6b7280;
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        .status-indicator {
+            margin-left: auto;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-indicator.active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .backup-history {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-header h2 {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .warning-text {
+            color: #d97706;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .history-filters {
+            display: flex;
+            gap: 15px;
+        }
+
+        .filter-select,
+        .date-filter {
+            padding: 10px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9em;
+            background: white;
+        }
+
+        .backup-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .backup-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .backup-item:hover {
+            background: #f3f4f6;
+            border-color: #0ea5e9;
+        }
+
+        .backup-item.failed {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .backup-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        .backup-item.failed .backup-icon {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .backup-info h3 {
+            color: #1e3a8a;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+        }
+
+        .backup-info p {
+            color: #6b7280;
+            margin: 4px 0;
+            font-size: 0.9em;
+        }
+
+        .backup-actions {
+            margin-left: auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .restore-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .restore-form {
+            max-width: 600px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #374151;
+            font-size: 0.95em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .restore-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9em;
+            background: white;
+            cursor: pointer;
+        }
+
+        .confirmation-input {
+            position: relative;
+        }
+
+        .confirm-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .confirm-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .restore-warnings {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .warning-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+            color: #92400e;
+            font-size: 0.9em;
+        }
+
+        .warning-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .warning-icon {
+            font-size: 1.1em;
+        }
+
+        .restore-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .backup-settings {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .setting-card {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .setting-card h3 {
+            color: #1e3a8a;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+        }
+
+        .setting-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .setting-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .setting-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #1e3a8a;
+        }
+
+        .setting-option label {
+            color: #374151;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        .setting-input {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .setting-input label {
+            color: #374151;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .time-input,
+        .encryption-select,
+        .email-input {
+            padding: 10px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9em;
+            background: white;
+        }
+
+        .storage-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .storage-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .storage-label {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .storage-value {
+            color: #374151;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .storage-progress {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            color: #374151;
+            font-size: 0.8em;
+            font-weight: 600;
+            min-width: 80px;
+        }
+
+        .security-options,
+        .notification-options {
+            margin-bottom: 20px;
+        }
+
+        .maintenance-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .maintenance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .maintenance-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .maintenance-card:hover {
+            background: #f3f4f6;
+            border-color: #0ea5e9;
+        }
+
+        .maintenance-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        .maintenance-info h3 {
+            color: #1e3a8a;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+        }
+
+        .maintenance-info p {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin: 0 0 10px 0;
+            line-height: 1.4;
+        }
+
+        .maintenance-stats {
+            color: #374151;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .controls-header,
+            .section-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .control-actions,
+            .history-filters,
+            .restore-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .backup-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .backup-actions {
+                margin-left: 0;
+                justify-content: center;
+            }
+
+            .status-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .maintenance-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .settings-grid,
+            .maintenance-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .storage-progress {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Gestión de Respaldos y Recuperación</h1>
+        <p>Administra los respaldos automáticos y manuales de la base de datos</p>
+    </div>
+
+    <div class="content">
+        <div class="backup-controls">
+            <div class="controls-header">
+                <h2>Controles de Respaldo</h2>
+                <div class="control-actions">
+                    <button class="action-btn secondary">Configurar Automático</button>
+                    <button class="action-btn primary">Crear Respaldo Manual</button>
+                </div>
+            </div>
+
+            <div class="backup-status">
+                <div class="status-card">
+                    <div class="status-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-ccw-icon lucide-refresh-ccw"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+                    </div>
+                    <div class="status-info">
+                        <h3>Estado del Sistema</h3>
+                        <p>Último respaldo automático: <strong>Hoy 02:00 AM</strong></p>
+                        <p>Siguiente respaldo: <strong>Mañana 02:00 AM</strong></p>
+                    </div>
+                    <div class="status-indicator active">
+                        <span>Activo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="backup-history">
+            <div class="section-header">
+                <h2>Historial de Respaldos</h2>
+                <div class="history-filters">
+                    <select class="filter-select">
+                        <option value="all">Todos los respaldos</option>
+                        <option value="automatic">Automáticos</option>
+                        <option value="manual">Manuales</option>
+                        <option value="failed">Fallidos</option>
+                    </select>
+                    <input type="date" class="date-filter">
+                </div>
+            </div>
+
+            <div class="backup-list">
+                <div class="backup-item success">
+                    <div class="backup-icon">
+                        <span class="icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="backup-info">
+                        <h3>Respaldo Automático Diario</h3>
+                        <p>Fecha: 15 Nov 2024, 02:00 AM</p>
+                        <p>Tamaño: 2.4 GB | Tipo: Completo</p>
+                    </div>
+                    <div class="backup-actions">
+                        <button class="action-btn small">Descargar</button>
+                        <button class="action-btn small secondary">Restaurar</button>
+                        <button class="action-btn small danger">Eliminar</button>
+                    </div>
+                </div>
+
+                <div class="backup-item success">
+                    <div class="backup-icon">
+                        <span class="icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="backup-info">
+                        <h3>Respaldo Manual - Pre Mantenimiento</h3>
+                        <p>Fecha: 14 Nov 2024, 10:30 AM</p>
+                        <p>Tamaño: 2.3 GB | Tipo: Completo</p>
+                    </div>
+                    <div class="backup-actions">
+                        <button class="action-btn small">Descargar</button>
+                        <button class="action-btn small secondary">Restaurar</button>
+                        <button class="action-btn small danger">Eliminar</button>
+                    </div>
+                </div>
+
+                <div class="backup-item success">
+                    <div class="backup-icon">
+                        <span class="icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="backup-info">
+                        <h3>Respaldo Automático Diario</h3>
+                        <p>Fecha: 14 Nov 2024, 02:00 AM</p>
+                        <p>Tamaño: 2.2 GB | Tipo: Completo</p>
+                    </div>
+                    <div class="backup-actions">
+                        <button class="action-btn small">Descargar</button>
+                        <button class="action-btn small secondary">Restaurar</button>
+                        <button class="action-btn small danger">Eliminar</button>
+                    </div>
+                </div>
+
+                <div class="backup-item failed">
+                    <div class="backup-icon">
+                        <span class="icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="backup-info">
+                        <h3>Respaldo Automático Diario</h3>
+                        <p>Fecha: 13 Nov 2024, 02:00 AM</p>
+                        <p>Error: Conexión al almacenamiento falló | Reintentos: 3</p>
+                    </div>
+                    <div class="backup-actions">
+                        <button class="action-btn small">Reintentar</button>
+                        <button class="action-btn small danger">Eliminar</button>
+                    </div>
+                </div>
+
+                <div class="backup-item success">
+                    <div class="backup-icon">
+                        <span class="icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="backup-info">
+                        <h3>Respaldo Automático Diario</h3>
+                        <p>Fecha: 12 Nov 2024, 02:00 AM</p>
+                        <p>Tamaño: 2.1 GB | Tipo: Completo</p>
+                    </div>
+                    <div class="backup-actions">
+                        <button class="action-btn small">Descargar</button>
+                        <button class="action-btn small secondary">Restaurar</button>
+                        <button class="action-btn small danger">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="restore-section">
+            <div class="section-header">
+                <h2>Restauración de Datos</h2>
+                <span class="warning-text">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; margin-right: 8px; vertical-align: middle;">
+                        <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    La restauración sobrescribirá todos los datos actuales
+                </span>
+            </div>
+
+            <div class="restore-form">
+                <div class="form-group">
+                    <label>Punto de Restauración</label>
+                    <select class="restore-select">
+                        <option value="">Seleccionar respaldo...</option>
+                        <option value="2024-11-15">15 Nov 2024, 02:00 AM - 2.4 GB</option>
+                        <option value="2024-11-14-manual">14 Nov 2024, 10:30 AM - 2.3 GB</option>
+                        <option value="2024-11-14">14 Nov 2024, 02:00 AM - 2.2 GB</option>
+                        <option value="2024-11-12">12 Nov 2024, 02:00 AM - 2.1 GB</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Confirmación</label>
+                    <div class="confirmation-input">
+                        <input type="text" placeholder="Escribe 'RESTAURAR' para confirmar" class="confirm-input">
+                    </div>
+                </div>
+
+                <div class="restore-warnings">
+                    <div class="warning-item">
+                        <span class="warning-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <span>Se recomienda hacer un respaldo manual antes de restaurar</span>
+                    </div>
+                    <div class="warning-item">
+                        <span class="warning-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <span>La restauración puede tomar varios minutos</span>
+                    </div>
+                    <div class="warning-item">
+                        <span class="warning-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <span>El sistema estará en mantenimiento durante la restauración</span>
+                    </div>
+                </div>
+
+                <div class="restore-actions">
+                    <button class="action-btn danger large" disabled>Iniciar Restauración</button>
+                    <button class="action-btn secondary">Validar Integridad</button>
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Funcionalidad para las preguntas frecuentes
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

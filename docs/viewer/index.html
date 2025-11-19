@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visor de Mockups - Plataforma de Voluntariado</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1> Visor de Mockups</h1>
+                <p>Plataforma de Registro de Voluntariado</p>
+            </div>
+            <div class="header-controls">
+                <button id="toggleView" class="btn-secondary">Vista Lista</button>
+                <button id="fullscreenBtn" class="btn-secondary">Pantalla Completa</button>
+            </div>
+        </header>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar mockup por número o título..." class="search-input">
+            <select id="categoryFilter" class="category-select">
+                <option value="all">Todas las categorías</option>
+                <option value="auth">Autenticación</option>
+                <option value="user">Voluntario</option>
+                <option value="activities">Actividades</option>
+                <option value="admin">Administración</option>
+            </select>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Grid View -->
+            <div id="gridView" class="grid-view">
+                <div id="mockupGrid" class="mockup-grid">
+                    <!-- Mockups will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Single View -->
+            <div id="singleView" class="single-view hidden">
+                <div class="viewer-controls">
+                    <button id="prevBtn" class="nav-btn">⬅ Anterior</button>
+                    <div class="viewer-info">
+                        <span id="currentMockup">HU_001</span>
+                        <span id="currentTitle">Registro de Usuario</span>
+                    </div>
+                    <button id="nextBtn" class="nav-btn">Siguiente ➡</button>
+                </div>
+                <div class="mockup-container">
+                    <iframe id="mockupFrame" src="" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Total de mockups: <span id="totalCount">23</span></p>
+            <p>Usa las flechas del teclado para navegar • Presiona ESC para salir de pantalla completa</p>
+        </footer>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

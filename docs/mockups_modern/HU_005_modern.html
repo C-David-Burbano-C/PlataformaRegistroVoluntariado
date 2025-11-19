@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_005 - Asistencia Moderno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .activity-info {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .activity-title {
+            font-size: 1.8em;
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+
+        .activity-meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6b7280;
+        }
+
+        .meta-item strong {
+            color: #374151;
+        }
+
+        .attendance-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .section-title {
+            color: #1e3a8a;
+            font-size: 1.5em;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #0ea5e9;
+            padding-bottom: 10px;
+        }
+
+        .attendance-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            color: #374151;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #0ea5e9;
+        }
+
+        .attendance-list {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .list-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .list-header h2 {
+            font-size: 1.4em;
+            font-weight: 300;
+        }
+
+        .volunteer-item {
+            padding: 20px 30px;
+            border-bottom: 1px solid #f3f4f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .volunteer-item:hover {
+            background: #f9fafb;
+        }
+
+        .volunteer-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .volunteer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2em;
+        }
+
+        .volunteer-details h3 {
+            color: #374151;
+            font-size: 1.1em;
+            margin-bottom: 4px;
+        }
+
+        .volunteer-details p {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .attendance-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            align-items: center;
+        }
+
+        .attendance-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-present {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-absent {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-late {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .attendance-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .status-indicator {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-present {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-absent {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-late {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-pending {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .time-input {
+            padding: 8px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.85em;
+            background: #f9fafb;
+        }
+
+        .time-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+        }
+
+        .observation-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.85em;
+        }
+
+        .summary-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .summary-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f9fafb;
+        }
+
+        .summary-value {
+            font-size: 2.5em;
+            font-weight: 300;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .summary-label {
+            color: #6b7280;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        .actions-section {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-export {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+        }
+
+        .btn-cancel {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .activity-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .attendance-form {
+                grid-template-columns: 1fr;
+            }
+
+            .volunteer-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .attendance-controls {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .attendance-btn {
+                width: 100%;
+            }
+
+            .actions-section {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Control de Asistencia</h1>
+        <p>Gestión de asistencia para actividades voluntarias</p>
+    </div>
+
+    <div class="content">
+        <div class="activity-info">
+            <div class="activity-header">
+                <h2 class="activity-title">Limpieza Parque Central</h2>
+                <div class="activity-meta">
+                    <div class="meta-item">
+                        <span>Fecha:</span>
+                        <strong>20 Nov 2025</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span>Hora:</span>
+                        <strong>09:00 - 13:00</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span>Inscritos:</span>
+                        <strong>15 voluntarios</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="attendance-section">
+            <h3 class="section-title">Registro de Asistencia</h3>
+            <div class="attendance-form">
+                <div class="form-group">
+                    <label for="fecha">Fecha de la Actividad</label>
+                    <input type="date" id="fecha" value="2025-11-20">
+                </div>
+                <div class="form-group">
+                    <label for="hora">Hora de Registro</label>
+                    <input type="time" id="hora" value="09:00">
+                </div>
+                <div class="form-group">
+                    <label for="hora_salida">Hora de Cierre</label>
+                    <input type="time" id="hora_salida" value="13:00">
+                </div>
+                <div class="form-group">
+                    <label for="responsable">Responsable</label>
+                    <select id="responsable">
+                        <option>María González</option>
+                        <option>Juan Pérez</option>
+                        <option>Ana López</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="observaciones">Observaciones</label>
+                    <input type="text" id="observaciones" placeholder="Observaciones adicionales...">
+                </div>
+                <div class="form-group">
+                    <label for="desempeno">Nivel de Desempeño</label>
+                    <select id="desempeno">
+                        <option>Seleccionar...</option>
+                        <option>Excelente</option>
+                        <option>Bueno</option>
+                        <option>Regular</option>
+                        <option>Deficiente</option>
+                    </select>
+                </div>
+            </div>
+            <p style="margin-top:25px; color:#ef4444;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; margin-right: 8px; vertical-align: middle;">
+                    <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                El registro solo se habilita el día de la actividad y debe realizarlo un coordinador autorizado.
+            </p>
+        </div>
+
+        <div class="attendance-list">
+            <div class="list-header">
+                <h2>Lista de Voluntarios</h2>
+            </div>
+
+            <div class="volunteer-item">
+                <div class="volunteer-info">
+                    <div class="volunteer-avatar">MG</div>
+                    <div class="volunteer-details">
+                        <h3>María González</h3>
+                        <p>Coordinadora - Educación</p>
+                    </div>
+                </div>
+                <div class="attendance-controls">
+                    <span class="status-indicator status-present">Presente</span>
+                    <input type="time" class="time-input" value="09:02" aria-label="Hora de llegada">
+                    <input type="time" class="time-input" value="13:00" aria-label="Hora de salida">
+                    <input type="text" class="observation-input" placeholder="Observaciones...">
+                    <button class="attendance-btn btn-present">✓</button>
+                    <button class="attendance-btn btn-absent">✗</button>
+                    <button class="attendance-btn btn-late">Tarde</button>
+                </div>
+            </div>
+
+            <div class="volunteer-item">
+                <div class="volunteer-info">
+                    <div class="volunteer-avatar">JP</div>
+                    <div class="volunteer-details">
+                        <h3>Juan Pérez</h3>
+                        <p>Voluntario - Medio Ambiente</p>
+                    </div>
+                </div>
+                <div class="attendance-controls">
+                    <span class="status-indicator status-present">Presente</span>
+                    <input type="time" class="time-input" value="08:58" aria-label="Hora de llegada">
+                    <input type="time" class="time-input" value="13:05" aria-label="Hora de salida">
+                    <input type="text" class="observation-input" placeholder="Observaciones...">
+                    <button class="attendance-btn btn-present">✓</button>
+                    <button class="attendance-btn btn-absent">✗</button>
+                    <button class="attendance-btn btn-late">Tarde</button>
+                </div>
+            </div>
+
+            <div class="volunteer-item">
+                <div class="volunteer-info">
+                    <div class="volunteer-avatar">AL</div>
+                    <div class="volunteer-details">
+                        <h3>Ana López</h3>
+                        <p>Voluntaria - Salud</p>
+                    </div>
+                </div>
+                <div class="attendance-controls">
+                    <span class="status-indicator status-late">Tarde</span>
+                    <input type="time" class="time-input" value="09:25" aria-label="Hora de llegada">
+                    <input type="time" class="time-input" value="13:00" aria-label="Hora de salida">
+                    <input type="text" class="observation-input" placeholder="Observaciones...">
+                    <button class="attendance-btn btn-present">✓</button>
+                    <button class="attendance-btn btn-absent">✗</button>
+                    <button class="attendance-btn btn-late">Tarde</button>
+                </div>
+            </div>
+
+            <div class="volunteer-item">
+                <div class="volunteer-info">
+                    <div class="volunteer-avatar">CR</div>
+                    <div class="volunteer-details">
+                        <h3>Carlos Rodríguez</h3>
+                        <p>Voluntario - Alimentación</p>
+                    </div>
+                </div>
+                <div class="attendance-controls">
+                    <span class="status-indicator status-absent">Ausente</span>
+                    <input type="time" class="time-input" placeholder="Entrada" aria-label="Hora de llegada">
+                    <input type="time" class="time-input" placeholder="Salida" aria-label="Hora de salida">
+                    <input type="text" class="observation-input" placeholder="Motivo de ausencia...">
+                    <button class="attendance-btn btn-present">✓</button>
+                    <button class="attendance-btn btn-absent">✗</button>
+                    <button class="attendance-btn btn-late">Tarde</button>
+                </div>
+            </div>
+
+            <div class="volunteer-item">
+                <div class="volunteer-info">
+                    <div class="volunteer-avatar">SM</div>
+                    <div class="volunteer-details">
+                        <h3>Sofia Martínez</h3>
+                        <p>Voluntaria - Educación</p>
+                    </div>
+                </div>
+                <div class="attendance-controls">
+                    <span class="status-indicator status-pending">Pendiente</span>
+                    <input type="time" class="time-input" placeholder="Entrada" aria-label="Hora de llegada">
+                    <input type="time" class="time-input" placeholder="Salida" aria-label="Hora de salida">
+                    <input type="text" class="observation-input" placeholder="Observaciones...">
+                    <button class="attendance-btn btn-present">✓</button>
+                    <button class="attendance-btn btn-absent">✗</button>
+                    <button class="attendance-btn btn-late">Tarde</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary-section">
+            <h3 class="section-title">Resumen</h3>
+            <p style="text-align:center; margin-top:25px; color:#374151;">Horas trabajadas calculadas automáticamente: <strong>12</strong></p>
+            <p style="text-align:center; color:#6b7280;">Solo el coordinador puede modificar registros de asistencia.</p>
+        </div>
+    </div>
+</body>
+</html>

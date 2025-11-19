@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_015 - Comunicación entre Voluntarios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .chat-layout {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+            height: calc(100vh - 200px);
+        }
+
+        .conversations-sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .sidebar-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .new-chat-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .new-chat-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .conversation-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .tab-btn.active {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .tab-btn:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+
+        .conversations-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .conversation-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+
+        .conversation-item:hover,
+        .conversation-item.active {
+            background: #f0f9ff;
+            border-color: #0ea5e9;
+        }
+
+        .conversation-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .conversation-info {
+            flex: 1;
+        }
+
+        .conversation-name {
+            color: #1e3a8a;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .conversation-last-msg {
+            color: #6b7280;
+            font-size: 0.85em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .conversation-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .conversation-time {
+            color: #6b7280;
+            font-size: 0.75em;
+        }
+
+        .conversation-badge {
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            font-weight: 600;
+        }
+
+        .chat-main {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 25px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .chat-details h3 {
+            color: #1e3a8a;
+            font-size: 1.3em;
+            margin-bottom: 4px;
+        }
+
+        .chat-status {
+            color: #10b981;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .messages-container {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message {
+            display: flex;
+            gap: 15px;
+            max-width: 70%;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9em;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .message.sent .message-avatar {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        }
+
+        .message-content {
+            background: #f9fafb;
+            padding: 15px 20px;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            position: relative;
+        }
+
+        .message.sent .message-content {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-text {
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .message-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 0.75em;
+            opacity: 0.7;
+        }
+
+        .message-time {
+            font-weight: 600;
+        }
+
+        .message-input-area {
+            padding: 25px;
+            border-top: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+
+        .message-form {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 25px;
+            font-size: 0.95em;
+            resize: none;
+            min-height: 50px;
+            max-height: 120px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .message-send-btn {
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .message-send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .notifications-panel {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .notifications-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .notifications-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .notifications-count {
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .notification-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            margin-bottom: 10px;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1em;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-text {
+            color: #1e3a8a;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .notification-meta {
+            color: #6b7280;
+            font-size: 0.85em;
+        }
+
+        .notification-action {
+            padding: 6px 12px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .notification-action:hover {
+            background: #2d5aa0;
+        }
+
+        @media (max-width: 768px) {
+            .chat-layout {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .conversations-sidebar {
+                order: 2;
+            }
+
+            .chat-main {
+                order: 1;
+                height: 500px;
+            }
+
+            .message.sent {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Comunicación entre Voluntarios</h1>
+        <p>Sistema de mensajes interno para coordinación de actividades</p>
+    </div>
+
+    <div class="content">
+        <div class="notifications-panel">
+            <div class="notifications-header">
+                <h3 class="notifications-title">Notificaciones de Mensajes</h3>
+                <div class="notifications-count">3</div>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-text">Nuevo mensaje en "Grupo Limpieza Parque"</div>
+                    <div class="notification-meta">María González • Hace 5 min</div>
+                </div>
+                <button class="notification-action">Ver</button>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-text">Mensaje privado de Carlos Rodríguez</div>
+                    <div class="notification-meta">Sobre actividad "Banco de Alimentos" • Hace 12 min</div>
+                </div>
+                <button class="notification-action">Ver</button>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon">📝</div>
+                <div class="notification-content">
+                    <div class="notification-text">Ana López creó nuevo grupo "Taller de Arte"</div>
+                    <div class="notification-meta">Grupo de actividad • Hace 1 hora</div>
+                </div>
+                <button class="notification-action">Ver</button>
+            </div>
+        </div>
+
+        <div class="chat-layout">
+        <div class="conversations-sidebar">
+            <div class="sidebar-header">
+                <h3 class="sidebar-title">Conversaciones</h3>
+                <button class="new-chat-btn">Nuevo Chat</button>
+            </div>
+
+            <div class="conversations-list">
+                <div class="conversation-item active">
+                    <div class="conversation-avatar">LP</div>
+                    <div class="conversation-info">
+                        <div class="conversation-name">Limpieza Parque Central</div>
+                        <div class="conversation-last-msg">¿Alguien puede traer guantes extra?</div>
+                    </div>
+                    <div class="conversation-meta">
+                        <div class="conversation-time">14:30</div>
+                    </div>
+                </div>
+
+                <div class="conversation-item">
+                    <div class="conversation-avatar">BA</div>
+                    <div class="conversation-info">
+                        <div class="conversation-name">Banco de Alimentos</div>
+                        <div class="conversation-last-msg">La actividad fue un éxito, gracias a todos</div>
+                    </div>
+                    <div class="conversation-meta">
+                        <div class="conversation-time">12:15</div>
+                    </div>
+                </div>
+
+                <div class="conversation-item">
+                    <div class="conversation-avatar">TA</div>
+                    <div class="conversation-info">
+                        <div class="conversation-name">Taller de Arte</div>
+                        <div class="conversation-last-msg">Nuevo grupo creado por Ana López</div>
+                    </div>
+                    <div class="conversation-meta">
+                        <div class="conversation-time">11:45</div>
+                    </div>
+                </div>
+
+                <div class="conversation-item">
+                    <div class="conversation-avatar">EC</div>
+                    <div class="conversation-info">
+                        <div class="conversation-name">Educación Comunitaria</div>
+                        <div class="conversation-last-msg">Próxima reunión el viernes</div>
+                    </div>
+                    <div class="conversation-meta">
+                        <div class="conversation-time">09:20</div>
+                    </div>
+                </div>
+
+                <div class="conversation-item">
+                    <div class="conversation-avatar">CR</div>
+                    <div class="conversation-info">
+                        <div class="conversation-name">Carlos Rodríguez</div>
+                        <div class="conversation-last-msg">¿Podemos coordinar para mañana?</div>
+                    </div>
+                    <div class="conversation-meta">
+                        <div class="conversation-time">16:45</div>
+                    </div>
+                </div>
+
+                <div class="conversation-item">
+                    <div class="conversation-avatar">MG</div>
+                    <div class="conversation-info">
+                        <div class="conversation-name">María González</div>
+                        <div class="conversation-last-msg">Gracias por tu ayuda en la actividad</div>
+                    </div>
+                    <div class="conversation-meta">
+                        <div class="conversation-time">Ayer</div>
+                    </div>
+                </div>
+            </div>
+        </div>            <div class="chat-main">
+                <div class="chat-header">
+                    <div class="chat-info">
+                        <div class="chat-avatar">LP</div>
+                        <div class="chat-details">
+                            <h3>Limpieza Parque Central</h3>
+                            <div class="chat-status">8 miembros • Grupo activo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="messages-container">
+                    <div class="message">
+                        <div class="message-avatar">AL</div>
+                        <div class="message-content">
+                            <div class="message-text">¡Hola equipo! ¿Todos listos para la limpieza del parque mañana?</div>
+                            <div class="message-meta">
+                                <span class="message-time">Ana López • 09:15</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message sent">
+                        <div class="message-avatar">YO</div>
+                        <div class="message-content">
+                            <div class="message-text">¡Sí! Ya tengo preparados los materiales. ¿Alguien puede traer guantes extra?</div>
+                            <div class="message-meta">
+                                <span class="message-time">Tú • 09:18</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message">
+                        <div class="message-avatar">CR</div>
+                        <div class="message-content">
+                            <div class="message-text">Yo puedo llevar guantes. También tengo bolsas de basura adicionales.</div>
+                            <div class="message-meta">
+                                <span class="message-time">Carlos Rodríguez • 09:22</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message">
+                        <div class="message-avatar">MG</div>
+                        <div class="message-content">
+                            <div class="message-text">Perfecto Carlos. Yo me encargo de coordinar el punto de encuentro. ¿Alguien más necesita transporte?</div>
+                            <div class="message-meta">
+                                <span class="message-time">María González • 09:25</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message sent">
+                        <div class="message-avatar">YO</div>
+                        <div class="message-content">
+                            <div class="message-text">Yo tengo carro, puedo llevar a 3 personas más.</div>
+                            <div class="message-meta">
+                                <span class="message-time">Tú • 09:28</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message">
+                        <div class="message-avatar">AL</div>
+                        <div class="message-content">
+                            <div class="message-text">Excelente coordinación equipo. Recuerden llegar 15 minutos antes. ¡Nos vemos mañana!</div>
+                            <div class="message-meta">
+                                <span class="message-time">Ana López • 09:30</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="message-input-area">
+                    <form class="message-form">
+                        <textarea class="message-input" placeholder="Escribe tu mensaje..." rows="1"></textarea>
+                        <button type="submit" class="message-send-btn">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

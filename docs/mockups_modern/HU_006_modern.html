@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_006 - Asistencia Estudiantes Moderno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .class-info {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .class-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .class-title {
+            font-size: 1.8em;
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+
+        .class-meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6b7280;
+        }
+
+        .meta-item strong {
+            color: #374151;
+        }
+
+        .attendance-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .section-title {
+            color: #1e3a8a;
+            font-size: 1.5em;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #0ea5e9;
+            padding-bottom: 10px;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .quick-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-mark-all-present {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-mark-all-absent {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-clear-all {
+            background: #6b7280;
+            color: white;
+        }
+
+        .quick-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .student-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .student-card {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .student-card:hover {
+            border-color: #0ea5e9;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .student-card.present {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .student-card.absent {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .student-card.late {
+            border-color: #f59e0b;
+            background: #fffbeb;
+        }
+
+        .student-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .student-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2em;
+        }
+
+        .student-info h3 {
+            color: #374151;
+            font-size: 1.1em;
+            margin-bottom: 4px;
+        }
+
+        .student-info p {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .attendance-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .attendance-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-present {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-absent {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-late {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .attendance-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .status-present {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-absent {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-late {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-pending {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .summary-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .summary-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f9fafb;
+        }
+
+        .summary-value {
+            font-size: 2.5em;
+            font-weight: 300;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .summary-label {
+            color: #6b7280;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        .actions-section {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-export {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+        }
+
+        .btn-print {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .search-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .logic-description {
+            background: #f9fafb;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .logic-description p {
+            margin-bottom: 10px;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .menu-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .option-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .option-card:hover {
+            border-color: #0ea5e9;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
+        }
+
+        .option-card h4 {
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .option-card p {
+            color: #6b7280;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .class-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .student-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-actions {
+                flex-direction: column;
+            }
+
+            .quick-btn {
+                width: 100%;
+            }
+
+            .actions-section {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Control de Asistencia de Estudiantes</h1>
+        <p>Programa para registrar asistencia semanal de estudiantes</p>
+    </div>
+
+    <div class="content">
+        <div class="class-info">
+            <div class="class-header">
+                <h2 class="class-title">Constantes del Programa</h2>
+                <div class="class-meta">
+                    <div class="meta-item">
+                        <span>DIAS_SEMANA:</span>
+                        <strong>5</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span>NUM_ESTUDIANTES:</span>
+                        <strong>4</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="attendance-section">
+            <h3 class="section-title">Lógica del Programa</h3>
+            <div class="logic-description">
+                <p>El programa utiliza vectores para registrar asistencia (P = presente, A = ausente) por estudiante y día.</p>
+                <p>Se capturan los datos usando un ciclo (uno por estudiante y otro por día).</p>
+                <p>Se valida que el valor ingresado sea correcto (P o A).</p>
+                <p>Después de llenar los datos, se muestran estadísticas.</p>
+                <p>Un menú de opciones permite: ver asistencia individual, resumen general, volver a registrar o salir.</p>
+            </div>
+        </div>
+
+        <div class="attendance-section">
+            <h3 class="section-title">Registro Semanal (Vectores)</h3>
+            <div style="overflow-x:auto;">
+                <table style="width:100%; border-collapse:collapse;">
+                    <thead>
+                        <tr>
+                            <th style="padding:12px; border:1px solid #e5e7eb; background:#f9fafb;">Estudiante</th>
+                            <th style="padding:12px; border:1px solid #e5e7eb; background:#f9fafb;">Lunes</th>
+                            <th style="padding:12px; border:1px solid #e5e7eb; background:#f9fafb;">Martes</th>
+                            <th style="padding:12px; border:1px solid #e5e7eb; background:#f9fafb;">Miércoles</th>
+                            <th style="padding:12px; border:1px solid #e5e7eb; background:#f9fafb;">Jueves</th>
+                            <th style="padding:12px; border:1px solid #e5e7eb; background:#f9fafb;">Viernes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">Estudiante 1</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">A</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">Estudiante 2</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">A</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">A</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">Estudiante 4</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">A</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                            <td style="padding:12px; border:1px solid #e5e7eb;">P</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="margin-top:15px; color:#6b7280;">Valores permitidos: <strong>P</strong> (Presente) o <strong>A</strong> (Ausente). Cualquier otro valor es rechazado por validación automática.</p>
+        </div>
+
+        <div class="attendance-section">
+            <h3 class="section-title">Menú de Opciones</h3>
+
+            <div class="menu-options">
+                <div class="option-card">
+                    <h4>1. Ver Asistencia Individual</h4>
+                    <p>Muestra la asistencia de un estudiante específico por día</p>
+                </div>
+                <div class="option-card">
+                    <h4>2. Resumen General</h4>
+                    <p>Muestra estadísticas generales de asistencia</p>
+                </div>
+                <div class="option-card">
+                    <h4>3. Volver a Registrar</h4>
+                    <p>Permite registrar nuevamente la asistencia semanal</p>
+                </div>
+                <div class="option-card">
+                    <h4>4. Salir</h4>
+                    <p>Finalizar el programa</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

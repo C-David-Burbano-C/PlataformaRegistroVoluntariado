@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HU_017 - Notificaciones Moderno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .reminders-section,
+        .alerts-section,
+        .config-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            color: #1e3a8a;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .action-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .reminders-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .reminder-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .reminder-card.active {
+            border-color: #0ea5e9;
+            background: #f0f9ff;
+        }
+
+        .reminder-card:hover {
+            border-color: #0ea5e9;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .reminder-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .reminder-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+        }
+
+        .reminder-card.active .reminder-icon {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+        }
+
+        .reminder-info h3 {
+            color: #1e3a8a;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .reminder-info p {
+            color: #6b7280;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .reminder-toggle {
+            width: 50px;
+            height: 26px;
+            background: #e5e7eb;
+            border-radius: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: auto;
+        }
+
+        .reminder-toggle.active {
+            background: #10b981;
+        }
+
+        .reminder-toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .reminder-toggle.active::after {
+            left: 26px;
+        }
+
+        .reminder-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .detail-item .label {
+            color: #6b7280;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .detail-item .value {
+            color: #374151;
+            font-size: 0.9em;
+        }
+
+        .alerts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .alert-card {
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .alert-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-color: #0ea5e9;
+        }
+
+        .alert-card.urgent {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left: 4px solid #ef4444;
+        }
+
+        .alert-card.warning {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-left: 4px solid #f59e0b;
+        }
+
+        .alert-card.info {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .alert-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .alert-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+
+        .alert-content h3 {
+            color: #1e3a8a;
+            font-size: 1.1em;
+            margin-bottom: 6px;
+        }
+
+        .alert-content p {
+            color: #6b7280;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .alert-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+            margin-left: auto;
+        }
+
+        .alert-time {
+            color: #6b7280;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .alert-status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .alert-status.urgent {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .alert-status.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .alert-status.info {
+            background: #e0f2fe;
+            color: #0c4a6e;
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .config-group {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .config-group h3 {
+            color: #1e3a8a;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .config-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .config-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .config-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .config-option label {
+            color: #374151;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        .silence-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .silence-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .silence-label {
+            color: #374151;
+            font-size: 0.9em;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .silence-select {
+            flex: 1;
+            padding: 8px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9em;
+            background: white;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .tabs-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .notification-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .notification-meta {
+                align-items: flex-start;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bulk-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Recordatorios y Alertas</h1>
+        <p>Gestiona recordatorios automáticos y alertas del sistema de voluntariado</p>
+    </div>
+
+    <div class="content">
+        <div class="reminders-section">
+            <div class="section-header">
+                <h2 class="section-title">Recordatorios Automáticos</h2>
+            </div>
+
+            <div class="reminders-grid">
+                <div class="reminder-card active">
+                    <div class="reminder-header">
+                        <div class="reminder-icon">
+                            <span class="icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="reminder-info">
+                            <h3>Recordatorio 24h Antes de Actividad</h3>
+                            <p>Envía recordatorio automático 24 horas antes del inicio de cada actividad</p>
+                        </div>
+                        <div class="reminder-toggle active"></div>
+                    </div>
+                    <div class="reminder-details">
+                        <div class="detail-item">
+                            <span class="label">Frecuencia:</span>
+                            <span class="value">24 horas antes</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Método:</span>
+                            <span class="value">Email + Notificación Sistema</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Destinatarios:</span>
+                            <span class="value">Voluntarios asignados</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="alerts-section">
+            <div class="section-header">
+                <h2 class="section-title">Alertas del Sistema</h2>
+            </div>
+
+            <div class="alerts-list">
+                <div class="alert-card urgent">
+                    <div class="alert-header">
+                        <div class="alert-icon">
+                            <span class="icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="alert-content">
+                            <h3>Actividad Sin Voluntarios Asignados</h3>
+                            <p>La actividad "Limpieza Parque Central" programada para mañana no tiene voluntarios asignados</p>
+                        </div>
+                        <div class="alert-meta">
+                            <span class="alert-time">Hace 2 horas</span>
+                            <span class="alert-status urgent">Urgente</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert-card warning">
+                    <div class="alert-header">
+                        <div class="alert-icon">
+                            <span class="icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="alert-content">
+                            <h3>Ausencia No Justificada</h3>
+                            <p>María González no se presentó a la actividad "Banco de Alimentos" sin notificación previa</p>
+                        </div>
+                        <div class="alert-meta">
+                            <span class="alert-time">Hace 4 horas</span>
+                            <span class="alert-status warning">Advertencia</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert-card info">
+                    <div class="alert-header">
+                        <div class="alert-icon">
+                            <span class="icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="alert-content">
+                            <h3>Actividad Completada</h3>
+                            <p>La actividad "Taller de Arte" se completó exitosamente con 8 voluntarios participantes</p>
+                        </div>
+                        <div class="alert-meta">
+                            <span class="alert-time">Hace 1 día</span>
+                            <span class="alert-status info">Información</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="config-section">
+            <div class="section-header">
+                <h2 class="section-title">Configuración de Alertas</h2>
+                <button class="action-btn primary">Guardar Cambios</button>
+            </div>
+
+            <div class="config-grid">
+                <div class="config-group">
+                    <h3>Alertas por Email</h3>
+                    <div class="config-options">
+                        <div class="config-option">
+                            <input type="checkbox" id="email-activities" checked>
+                            <label for="email-activities">Actividades sin voluntarios asignados</label>
+                        </div>
+                        <div class="config-option">
+                            <input type="checkbox" id="email-absences" checked>
+                            <label for="email-absences">Ausencias de voluntarios</label>
+                        </div>
+                        <div class="config-option">
+                            <input type="checkbox" id="email-reminders" checked>
+                            <label for="email-reminders">Recordatorios automáticos</label>
+                        </div>
+                        <div class="config-option">
+                            <input type="checkbox" id="email-system">
+                            <label for="email-system">Alertas del sistema</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <h3>Notificaciones en Sistema</h3>
+                    <div class="config-options">
+                        <div class="config-option">
+                            <input type="checkbox" id="system-urgent" checked>
+                            <label for="system-urgent">Alertas urgentes</label>
+                        </div>
+                        <div class="config-option">
+                            <input type="checkbox" id="system-warnings" checked>
+                            <label for="system-warnings">Advertencias</label>
+                        </div>
+                        <div class="config-option">
+                            <input type="checkbox" id="system-info">
+                            <label for="system-info">Información general</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <h3>Silenciar Alertas</h3>
+                    <div class="silence-options">
+                        <div class="silence-option">
+                            <span class="silence-label">Silenciar todas las alertas por:</span>
+                            <select class="silence-select">
+                                <option value="">No silenciar</option>
+                                <option value="1h">1 hora</option>
+                                <option value="4h">4 horas</option>
+                                <option value="24h">24 horas</option>
+                                <option value="week">1 semana</option>
+                            </select>
+                        </div>
+                        <div class="silence-option">
+                            <span class="silence-label">Silenciar alertas de ausencias por:</span>
+                            <select class="silence-select">
+                                <option value="">No silenciar</option>
+                                <option value="1h">1 hora</option>
+                                <option value="4h">4 horas</option>
+                                <option value="24h">24 horas</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </div>
+</body>
+</html>

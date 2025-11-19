@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mockups Modernos - Plataforma de Voluntariado</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #374151;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 30px;
+        }
+
+        .intro {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+
+        .intro h2 {
+            color: #1e3a8a;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .intro p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .stat-item {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 600;
+            color: #1e3a8a;
+            display: block;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .mockups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .mockup-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .mockup-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .mockup-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa0 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .mockup-number {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .mockup-title {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .mockup-preview {
+            padding: 30px;
+            text-align: center;
+            background: #f9fafb;
+        }
+
+        .mockup-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 1.5em;
+        }
+
+        .mockup-description {
+            color: #6b7280;
+            font-size: 0.9em;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .view-btn {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .view-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .footer {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+
+        .footer h3 {
+            color: #1e3a8a;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .footer p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .mockups-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .categories {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Mockups Modernos</h1>
+        <p>Plataforma de Registro de Voluntariado</p>
+    </div>
+
+    <div class="container">
+        <div class="intro">
+            <h2> Colección Completa de Mockups</h2>
+            <p>Explora los 23 mockups modernos con diseño responsive y interfaz profesional para la plataforma de voluntariado.</p>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">23</span>
+                    <span class="stat-label">Mockups</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Responsive</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Funcionalidades</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="categories">
+            <button class="category-btn active" onclick="filterMockups('all')">Todos</button>
+            <button class="category-btn" onclick="filterMockups('auth')">Autenticación</button>
+            <button class="category-btn" onclick="filterMockups('user')">Usuario</button>
+            <button class="category-btn" onclick="filterMockups('activities')">Actividades</button>
+            <button class="category-btn" onclick="filterMockups('admin')">Administración</button>
+        </div>
+
+        <div class="mockups-grid" id="mockupsGrid">
+            <!-- Authentication -->
+            <div class="mockup-card" data-category="auth">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_001</div>
+                    <div class="mockup-title">Registro de Usuario</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Formulario completo de registro con validación y términos de servicio.</div>
+                    <a href="mockups_modern/HU_001_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <div class="mockup-card" data-category="auth">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_002</div>
+                    <div class="mockup-title">Inicio de Sesión</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon">🔐</div>
+                    <div class="mockup-description">Pantalla de login con opciones de recordar sesión y recuperación.</div>
+                    <a href="mockups_modern/HU_002_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <div class="mockup-card" data-category="auth">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_003</div>
+                    <div class="mockup-title">Recuperar Contraseña</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon">🔑</div>
+                    <div class="mockup-description">Proceso de recuperación de contraseña por email.</div>
+                    <a href="mockups_modern/HU_003_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <!-- User Profile -->
+            <div class="mockup-card" data-category="user">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_004</div>
+                    <div class="mockup-title">Perfil de Usuario</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Vista completa del perfil con estadísticas y logros.</div>
+                    <a href="mockups_modern/HU_004_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <div class="mockup-card" data-category="user">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_005</div>
+                    <div class="mockup-title">Editar Perfil</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon">✏️</div>
+                    <div class="mockup-description">Formulario para editar información personal y preferencias.</div>
+                    <a href="mockups_modern/HU_005_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <!-- Main Dashboard -->
+            <div class="mockup-card" data-category="user">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_006</div>
+                    <div class="mockup-title">Dashboard Principal</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Panel principal con métricas, actividades recientes y navegación.</div>
+                    <a href="mockups_modern/HU_006_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <!-- Activities -->
+            <div class="mockup-card" data-category="activities">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_007</div>
+                    <div class="mockup-title">Explorar Actividades</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Catálogo de actividades con filtros y búsqueda avanzada.</div>
+                    <a href="mockups_modern/HU_007_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <div class="mockup-card" data-category="activities">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_008</div>
+                    <div class="mockup-title">Detalles de Actividad</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Vista detallada de actividad con información completa y requisitos.</div>
+                    <a href="mockups_modern/HU_008_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <div class="mockup-card" data-category="activities">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_009</div>
+                    <div class="mockup-title">Inscripción a Actividad</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Proceso de inscripción con confirmación y términos.</div>
+                    <a href="mockups_modern/HU_009_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <div class="mockup-card" data-category="activities">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_010</div>
+                    <div class="mockup-title">Mis Actividades</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Lista de actividades inscritas con estado y progreso.</div>
+                    <a href="mockups_modern/HU_010_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <div class="mockup-card" data-category="user">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_011</div>
+                    <div class="mockup-title">Historial de Participación</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Historial completo de actividades realizadas y certificados.</div>
+                    <a href="mockups_modern/HU_011_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <!-- Administration -->
+            <div class="mockup-card" data-category="admin">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_012</div>
+                    <div class="mockup-title">Crear Actividad</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Formulario para crear nuevas actividades con todos los campos.</div>
+                    <a href="mockups_modern/HU_012_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <div class="mockup-card" data-category="admin">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_013</div>
+                    <div class="mockup-title">Gestionar Actividades</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Panel de administración para gestionar todas las actividades.</div>
+                    <a href="mockups_modern/HU_013_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <div class="mockup-card" data-category="admin">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_014</div>
+                    <div class="mockup-title">Reportes</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Sistema completo de reportes con filtros y exportación.</div>
+                    <a href="mockups_modern/HU_014_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <!-- Communication -->
+            <div class="mockup-card" data-category="user">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_015</div>
+                    <div class="mockup-title">Notificaciones</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 17h5l-5 5v-5zM4.868 12.683A17.925 17.925 0 0112 21c7.962 0 12-1.21 12-2.683m-12 2.683a17.925 17.925 0 01-7.132-8.317m0 0a3 3 0 010-5.684m7.132 5.684a3 3 0 010-5.684m7.132 5.684a3 3 0 010-5.684" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="mockup-description">Centro de notificaciones con diferentes tipos de alertas.</div>
+                    <a href="mockups_modern/HU_015_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <div class="mockup-card" data-category="user">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_016</div>
+                    <div class="mockup-title">Mensajes</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Sistema de mensajería interna para comunicación.</div>
+                    <a href="mockups_modern/HU_016_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <div class="mockup-card" data-category="user">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_017</div>
+                    <div class="mockup-title">Comunidad</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Espacio comunitario para compartir experiencias.</div>
+                    <a href="mockups_modern/HU_017_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <!-- Settings & Support -->
+            <div class="mockup-card" data-category="user">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_018</div>
+                    <div class="mockup-title">Configuración</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Panel de configuración de la cuenta y preferencias.</div>
+                    <a href="mockups_modern/HU_018_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <div class="mockup-card" data-category="user">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_019</div>
+                    <div class="mockup-title">Ayuda</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon">❓</div>
+                    <div class="mockup-description">Centro de ayuda con FAQ y guías de usuario.</div>
+                    <a href="mockups_modern/HU_019_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <div class="mockup-card" data-category="user">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_020</div>
+                    <div class="mockup-title">Soporte y Ayuda</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon">🆘</div>
+                    <div class="mockup-description">Sistema avanzado de soporte con tickets y chat.</div>
+                    <a href="mockups_modern/HU_020_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <!-- Analytics & Certificates -->
+            <div class="mockup-card" data-category="admin">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_021</div>
+                    <div class="mockup-title">Estadísticas y Métricas</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Dashboard de métricas con gráficos y KPIs detallados.</div>
+                    <a href="mockups_modern/HU_021_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <div class="mockup-card" data-category="admin">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_022</div>
+                    <div class="mockup-title">Panel de Administración</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Panel completo de administración del sistema.</div>
+                    <a href="mockups_modern/HU_022_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+
+            <div class="mockup-card" data-category="admin">
+                <div class="mockup-header">
+                    <div class="mockup-number">HU_023</div>
+                    <div class="mockup-title">Gestión de Certificados</div>
+                </div>
+                <div class="mockup-preview">
+                    <div class="mockup-icon"></div>
+                    <div class="mockup-description">Sistema completo para emitir y gestionar certificados.</div>
+                    <a href="mockups_modern/HU_023_modern.html" class="view-btn">Ver Mockup</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <h3> ¿Quieres ver los mockups renderizados?</h3>
+            <p>Configura GitHub Pages en Settings → Pages → Source: Deploy from a branch → Branch: main/docs</p>
+            <p>Una vez activado, podrás ver todos los mockups como páginas web reales en: <strong>C-David-Burbano-C.github.io/PlataformaRegistroVoluntariado</strong></p>
+            <div style="margin-top: 20px;">
+                <a href="viewer/" class="view-btn" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); margin-right: 10px;"> Abrir Visor Interactivo</a>
+                <a href="viewer/README.md" class="view-btn" style="background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);"> Documentación</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filterMockups(category) {
+            const cards = document.querySelectorAll('.mockup-card');
+            const buttons = document.querySelectorAll('.category-btn');
+
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
